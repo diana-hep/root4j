@@ -140,7 +140,16 @@
         </configuration>
       </plugin>
     </plugins>
+
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+        <targetPath>resources</targetPath>
+      </testResource>
+    </testResources>
+
   </build>
+
   <reporting>
     <plugins>
       <plugin>
@@ -200,5 +209,5 @@
       </build>
     </profile>
   </profiles>
-  
+
 </project>
