@@ -205,7 +205,9 @@ class ProxyBuilder implements ClassBuilder, Constants
                il.append(InstructionConstants.ALOAD_0);
                il.append(factory.createGetField(className, members[i].getName(), type));
             }
-            if (!returnType.equals(type)) il.append(factory.createCast(type,returnType));
+            if (!returnType.equals(type)  &&  !(returnType == Type.INT  &&  (type == Type.BYTE  ||  type == Type.CHAR  ||  type == Type.SHORT)))
+                il.append(factory.createCast(type,returnType));
+
             il.append(InstructionFactory.createReturn(returnType));
             mg.setMaxStack();
             mg.setMaxLocals();
@@ -214,7 +216,7 @@ class ProxyBuilder implements ClassBuilder, Constants
          }
       }
    }
-   
+
    private void iterativelyAdd(List list, RootClass[] superClasses)
    {
       for (int i = 0; i < superClasses.length; i++)

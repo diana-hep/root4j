@@ -78,10 +78,10 @@ public class TestReading {
     @Test
     public void testBacon() throws java.io.IOException, RootClassNotFound {
         RootFileReader reader = new RootFileReader("/home/pivarski/data/TTJets_13TeV_amcatnloFXFX_pythia8_2_77.root");
-        // TTree tree = (TTree)reader.get("Events");
-        // List leaves = (List)tree.getLeaves();
-        // for (Object leaf : leaves)
-        //     System.out.println(((TLeaf)leaf).getName());
+        TTree tree = (TTree)reader.get("Events");
+        List leaves = (List)tree.getLeaves();
+        for (Object leaf : leaves)
+            System.out.println(((TLeaf)leaf).getName());
     }
 
     // @Test

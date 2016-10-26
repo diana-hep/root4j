@@ -185,7 +185,8 @@ public class StreamerInfoString extends StreamerInfo
             Type varMemberType = varMember.getJavaType();
             il.append(InstructionConstants.ALOAD_0);
             il.append(factory.createInvoke(className, nameMangler.mangleMember(varCounter), varMemberType, Type.NO_ARGS, INVOKESPECIAL));
-            if (varMemberType != Type.INT) il.append(factory.createCast(varMemberType, Type.INT));
+            if (varMemberType != Type.INT  &&  varMemberType != Type.BYTE  &&  varMemberType != Type.CHAR  &&  varMemberType != Type.SHORT)
+                il.append(factory.createCast(varMemberType, Type.INT));
 
             BasicType type = (BasicType) varClass.getJavaType();
             il.append(new NEWARRAY(type));

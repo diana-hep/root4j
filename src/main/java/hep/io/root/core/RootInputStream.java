@@ -405,7 +405,7 @@ class RootInputStream extends DataInputStream implements RootInput
                map.put(new Long(startpos + kMapOffset), rootClass);
             else
                map.put(new Long(map.size() + 1), rootClass);
-            
+
             AbstractRootObject obj = rootClass.newInstance();
             
             // Add this class to the map

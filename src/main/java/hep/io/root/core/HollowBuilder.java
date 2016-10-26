@@ -291,7 +291,7 @@ public class HollowBuilder implements ClassBuilder, Constants
             Type sType = hasSubIndex ? new ArrayType(type, (short) 1) : type;
             Type rType = (sType instanceof BasicType) ? sType : Type.OBJECT;
             leaf.generateReadCode(il, factory, cp, className);
-            if (rType != sType)
+            if (rType != sType  &&  !(sType == Type.INT  &&  (rType == Type.BYTE  ||  rType == Type.CHAR  ||  rType == Type.SHORT)))
                il.append(factory.createCast(rType, sType));
             if (hasSubIndex)
             {
