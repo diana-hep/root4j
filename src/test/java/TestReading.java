@@ -87,10 +87,10 @@ public class TestReading {
     // @Test
     // public void testAOD() throws java.io.IOException, RootClassNotFound {
     //     RootFileReader reader = new RootFileReader("/home/pivarski/data/Mu_Run2010B-Apr21ReReco-v1_AOD.root");
-    //     // TTree tree = (TTree)reader.get("Events");
-    //     // List leaves = (List)tree.getLeaves();
-    //     // for (Object leaf : leaves)
-    //     //     System.out.println(((TLeaf)leaf).getName());
+    //     TTree tree = (TTree)reader.get("Events");
+    //     List leaves = (List)tree.getLeaves();
+    //     for (Object leaf : leaves)
+    //         System.out.println(((TLeaf)leaf).getName());
     // }
 
 }
