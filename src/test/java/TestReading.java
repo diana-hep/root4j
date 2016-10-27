@@ -84,36 +84,39 @@ public class TestReading {
         
         TBranch branch = tree.getBranch("Muon").getBranchForName("pt");
         TLeaf leaf = (TLeaf)branch.getLeaves().get(0);
-        
+
         long[] startingEntries = branch.getBasketEntry();
 
         for (int i = 0;  i < startingEntries.length - 1;  i++) {
-            System.out.println(String.format("BASKET %d", i));
+            // System.out.println(String.format("BASKET %d", i));
 
             long endEntry = startingEntries[i + 1];
 
             // all but the last one
             for (long entry = startingEntries[i];  entry < endEntry - 1;  entry++) {
+                // System.out.println(String.format("entry %d endEntry %d", entry, endEntry));
+
                 RootInput in = branch.setPosition(leaf, entry + 1);
                 long endPosition = in.getPosition();
                 in = branch.setPosition(leaf, entry);
                 while (in.getPosition() < endPosition) {
-                    System.out.print(in.readFloat());
-                    System.out.print(" ");
+                    in.readFloat();
+                    // System.out.print(in.readFloat());
+                    // System.out.print(" ");
                 }
-                System.out.println();
+                // System.out.println();
             }
 
             // the last one
             RootInput in = branch.setPosition(leaf, endEntry - 1);
             long endPosition = in.getLast();
             while (in.getPosition() < endPosition) {
-                System.out.print(in.readFloat());
-                System.out.print(" ");
+                in.readFloat();
+                // System.out.print(in.readFloat());
+                // System.out.print(" ");
             }
-            System.out.println();
+            // System.out.println();
         }
-
     }
 
     // @Test

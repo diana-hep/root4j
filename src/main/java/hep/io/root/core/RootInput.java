@@ -36,6 +36,16 @@ public interface RootInput extends DataInput
 
    void clearMap() throws IOException;
 
+   int[] readVarWidthArrayInt() throws IOException;
+
+   byte[] readVarWidthArrayByte() throws IOException;
+
+   short[] readVarWidthArrayShort() throws IOException;
+
+   float[] readVarWidthArrayFloat() throws IOException;
+
+   double[] readVarWidthArrayDouble() throws IOException;
+
    int readArray(int[] data) throws IOException;
 
    int readArray(byte[] data) throws IOException;

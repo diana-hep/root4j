@@ -51,12 +51,11 @@ public abstract class TBasketRep extends AbstractRootObject implements hep.io.ro
       return data;
    }
 
-   public void readEntryOffsets(int len) throws IOException
+   public void readEntryOffsets(int len) throws IOException   // this 'len' is wrong!
    {
       int last = getLast();
       data.setPosition(last);
-      fEntryOffset = new int[len];
-      data.readArray(fEntryOffset);
+      fEntryOffset = data.readVarWidthArrayInt();
 
       // Currently there is no handling for displacements, I am not clear
       // what they are for anyway.
