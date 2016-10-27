@@ -5,6 +5,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
+import hep.io.root.core.RootInput;
 import hep.io.root.*;
 import hep.io.root.interfaces.*;
 
@@ -76,12 +77,43 @@ public class TestReading {
     }
 
     @Test
-    public void testBacon() throws java.io.IOException, RootClassNotFound {
-        RootFileReader reader = new RootFileReader("/home/pivarski/data/TTJets_13TeV_amcatnloFXFX_pythia8_2_77.root");
+    public void testBacon() throws java.io.IOException, RootClassNotFound, NoSuchMethodException, IllegalAccessException, java.lang.reflect.InvocationTargetException {
+        RootFileReader reader = new RootFileReader(new java.io.File("/home/pivarski/data/TTJets_13TeV_amcatnloFXFX_pythia8_2_77.root"));
         TTree tree = (TTree)reader.get("Events");
-        List leaves = (List)tree.getLeaves();
-        for (Object leaf : leaves)
-            System.out.println(((TLeaf)leaf).getName());
+        // List leaves = (List)tree.getLeaves();
+        
+        TBranch branch = tree.getBranch("Muon").getBranchForName("pt");
+        TLeaf leaf = (TLeaf)branch.getLeaves().get(0);
+        
+        long[] startingEntries = branch.getBasketEntry();
+
+        for (int i = 0;  i < startingEntries.length - 1;  i++) {
+            System.out.println(String.format("BASKET %d", i));
+
+            long endEntry = startingEntries[i + 1];
+
+            // all but the last one
+            for (long entry = startingEntries[i];  entry < endEntry - 1;  entry++) {
+                RootInput in = branch.setPosition(leaf, entry + 1);
+                long endPosition = in.getPosition();
+                in = branch.setPosition(leaf, entry);
+                while (in.getPosition() < endPosition) {
+                    System.out.print(in.readFloat());
+                    System.out.print(" ");
+                }
+                System.out.println();
+            }
+
+            // the last one
+            RootInput in = branch.setPosition(leaf, endEntry - 1);
+            long endPosition = in.getLast();
+            while (in.getPosition() < endPosition) {
+                System.out.print(in.readFloat());
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
+
     }
 
     // @Test

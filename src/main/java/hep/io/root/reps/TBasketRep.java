@@ -45,6 +45,9 @@ public abstract class TBasketRep extends AbstractRootObject implements hep.io.ro
       {
          data.setPosition(fEntryOffset[i]);
       }
+
+      data.setLast(fLast);
+
       return data;
    }
 

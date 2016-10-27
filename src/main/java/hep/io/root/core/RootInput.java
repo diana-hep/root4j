@@ -99,4 +99,7 @@ public interface RootInput extends DataInput
     * For skipping uninterpretable objects
     */
    void skipObject() throws IOException;
+
+   int getLast();
+   void setLast(int last);
 }

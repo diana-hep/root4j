@@ -27,6 +27,7 @@ class RootInputStream extends DataInputStream implements RootInput
    private static int HDRSIZE = 9;
    private Hashtable readMap = new Hashtable();
    private RootInput top;
+   private int last = -1;
    
    public enum ZAlgo {
        GLOBAL_SETTING,
@@ -581,4 +582,12 @@ class RootInputStream extends DataInputStream implements RootInput
       throw new IOException("dump");
    }
    
+   public int getLast() {
+       return last;
+   }
+
+   public void setLast(int last) {
+       this.last = last;
+   }
+
 }
