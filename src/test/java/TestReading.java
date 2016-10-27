@@ -78,6 +78,8 @@ public class TestReading {
 
     @Test
     public void testBacon() throws java.io.IOException, RootClassNotFound, NoSuchMethodException, IllegalAccessException, java.lang.reflect.InvocationTargetException {
+        double total = 0.0;
+
         RootFileReader reader = new RootFileReader(new java.io.File("/home/pivarski/data/TTJets_13TeV_amcatnloFXFX_pythia8_2_77.root"));
         TTree tree = (TTree)reader.get("Events");
         // List leaves = (List)tree.getLeaves();
@@ -100,7 +102,7 @@ public class TestReading {
                 long endPosition = in.getPosition();
                 in = branch.setPosition(leaf, entry);
                 while (in.getPosition() < endPosition) {
-                    in.readFloat();
+                    total += in.readFloat();
                     // System.out.print(in.readFloat());
                     // System.out.print(" ");
                 }
@@ -111,21 +113,63 @@ public class TestReading {
             RootInput in = branch.setPosition(leaf, endEntry - 1);
             long endPosition = in.getLast();
             while (in.getPosition() < endPosition) {
-                in.readFloat();
+                total += in.readFloat();
                 // System.out.print(in.readFloat());
                 // System.out.print(" ");
             }
             // System.out.println();
         }
+
+        assertEquals(total, 1212110.9802200794, 1e-12);
     }
 
-    // @Test
-    // public void testAOD() throws java.io.IOException, RootClassNotFound {
-    //     RootFileReader reader = new RootFileReader("/home/pivarski/data/Mu_Run2010B-Apr21ReReco-v1_AOD.root");
-    //     TTree tree = (TTree)reader.get("Events");
-    //     List leaves = (List)tree.getLeaves();
-    //     for (Object leaf : leaves)
-    //         System.out.println(((TLeaf)leaf).getName());
-    // }
+    @Test
+    public void testAOD() throws java.io.IOException, RootClassNotFound {
+        double total = 0.0;
+
+        RootFileReader reader = new RootFileReader("/home/pivarski/data/Mu_Run2010B-Apr21ReReco-v1_AOD.root");
+        TTree tree = (TTree)reader.get("Events");
+        // List leaves = (List)tree.getLeaves();
+        // for (Object leaf : leaves)
+        //     System.out.println(((TLeaf)leaf).getName());
+
+        TBranch branch = tree.getBranch("recoMuons_muons__RECO.").getBranchForName("obj").getBranchForName("pt_");
+        TLeaf leaf = (TLeaf)branch.getLeaves().get(0);
+
+        long[] startingEntries = branch.getBasketEntry();
+
+        for (int i = 0;  i < startingEntries.length - 1;  i++) {
+            // System.out.println(String.format("BASKET %d", i));
+
+            long endEntry = startingEntries[i + 1];
+
+            // all but the last one
+            for (long entry = startingEntries[i];  entry < endEntry - 1;  entry++) {
+                // System.out.println(String.format("entry %d endEntry %d", entry, endEntry));
+
+                RootInput in = branch.setPosition(leaf, entry + 1);
+                long endPosition = in.getPosition();
+                in = branch.setPosition(leaf, entry);
+                while (in.getPosition() < endPosition) {
+                    total += in.readFloat();
+                    // System.out.print(in.readFloat());
+                    // System.out.print(" ");
+                }
+                // System.out.println();
+            }
+
+            // the last one
+            RootInput in = branch.setPosition(leaf, endEntry - 1);
+            long endPosition = in.getLast();
+            while (in.getPosition() < endPosition) {
+                total += in.readFloat();
+                // System.out.print(in.readFloat());
+                // System.out.print(" ");
+            }
+            // System.out.println();
+        }
+
+        assertEquals(total, 149084.45634351671, 1e-12);
+    }
 
 }
