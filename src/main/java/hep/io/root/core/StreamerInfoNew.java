@@ -354,7 +354,8 @@ public class StreamerInfoNew extends StreamerInfo implements org.apache.bcel.Con
             
                   il.append(InstructionConstants.DUP); //ALOAD_0
                   il.append(factory.createInvoke(className, nameMangler.mangleMember(varCounter), varMemberType, Type.NO_ARGS, INVOKESPECIAL));
-                  if (varMemberType != Type.INT) il.append(factory.createCast(varMemberType, Type.INT));
+                  if (varMemberType != Type.INT  &&  varMemberType != Type.BYTE  &&  varMemberType != Type.CHAR  &&  varMemberType != Type.SHORT)
+                      il.append(factory.createCast(varMemberType, Type.INT));
                   il.append(InstructionConstants.DUP);
                   il.append(InstructionConstants.ISTORE_2);
 

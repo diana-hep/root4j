@@ -27,6 +27,7 @@ public class FastInputStream implements RootInput
    private byte[] out;
    private int offset;
    private RandomAccessFile raf;
+   private int last;
 
    public FastInputStream(RootFileReader rfr, RandomAccessFile raf) throws IOException
    {
@@ -91,6 +92,50 @@ public class FastInputStream implements RootInput
       System.out.println("Decompressing took " + elapsed + "ms (" + invocations + ")");
       System.out.println("in size = " + in.length);
       System.out.println("out size = " + out.length);
+   }
+
+   public int[] readVarWidthArrayInt() throws IOException
+   {
+      int n = buffer.getInt();
+      int[] data = new int[n];
+      buffer.asIntBuffer().get(data, 0, n);
+      buffer.position(buffer.position() + (n * 4));
+      return data;
+   }
+
+   public byte[] readVarWidthArrayByte() throws IOException
+   {
+      int n = buffer.getInt();
+      byte[] data = new byte[n];
+      buffer.get(data, 0, n);
+      return data;
+   }
+
+   public short[] readVarWidthArrayShort() throws IOException
+   {
+      int n = buffer.getInt();
+      short[] data = new short[n];
+      buffer.asShortBuffer().get(data, 0, n);
+      buffer.position(buffer.position() + (n * 2));
+      return data;
+   }
+
+   public float[] readVarWidthArrayFloat() throws IOException
+   {
+      int n = buffer.getInt();
+      float[] data = new float[n];
+      buffer.asFloatBuffer().get(data, 0, n);
+      buffer.position(buffer.position() + (n * 4));
+      return data;
+   }
+
+   public double[] readVarWidthArrayDouble() throws IOException
+   {
+      int n = buffer.getInt();
+      double[] data = new double[n];
+      buffer.asDoubleBuffer().get(data, 0, n);
+      buffer.position(buffer.position() + (n * 8));
+      return data;
    }
 
    public int readArray(short[] data) throws IOException
@@ -416,5 +461,13 @@ outer: while (true)
    public void close() throws IOException
    {
       raf.close();
+   }
+
+   public int getLast() {
+       return last;
+   }
+
+   public void setLast(int last) {
+       this.last = last;
    }
 }

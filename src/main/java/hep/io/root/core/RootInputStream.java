@@ -27,6 +27,7 @@ class RootInputStream extends DataInputStream implements RootInput
    private static int HDRSIZE = 9;
    private Hashtable readMap = new Hashtable();
    private RootInput top;
+   private int last = -1;
    
    public enum ZAlgo {
        GLOBAL_SETTING,
@@ -101,6 +102,31 @@ class RootInputStream extends DataInputStream implements RootInput
       ((RootByteArrayInputStream) in).setOffset(0);
    }
    
+   public int[] readVarWidthArrayInt() throws IOException
+   {
+      return RootInputStream.readVarWidthArrayInt(this);
+   }
+
+   public byte[] readVarWidthArrayByte() throws IOException
+   {
+      return RootInputStream.readVarWidthArrayByte(this);
+   }
+
+   public short[] readVarWidthArrayShort() throws IOException
+   {
+      return RootInputStream.readVarWidthArrayShort(this);
+   }
+
+   public float[] readVarWidthArrayFloat() throws IOException
+   {
+      return RootInputStream.readVarWidthArrayFloat(this);
+   }
+
+   public double[] readVarWidthArrayDouble() throws IOException
+   {
+      return RootInputStream.readVarWidthArrayDouble(this);
+   }
+
    public int readArray(int[] data) throws IOException
    {
       return RootInputStream.readArray(this, data);
@@ -223,6 +249,51 @@ class RootInputStream extends DataInputStream implements RootInput
       obj.checkLength(in.getPosition());
    }
    
+   static int[] readVarWidthArrayInt(RootInput in) throws IOException
+   {
+       int n = in.readInt();
+       int[] data = new int[n];
+       for (int i = 0;  i < n;  i++)
+           data[i] = in.readInt();
+       return data;
+   }
+
+   static byte[] readVarWidthArrayByte(RootInput in) throws IOException
+   {
+       int n = in.readInt();
+       byte[] data = new byte[n];
+       for (int i = 0;  i < n;  i++)
+           data[i] = in.readByte();
+       return data;
+   }
+
+   static short[] readVarWidthArrayShort(RootInput in) throws IOException
+   {
+       int n = in.readInt();
+       short[] data = new short[n];
+       for (int i = 0;  i < n;  i++)
+           data[i] = in.readShort();
+       return data;
+   }
+
+   static float[] readVarWidthArrayFloat(RootInput in) throws IOException
+   {
+       int n = in.readInt();
+       float[] data = new float[n];
+       for (int i = 0;  i < n;  i++)
+           data[i] = in.readFloat();
+       return data;
+   }
+
+   static double[] readVarWidthArrayDouble(RootInput in) throws IOException
+   {
+       int n = in.readInt();
+       double[] data = new double[n];
+       for (int i = 0;  i < n;  i++)
+           data[i] = in.readDouble();
+       return data;
+   }
+
    static int readArray(RootInput in, int[] data) throws IOException
    {
       int n = in.readInt();
@@ -405,7 +476,7 @@ class RootInputStream extends DataInputStream implements RootInput
                map.put(new Long(startpos + kMapOffset), rootClass);
             else
                map.put(new Long(map.size() + 1), rootClass);
-            
+
             AbstractRootObject obj = rootClass.newInstance();
             
             // Add this class to the map
@@ -581,4 +652,12 @@ class RootInputStream extends DataInputStream implements RootInput
       throw new IOException("dump");
    }
    
+   public int getLast() {
+       return last;
+   }
+
+   public void setLast(int last) {
+       this.last = last;
+   }
+
 }

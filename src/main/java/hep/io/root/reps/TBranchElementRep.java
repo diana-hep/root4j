@@ -124,13 +124,18 @@ public abstract class TBranchElementRep extends AbstractRootObject implements he
          if (fId >= 0)
          {
             RootMember[] members = rc.getMembers();
-            RootMember member = members[fId];
-            if (leaves != null)
+            // some CMSSW files have fId >= length of members
+            // what does that mean???
+            if (fId < members.length)
             {
-               for (int i = 0; i < leaves.size(); i++)
+               RootMember member = members[fId];
+               if (leaves != null)
                {
-                  TLeafElement leaf = (TLeafElement) leaves.get(i);
-                  leaf.setMember(member);
+                  for (int i = 0; i < leaves.size(); i++)
+                  {
+                     TLeafElement leaf = (TLeafElement) leaves.get(i);
+                     leaf.setMember(member);
+                  }
                }
             }
          }

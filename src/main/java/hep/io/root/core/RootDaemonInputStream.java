@@ -18,6 +18,7 @@ public class RootDaemonInputStream extends DataInputStream implements RootInput
    private RootFileReader reader;
    private DaemonInputStream source;
    private long offset;
+   private int last;
 
    public RootDaemonInputStream(DaemonInputStream source, RootFileReader reader) throws IOException
    {
@@ -69,6 +70,31 @@ public class RootDaemonInputStream extends DataInputStream implements RootInput
    {
       map.clear();
       offset = 0;
+   }
+
+   public int[] readVarWidthArrayInt() throws IOException
+   {
+      return RootInputStream.readVarWidthArrayInt(this);
+   }
+
+   public byte[] readVarWidthArrayByte() throws IOException
+   {
+      return RootInputStream.readVarWidthArrayByte(this);
+   }
+
+   public short[] readVarWidthArrayShort() throws IOException
+   {
+      return RootInputStream.readVarWidthArrayShort(this);
+   }
+
+   public float[] readVarWidthArrayFloat() throws IOException
+   {
+      return RootInputStream.readVarWidthArrayFloat(this);
+   }
+
+   public double[] readVarWidthArrayDouble() throws IOException
+   {
+      return RootInputStream.readVarWidthArrayDouble(this);
    }
 
    public int readArray(int[] data) throws IOException
@@ -188,5 +214,13 @@ public class RootDaemonInputStream extends DataInputStream implements RootInput
    public void skipObject() throws IOException 
    {
       RootInputStream.skipObject(this);
+   }
+
+   public int getLast() {
+       return last;
+   }
+
+   public void setLast(int last) {
+       this.last = last;
    }
 }

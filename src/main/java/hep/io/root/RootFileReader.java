@@ -28,7 +28,7 @@ import java.util.Map;
  */
 public class RootFileReader implements TFile
 {
-   private static boolean welcome = false;
+   private static boolean welcome = true;
    private static boolean debug = System.getProperty("debugRoot") != null;
    private ClassLoader classLoader;
    private java.util.Date fDatimeC;

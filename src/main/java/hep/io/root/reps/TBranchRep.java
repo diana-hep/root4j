@@ -147,7 +147,7 @@ public abstract class TBranchRep extends AbstractRootObject implements hep.io.ro
          TBasket basket = (TBasket) rin.readObject("TBasket");
          
          int len = getEntryOffsetLen();
-         if (len > 0) basket.readEntryOffsets(len);
+         if (len > 0) basket.readEntryOffsets(-1);   // len is now ignored
          
          curIndex = index;
          return curBasket = basket;
