@@ -78,6 +78,11 @@ public class TestReading {
 
     @Test
     public void testBacon() throws java.io.IOException, RootClassNotFound, NoSuchMethodException, IllegalAccessException, java.lang.reflect.InvocationTargetException {
+        // gzip 0: 0.07068413925
+        // gzip 1: 0.07774616925
+        // gzip 2: 0.0736906025
+        // gzip 9: 0.0706459315
+
         double total = 0.0;
 
         RootFileReader reader = new RootFileReader(new java.io.File("/home/pivarski/data/TTJets_13TeV_amcatnloFXFX_pythia8_2_77.root"));
