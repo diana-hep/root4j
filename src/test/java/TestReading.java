@@ -78,34 +78,47 @@ public class TestReading {
 
     @Test
     public void testBacon() throws java.io.IOException, RootClassNotFound, NoSuchMethodException, IllegalAccessException, java.lang.reflect.InvocationTargetException {
-        // gzip 0: 0.07068413925
-        // gzip 1: 0.07774616925
-        // gzip 2: 0.0736906025
-        // gzip 9: 0.0706459315
+        java.io.File file = new java.io.File("/home/pivarski/data/TTJets_13TeV_amcatnloFXFX_pythia8_2_77.root");
+        if (file.exists()) {
+            // gzip 0: 0.07068413925
+            // gzip 1: 0.07774616925
+            // gzip 2: 0.0736906025
+            // gzip 9: 0.0706459315
 
-        double total = 0.0;
+            double total = 0.0;
 
-        RootFileReader reader = new RootFileReader(new java.io.File("/home/pivarski/data/TTJets_13TeV_amcatnloFXFX_pythia8_2_77.root"));
-        TTree tree = (TTree)reader.get("Events");
-        // List leaves = (List)tree.getLeaves();
+            RootFileReader reader = new RootFileReader(file);
+            TTree tree = (TTree)reader.get("Events");
+            // List leaves = (List)tree.getLeaves();
         
-        TBranch branch = tree.getBranch("Muon").getBranchForName("pt");
-        TLeaf leaf = (TLeaf)branch.getLeaves().get(0);
+            TBranch branch = tree.getBranch("Muon").getBranchForName("pt");
+            TLeaf leaf = (TLeaf)branch.getLeaves().get(0);
 
-        long[] startingEntries = branch.getBasketEntry();
+            long[] startingEntries = branch.getBasketEntry();
 
-        for (int i = 0;  i < startingEntries.length - 1;  i++) {
-            // System.out.println(String.format("BASKET %d", i));
+            for (int i = 0;  i < startingEntries.length - 1;  i++) {
+                // System.out.println(String.format("BASKET %d", i));
 
-            long endEntry = startingEntries[i + 1];
+                long endEntry = startingEntries[i + 1];
 
-            // all but the last one
-            for (long entry = startingEntries[i];  entry < endEntry - 1;  entry++) {
-                // System.out.println(String.format("entry %d endEntry %d", entry, endEntry));
+                // all but the last one
+                for (long entry = startingEntries[i];  entry < endEntry - 1;  entry++) {
+                    // System.out.println(String.format("entry %d endEntry %d", entry, endEntry));
 
-                RootInput in = branch.setPosition(leaf, entry + 1);
-                long endPosition = in.getPosition();
-                in = branch.setPosition(leaf, entry);
+                    RootInput in = branch.setPosition(leaf, entry + 1);
+                    long endPosition = in.getPosition();
+                    in = branch.setPosition(leaf, entry);
+                    while (in.getPosition() < endPosition) {
+                        total += in.readFloat();
+                        // System.out.print(in.readFloat());
+                        // System.out.print(" ");
+                    }
+                    // System.out.println();
+                }
+
+                // the last one
+                RootInput in = branch.setPosition(leaf, endEntry - 1);
+                long endPosition = in.getLast();
                 while (in.getPosition() < endPosition) {
                     total += in.readFloat();
                     // System.out.print(in.readFloat());
@@ -114,47 +127,50 @@ public class TestReading {
                 // System.out.println();
             }
 
-            // the last one
-            RootInput in = branch.setPosition(leaf, endEntry - 1);
-            long endPosition = in.getLast();
-            while (in.getPosition() < endPosition) {
-                total += in.readFloat();
-                // System.out.print(in.readFloat());
-                // System.out.print(" ");
-            }
-            // System.out.println();
+            assertEquals(total, 1212110.9802200794, 1e-12);
         }
-
-        assertEquals(total, 1212110.9802200794, 1e-12);
     }
 
     @Test
     public void testAOD() throws java.io.IOException, RootClassNotFound {
-        double total = 0.0;
+        java.io.File file = new java.io.File("/home/pivarski/data/Mu_Run2010B-Apr21ReReco-v1_AOD.root");
+        if (file.exists()) {
+            double total = 0.0;
 
-        RootFileReader reader = new RootFileReader("/home/pivarski/data/Mu_Run2010B-Apr21ReReco-v1_AOD.root");
-        TTree tree = (TTree)reader.get("Events");
-        // List leaves = (List)tree.getLeaves();
-        // for (Object leaf : leaves)
-        //     System.out.println(((TLeaf)leaf).getName());
+            RootFileReader reader = new RootFileReader(file);
+            TTree tree = (TTree)reader.get("Events");
+            // List leaves = (List)tree.getLeaves();
+            // for (Object leaf : leaves)
+            //     System.out.println(((TLeaf)leaf).getName());
 
-        TBranch branch = tree.getBranch("recoMuons_muons__RECO.").getBranchForName("obj").getBranchForName("pt_");
-        TLeaf leaf = (TLeaf)branch.getLeaves().get(0);
+            TBranch branch = tree.getBranch("recoMuons_muons__RECO.").getBranchForName("obj").getBranchForName("pt_");
+            TLeaf leaf = (TLeaf)branch.getLeaves().get(0);
 
-        long[] startingEntries = branch.getBasketEntry();
+            long[] startingEntries = branch.getBasketEntry();
 
-        for (int i = 0;  i < startingEntries.length - 1;  i++) {
-            // System.out.println(String.format("BASKET %d", i));
+            for (int i = 0;  i < startingEntries.length - 1;  i++) {
+                // System.out.println(String.format("BASKET %d", i));
 
-            long endEntry = startingEntries[i + 1];
+                long endEntry = startingEntries[i + 1];
 
-            // all but the last one
-            for (long entry = startingEntries[i];  entry < endEntry - 1;  entry++) {
-                // System.out.println(String.format("entry %d endEntry %d", entry, endEntry));
+                // all but the last one
+                for (long entry = startingEntries[i];  entry < endEntry - 1;  entry++) {
+                    // System.out.println(String.format("entry %d endEntry %d", entry, endEntry));
 
-                RootInput in = branch.setPosition(leaf, entry + 1);
-                long endPosition = in.getPosition();
-                in = branch.setPosition(leaf, entry);
+                    RootInput in = branch.setPosition(leaf, entry + 1);
+                    long endPosition = in.getPosition();
+                    in = branch.setPosition(leaf, entry);
+                    while (in.getPosition() < endPosition) {
+                        total += in.readFloat();
+                        // System.out.print(in.readFloat());
+                        // System.out.print(" ");
+                    }
+                    // System.out.println();
+                }
+
+                // the last one
+                RootInput in = branch.setPosition(leaf, endEntry - 1);
+                long endPosition = in.getLast();
                 while (in.getPosition() < endPosition) {
                     total += in.readFloat();
                     // System.out.print(in.readFloat());
@@ -163,18 +179,8 @@ public class TestReading {
                 // System.out.println();
             }
 
-            // the last one
-            RootInput in = branch.setPosition(leaf, endEntry - 1);
-            long endPosition = in.getLast();
-            while (in.getPosition() < endPosition) {
-                total += in.readFloat();
-                // System.out.print(in.readFloat());
-                // System.out.print(" ");
-            }
-            // System.out.println();
+            assertEquals(total, 149084.45634351671, 1e-12);
         }
-
-        assertEquals(total, 149084.45634351671, 1e-12);
     }
 
 }
