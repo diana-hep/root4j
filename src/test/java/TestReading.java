@@ -1,13 +1,13 @@
-package hep.io.root;
+package org.dianahep.root4j;
 
 import java.util.List;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-import hep.io.root.core.RootInput;
-import hep.io.root.*;
-import hep.io.root.interfaces.*;
+import org.dianahep.root4j.core.RootInput;
+import org.dianahep.root4j.*;
+import org.dianahep.root4j.interfaces.*;
 
 public class TestReading {
     @Test
