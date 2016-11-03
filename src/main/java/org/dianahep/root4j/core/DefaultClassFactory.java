@@ -120,6 +120,33 @@ public class DefaultClassFactory implements RootClassFactory
             // Look to see if there is a specific implementation class
             classMap.put(key, findClass(key, info));
          }
+         // 
+         // tmp
+         //
+         String key = "vector<analysis::core::Muon>";
+         String value = "TCollection;";
+         classMap.put(key, findClass(key, new StreamerInfoString((String) value)));
+         key = "vector<analysis::core::Jet>";
+         value = "TCollection;";
+         classMap.put(key, findClass(key, new StreamerInfoString((String) value)));
+         key = "vector<analysis::core::Vertex>";
+         value = "TCollection;";
+         classMap.put(key, findClass(key, new StreamerInfoString((String) value)));
+         key = "analysis::core::Event";
+         value = "Int_t _run; Int_t _lumi; Long64_t _event; Int_t _bx; Int_t _orbit;";
+         classMap.put(key, findClass(key, new StreamerInfoString((String) value)));
+         key = "analysis::core::EventAuxiliary";
+         value = "TCollection;";
+         classMap.put(key, findClass(key, new StreamerInfoString((String) value)));
+         key = "analysis::core::MET";
+         value = "TCollection;";
+         classMap.put(key, findClass(key, new StreamerInfoString((String) value)));
+         key = "vector<analysis::core::Electron>";
+         value = "TCollection;";
+         classMap.put(key, findClass(key, new StreamerInfoString((String) value)));
+         key = "vector<analysis::core::Tau>";
+         value = "TCollection;";
+         classMap.put(key, findClass(key, new StreamerInfoString((String) value)));
       }
       catch (Exception x)
       {

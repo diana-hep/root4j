@@ -1,4 +1,4 @@
-package org.dianahep.root4j;
+import org.dianahep.root4j.*;
 
 import java.util.List;
 
@@ -10,8 +10,10 @@ import org.dianahep.root4j.*;
 import org.dianahep.root4j.interfaces.*;
 
 public class TestReading {
+    
     @Test
     public void testVerySimple() throws java.io.IOException, RootClassNotFound {
+        System.setProperty("debugRoot", "true");
         RootFileReader reader = new RootFileReader("src/test/resources/verysimple.root");
         TTree tree = (TTree)reader.get("ntuple");
         List leaves = (List)tree.getLeaves();
@@ -47,6 +49,7 @@ public class TestReading {
 
     @Test
     public void testSimple() throws java.io.IOException, RootClassNotFound {
+        System.setProperty("debugRoot", "true");
         RootFileReader reader = new RootFileReader("src/test/resources/simple.root");
         TTree tree = (TTree)reader.get("tree");
         List leaves = (List)tree.getLeaves();
@@ -76,6 +79,72 @@ public class TestReading {
         assertEquals(leaf2.getValue(3), "quatro");
     }
 
+    @Test
+    public void testHiggsNtuple() throws java.io.IOException, RootClassNotFound, NoSuchMethodException, IllegalAccessException, java.lang.reflect.InvocationTargetException
+    {
+        System.setProperty("debugRoot", "true");
+        java.io.File file = new java.io.File("/Users/vk/software/diana-hep/test_data/test_1.root");
+        if (file.exists())
+        {
+            double total = 0.0;
+            RootFileReader reader = new RootFileReader(file);
+            //List leaves = (List)tree.getLeaves();
+            // for (Object leaf : leaves)
+            //     System.out.println(((TLeaf)leaf).getName());
+            String name = "ntuplemaker_H2DiMuonMaker";
+            System.out.println("Does ntuplamker folder exist???");
+            System.out.println(reader.hasKey(name));
+            TKey key = reader.getKey(name);
+            TDirectory dir = (TDirectory)reader.get(name);
+            TDirectory dir1 = (TDirectory)key.getObject();
+            System.out.println("Directory Title: " + dir.getTitle());
+            System.out.println("Directory Name: " + dir.getName() + "  " + dir.getRootClass().getClassName());
+            System.out.println("Directory Name: " + key.getName() + "  " + dir1.getRootClass().getClassName());
+
+            key = dir.getKey("Events");
+            TTree tree = (TTree)key.getObject();
+            System.out.println(key.getName());
+//            List leaves = (List)tree.getLeaves();
+/*            TBranch branch = tree.getBranch("Muons");
+            long n = branch.getEntries();
+            System.out.println("NEVENTS = " + n);
+            for (int i=0; i<n; i++)
+            {
+                TCollection muons = (TCollection)branch.getEntry(i);
+            }
+*/
+            /*
+            TLeaf leaf = (TLeaf)bpt.getLeaves().get(0);
+            long[] startingEntries = bpt.getBasketEntry();
+
+            for (int i=0; i<startingEntries.length-1; i++)
+            {
+                long endEntry = startingEntries[i+1];
+                for (long entry = startingEntries[i]; entry<endEntry-1; entry++)
+                {
+                    RootInput in = bpt.setPosition(leaf, entry+1);
+                    long endPosition = in.getPosition();
+                    in = bpt.setPosition(leaf, entry);
+                    while (in.getPosition() < endPosition)
+                    {
+                        total += in.readInt();
+                    }
+                }
+            }
+            System.out.println("Total = " + total);
+            */
+
+            //TDirectory dir = (TDirectory)reader.get(name);
+            //assertEquals(dir.getName(), name);
+            
+//            TTree tree = (TTree)reader.get("ntuplemaker_H2DiMuonMaker/Events");
+//            TTree tree = (TTree)reader.get("Events");
+//            TBranch branch = tree.getBranch("Muons");
+//            assertEquals(branch.getName(), "Events");
+        }
+    }
+    
+/*
     @Test
     public void testBacon() throws java.io.IOException, RootClassNotFound, NoSuchMethodException, IllegalAccessException, java.lang.reflect.InvocationTargetException {
         java.io.File file = new java.io.File("/home/pivarski/data/TTJets_13TeV_amcatnloFXFX_pythia8_2_77.root");
@@ -182,5 +251,6 @@ public class TestReading {
             assertEquals(total, 149084.45634351671, 1e-12);
         }
     }
+    */
 
 }

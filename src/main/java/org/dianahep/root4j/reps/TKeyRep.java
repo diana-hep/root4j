@@ -57,6 +57,8 @@ public abstract class TKeyRep extends AbstractRootObject implements TKey
          }
          soft = new SoftReference(object);
       }
+
+
       return object;
    }
 
@@ -111,4 +113,6 @@ public abstract class TKeyRep extends AbstractRootObject implements TKey
    {
       return ((GenericRootClass) k).newInstance();
    }
+
+    public String getName() {return fName;}
 }

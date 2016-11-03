@@ -226,9 +226,18 @@ public class RootFileReader implements TFile
          String className = in.readObject("TString").toString();
          name = in.readObject("TString").toString();
          title = in.readObject("TString").toString();
-                 
+
          in.setPosition(fBEGIN + fNbytesName); // This should get us to the directory
          dir = (TDirectory) in.readObject("TDirectory");
+
+         if (debug)
+         {
+             System.out.println("className = " + className);
+             System.out.println("className = " + name);
+             System.out.println("title = " + title);
+             System.out.println("dirname = " + dir.getName());
+             System.out.println("dirtitlename = " + dir.getTitle());
+         }
 
          if (fSeekInfo == 0) recover(fBEGIN);
          
@@ -428,7 +437,9 @@ public class RootFileReader implements TFile
    public Object get(String name) throws IOException, RootClassNotFound
    {
       TKey key = getKey(name);
-      return key.getObject();
+      RootObject o = key.getObject();
+      System.out.println(o.getRootClass().getClassName());
+      return o;
    }
 
    public int nKeys()
