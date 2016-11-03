@@ -2,6 +2,9 @@
 
 target
 
+# jasmin walks
+jasmin
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
