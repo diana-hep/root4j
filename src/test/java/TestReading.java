@@ -14,6 +14,7 @@ public class TestReading {
     @Test
     public void testVerySimple() throws java.io.IOException, RootClassNotFound {
         System.setProperty("debugRoot", "true");
+        System.setProperty("jasminPath", "jasmin");
         RootFileReader reader = new RootFileReader("src/test/resources/verysimple.root");
         TTree tree = (TTree)reader.get("ntuple");
         List leaves = (List)tree.getLeaves();
@@ -50,6 +51,7 @@ public class TestReading {
     @Test
     public void testSimple() throws java.io.IOException, RootClassNotFound {
         System.setProperty("debugRoot", "true");
+        System.setProperty("jasminPath", "jasmin");
         RootFileReader reader = new RootFileReader("src/test/resources/simple.root");
         TTree tree = (TTree)reader.get("tree");
         List leaves = (List)tree.getLeaves();
@@ -83,6 +85,7 @@ public class TestReading {
     public void testHiggsNtuple() throws java.io.IOException, RootClassNotFound, NoSuchMethodException, IllegalAccessException, java.lang.reflect.InvocationTargetException
     {
         System.setProperty("debugRoot", "true");
+        System.setProperty("jasminPath", "jasmin");
         java.io.File file = new java.io.File("/Users/vk/software/diana-hep/test_data/test_1.root");
         if (file.exists())
         {

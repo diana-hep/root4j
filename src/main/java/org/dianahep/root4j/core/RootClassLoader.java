@@ -18,6 +18,7 @@ import org.apache.bcel.classfile.JavaClass;
 public class RootClassLoader extends ClassLoader
 {
    private final static boolean debugRoot = System.getProperty("debugRoot") != null;
+   private final static String jasminPath = System.getProperty("jasminPath");
    private Map<Class,GenericRootClass> classMap = new HashMap<Class,GenericRootClass>();
    private Map<String,ClassBuilder> stemMap = new HashMap<String,ClassBuilder>();
    private RootFileReader rfr;
@@ -59,9 +60,9 @@ public class RootClassLoader extends ClassLoader
          {
             try
             {
-               FileOutputStream out = new FileOutputStream(name + ".j");
-               new JasminVisitor(jc, out).disassemble();
-               out.close();
+                FileOutputStream out = new FileOutputStream(jasminPath+"/"+name + ".j");
+                new JasminVisitor(jc, out).disassemble();
+                out.close();
             }
             catch (IOException x) {}
          }
@@ -87,7 +88,7 @@ public class RootClassLoader extends ClassLoader
       {
          try
          {
-            FileOutputStream out = new FileOutputStream(name + ".j");
+            FileOutputStream out = new FileOutputStream(jasminPath+"/"+name + ".j");
             new JasminVisitor(jc, out).disassemble();
             out.close();
          }
