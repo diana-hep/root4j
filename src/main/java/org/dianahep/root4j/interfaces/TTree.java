@@ -1,4 +1,4 @@
-/*
+/**
  * Interface created by InterfaceBuilder. Do not modify.
  *
  * Created on Mon Jan 15 18:49:11 PST 2001

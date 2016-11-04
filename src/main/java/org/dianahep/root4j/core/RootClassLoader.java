@@ -47,6 +47,7 @@ public class RootClassLoader extends ClassLoader
 
          String stem = nameMangler.getStemForJavaClass(name);
          String rootClassName = nameMangler.getClassForJavaClass(name);
+
          ClassBuilder builder = stemMap.get(stem);
          GenericRootClass gc = (GenericRootClass) rfr.getFactory().create(rootClassName);
          JavaClass jc;

@@ -95,18 +95,12 @@ public class TestReading {
             // for (Object leaf : leaves)
             //     System.out.println(((TLeaf)leaf).getName());
             String name = "ntuplemaker_H2DiMuonMaker";
-            System.out.println("Does ntuplamker folder exist???");
-            System.out.println(reader.hasKey(name));
             TKey key = reader.getKey(name);
             TDirectory dir = (TDirectory)reader.get(name);
             TDirectory dir1 = (TDirectory)key.getObject();
-            System.out.println("Directory Title: " + dir.getTitle());
-            System.out.println("Directory Name: " + dir.getName() + "  " + dir.getRootClass().getClassName());
-            System.out.println("Directory Name: " + key.getName() + "  " + dir1.getRootClass().getClassName());
 
             key = dir.getKey("Events");
             TTree tree = (TTree)key.getObject();
-            System.out.println(key.getName());
 //            List leaves = (List)tree.getLeaves();
 /*            TBranch branch = tree.getBranch("Muons");
             long n = branch.getEntries();

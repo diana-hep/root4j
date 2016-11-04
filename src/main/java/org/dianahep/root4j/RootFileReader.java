@@ -128,7 +128,9 @@ public class RootFileReader implements TFile
 
    /**
     * Open a root file for reading.
-    * The DefaultClassFactory will be used for creating classes
+    * The DefaultClassFactory will be used for creating classes.
+    * Typedef.properties and StreamerInfo.properties are used to bootstrap initial set of classes
+    * 
     * @param file The name of the file to open
     * @throws IOException If the file cannot be opened
     */
@@ -139,7 +141,9 @@ public class RootFileReader implements TFile
 
    /**
     * Open a root file for reading
+    * 
     * @param file The file to open
+    * @throws IOException
     */
    public RootFileReader(File file) throws IOException
    {
@@ -156,15 +160,35 @@ public class RootFileReader implements TFile
       if (System.getProperty("useNIO") != null) in = new FastInputStream(this, raf);
       init(in, shared);
    }
+   
+   /**
+    * 
+    * @param in - a wrapper around ByteStream(java.io Streaming facility)
+    * @param shared - if there is no TStreamerInfo in the ROOT File - 
+    *   DefaultClassFactory is to be used for reading downstream
+    * @throws IOException   
+    */
    private void init(RootInput in, RootFileReader shared) throws IOException
    {
       try
       {
          this.in = in;
          if (!welcome) welcome();
+         
+         /**
+          * 1. Initiales the Default Factory.
+          * 2. Loads all the classes sitting in .properties as GenericRootClass
+          * 3. Resolves all the loaded classes as specified in the .properties file:
+          * 	- identifies and stores all the superclasses
+          * 	- identifies and stores all the members
+          *  4. Contains a map class name -> GenericRootClass that contains 
+          *     the list of things above
+          */
          factory = new DefaultClassFactory(this);
-         fileClass = factory.create("TFile");
+         // nothing to create - it just retrieves the Class Object
+         fileClass = factory.create("TFile"); // nothing to create
 
+         //	ROOT version - 2GB changes the Header format
          fVersion = in.readInt();
          if (fVersion < 30006)
             throw new IOException("org.dianahep.root4j package cannot read files created by Root before release 3.00/6 (" + fVersion + ")");
@@ -173,6 +197,14 @@ public class RootFileReader implements TFile
          boolean fLargeFile = fVersion > 1000000;
          fVersion %= 1000000;
 
+         /**
+          * Read in the ROOT File Header. 
+          * Full specification of the Header format : /root/io/io/src/TFile.cxx
+          * fBEGIN -> .... -> fNBytesInfo -> FCompress
+          * 
+          * fBEGIN - pointer (byte position) to the first data record
+          * fSeekInfo - pointer to the TStreamerInfo Record
+          */
          int fBEGIN = in.readInt();
          if (fLargeFile)
          {
@@ -200,9 +232,14 @@ public class RootFileReader implements TFile
              fSeekInfo = in.readInt();
              int fNBytesInfo = in.readInt();
          }
-
+         //	move to the first data record - should be the top Directory!
          in.setPosition(fBEGIN);
 
+         /**
+          * Read the TKey of the Top Directory
+          * TODO: Why don't we use the TKey itselt.... 
+          * Format below matches the record header exactly???
+          */
          int Nbytes = in.readInt();
          int version = in.readShort();
          int ObjLen = in.readInt();
@@ -222,31 +259,36 @@ public class RootFileReader implements TFile
             fSeekKey = in.readInt();
             fSeekPdir = in.readInt();         
          }
-
          String className = in.readObject("TString").toString();
          name = in.readObject("TString").toString();
          title = in.readObject("TString").toString();
 
+         /**
+          * TODO: ???
+          * It is the same in the root/io/io/src/TFile.cxx:740 but why do we go to 
+          * fBEGIN + Number of bytes in TNamed??? Is that the case only for 
+          * the Top Directory ???
+          * Is that because we skip the super class information??? 
+          * TDirectory <- TNamed <- TObject
+          * ----------------
+          * Bottom line - gets to the top directory and you can browse the keys from there
+          */
          in.setPosition(fBEGIN + fNbytesName); // This should get us to the directory
          dir = (TDirectory) in.readObject("TDirectory");
 
-         if (debug)
-         {
-             System.out.println("className = " + className);
-             System.out.println("className = " + name);
-             System.out.println("title = " + title);
-             System.out.println("dirname = " + dir.getName());
-             System.out.println("dirtitlename = " + dir.getTitle());
-         }
-
          if (fSeekInfo == 0) recover(fBEGIN);
-         
          if (shared != null)
          {
             this.factory = shared.factory;
          }
          else if (fSeekInfo != 0)
          {
+        	/**
+        	 * Go to the TStreamerInfo Location:
+        	 * 1. read the TKey of the TStreamerInfo Record!
+        	 * 2. Initialize a class factory which will iterate thru the StreamerInfo
+             *      for each StreamerInfo object and get the description of each class
+        	 */
             in.setPosition(fSeekInfo);
             streamerInfo = (TKey) in.readObject("TKey");
             this.factory = new FileClassFactory(streamerInfo, factory, this);
@@ -438,7 +480,6 @@ public class RootFileReader implements TFile
    {
       TKey key = getKey(name);
       RootObject o = key.getObject();
-      System.out.println(o.getRootClass().getClassName());
       return o;
    }
 

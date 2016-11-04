@@ -42,11 +42,18 @@ public abstract class TKeyRep extends AbstractRootObject implements TKey
       // AbstractRootObject object = soft == null ? null : (AbstractRootObject) soft.get();
       if (object == null)
       {
+          /*
+           * retrieve the class information and create an empty!!! object
+           * here we just create an object of a class.
+           * NOTE: ProxyClasses are used. If such a class does not exist yet, it will
+           * be loaded by the RootClassLoader with all the fields/members.
+           */
          object = createObject(getObjectClass());
          rin.setPosition(fSeekKey + fKeylen);
          if (fObjlen > (fNbytes - fKeylen)) // We need to decompress
          {
             RootInput in = getData();
+            //  read the object - readMembers - streamer method
             object.read(in);
          }
          else

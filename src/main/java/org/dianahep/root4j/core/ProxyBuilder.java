@@ -54,6 +54,7 @@ class ProxyBuilder implements ClassBuilder, Constants
    public JavaClass build(GenericRootClass klass)
    {
       String className = nameMangler.mangleFullClassName(getStem(),klass.getClassName());
+      
       ClassGen cg = new ClassGen(className, "org/dianahep/root4j/core/AbstractRootObject", "<generated>", ACC_PUBLIC | ACC_SUPER, new String[]
       {
          nameMangler.mangleInterfaceName(klass.getClassName())
@@ -130,7 +131,8 @@ class ProxyBuilder implements ClassBuilder, Constants
       catch (ClassNotFoundException x) 
       {
          //if (debugRoot) throw new RuntimeException("Unable to load interface "+klass.getClassName(),x);
-         if (debugRoot) System.out.println("Warning, could not load interface "+klass.getClassName());
+         if (debugRoot) System.out.println("Warning, could not load interface " +
+            klass.getClassName());
       }
 
       // Generate the accessor methods

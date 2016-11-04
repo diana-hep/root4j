@@ -15,6 +15,12 @@ import java.util.Map;
  * A class factory used inside a RootFileReader.
  * It first attempts to resolve classes using the StreamerInfo from the file
  * itself, and if that fails delelgates to a default class factory.
+ * 
+ * - Upon initialization, retrieve the TList of TStreamerInfo objects
+ * - Each TStreamerInfo object corresponds to 1 class and allows to describe the members
+ *      of a ROOT object sitting in the ROOT FILE.
+ * - Iterate thru the list and put the GenericRootClass object corresponding to each class
+ *
  * @author tonyj
  * @version $Id: FileClassFactory.java 13849 2011-07-01 23:49:23Z tonyj $
  */
@@ -31,7 +37,6 @@ public class FileClassFactory implements RootClassFactory
 
       // Loop over all the streamerInfo objects
       List tList = (List) streamerInfo.getObject();
-
       for (Iterator i = tList.iterator(); i.hasNext();)
       {
          Object element = i.next();
@@ -40,6 +45,8 @@ public class FileClassFactory implements RootClassFactory
             TStreamerInfo si = (TStreamerInfo) element;
             String key = si.getName();
             StreamerInfo info = new StreamerInfoNew(si);
+            //  note, this does not find - it creates a GenericRootClass
+            //  with the provides name=key and StreamerInfo=info
             classMap.put(key, DefaultClassFactory.findClass(key, info));
          }
       }
@@ -51,6 +58,9 @@ public class FileClassFactory implements RootClassFactory
          GenericRootClass info = (GenericRootClass) i.next();
          try
          {
+             // upon resolution - iterate thru the contents of the StreamerInfo
+             // that corresponds to some class and collect all the members 
+             // that are part of that class and all the superclasses
             info.resolve(this);
          }
          catch (RootClassNotFound x)
@@ -67,8 +77,6 @@ public class FileClassFactory implements RootClassFactory
 
    public BasicRootClass create(String name) throws RootClassNotFound
    {
-      //System.out.println("FileClassLoader loading "+name);
-      //if (name.startsWith("enum")) name = "Int_t";
       BasicRootClass klass = (BasicRootClass) classMap.get(name);
       if (klass != null)
          return klass;
