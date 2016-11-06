@@ -1,9 +1,8 @@
-# root4j - Pure Java [ROOT](https://root.cern.ch/) IO Library
+# ROOT4J
 *A fork of http://java.freehep.org/freehep-rootio/*
 
 **Under rapid development :+1:**
 
-## Description
 root4j is a pure Java IO Library for [ROOT](https://root.cern.ch/) __with no binding__ to the original implementation of [ROOT](https://root.cern.ch/) in C++. Building on success of [ROOT](https://root.cern.ch/), we mimic the behavior of the classes from the original implementation. root4j utilizes the TStreamerInfo Record to infer the schema/description of Classes present and relies on JIT compilation of classes for objects requested to be read in. 
 
 ## Supported Features
@@ -22,7 +21,7 @@ root4j is a pure Java IO Library for [ROOT](https://root.cern.ch/) __with no bin
   - __Currently only old-style (thru leaves and baskets) exists for iterating thru the TTree entries.__
 
 ## RoadMap - TODO List
-Our road map has 3 more or less generic topics to be addressed immediately: Core Functionality, Extra Functionality and Testing. __It is important to address that some features have description that references [spark-root](https://github.com/diana-hep/spark-root) as their full use will be demonstrated in there.__
+Our road map has 3 more or less generic topics to be addressed immediately: Core Functionality, Extra Functionality and Testing/Bug Fixing. 
 
 ### Core 
 - [ ] **Preparation for HDFS access** - Replace the use of `java.io.File` with a generic interface
