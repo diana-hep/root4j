@@ -1,7 +1,7 @@
 # root4j - Pure Java [ROOT](https://root.cern.ch/) IO Library
 *A fork of http://java.freehep.org/freehep-rootio/*
 
-**Under rapid development**
+**Under rapid development :+1:**
 
 ## Description
 root4j is a pure Java IO Library for [ROOT](https://root.cern.ch/) __with no binding__ to the original implementation of [ROOT](https://root.cern.ch/) in C++. Building on success of [ROOT](https://root.cern.ch/), we mimic the behavior of the classes from the original implementation. root4j utilizes the TStreamerInfo Record to infer the schema/description of Classes present and relies on JIT compilation of classes for objects requested to be read in. 
