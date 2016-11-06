@@ -25,7 +25,7 @@ root4j is a pure Java IO Library for [ROOT](https://root.cern.ch/) __with no bin
 Our road map has 3 more or less generic topics to be addressed immediately: Core Functionality, Extra Functionality and Testing. __It is important to address that some features have description that references [spark-root](https://github.com/diana-hep/spark-root) as their full use will be demonstrated in there.__
 
 ### Core 
-- [] **Preparation for HDFS access** - Replace the use of `java.io.File` with a generic interface
+- [x] **Preparation for HDFS access** - Replace the use of `java.io.File` with a generic interface
 - [] **TRef Support for spark-root** - This applies to [spark-root](https://github.com/diana-hep/spark-root) for the most part. If something is to be added for the IO part, it has to come here.
 - [] **Demostrate the 3 levels TTree Hierarchy** - [ROOT](https://root.cern.ch/) treates Top branches of the tree differently from their subbranches - therefore this functionality has to be validated.
 - [] **Test [ROOT](https://root.cern.ch/) IO** - establish the testbed with various files coming from CMS, Atlas, etc... 
