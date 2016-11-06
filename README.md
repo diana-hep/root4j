@@ -26,13 +26,13 @@ Our road map has 3 more or less generic topics to be addressed immediately: Core
 
 ### Core 
 [] **Preparation for HDFS access** - Replace the use of `java.io.File` with a generic interface
-- [] **TRef Support for spark-root** - This applies to [spark-root](https://github.com/diana-hep/spark-root) for the most part. If something is to be added for the IO part, it has to come here.
-- [] **Demostrate the 3 levels TTree Hierarchy** - [ROOT](https://root.cern.ch/) treates Top branches of the tree differently from their subbranches - therefore this functionality has to be validated.
-- [] **Test [ROOT](https://root.cern.ch/) IO** - establish the testbed with various files coming from CMS, Atlas, etc... 
-- [] **Anything that points above do not cover**
+[] **TRef Support for spark-root** - This applies to [spark-root](https://github.com/diana-hep/spark-root) for the most part. If something is to be added for the IO part, it has to come here.
+[] **Demostrate the 3 levels TTree Hierarchy** - [ROOT](https://root.cern.ch/) treates Top branches of the tree differently from their subbranches - therefore this functionality has to be validated.
+[] **Test [ROOT](https://root.cern.ch/) IO** - establish the testbed with various files coming from CMS, Atlas, etc... 
+[] **Anything that points above do not cover**
 
-- [] **Tuning Phase**
-- [] **Deploy to the Central Maven Repository**
+[] **Tuning Phase**
+[] **Deploy to the Central Maven Repository**
 
 ### Extra
 - [] **Support for TByteBuffer** - Support for the memory management would allow us to be Garbage Collector independent, which in turn should give us a boost in performance!
