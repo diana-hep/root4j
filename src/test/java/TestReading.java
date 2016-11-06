@@ -86,14 +86,12 @@ public class TestReading {
     {
         System.setProperty("debugRoot", "true");
         System.setProperty("jasminPath", "jasmin");
-        java.io.File file = new java.io.File("/Users/vk/software/diana-hep/test_data/test_1.root");
+        java.io.File file = new java.io.File("src/test/resources/test_1.root");
         if (file.exists())
         {
+            //  should not throw anything
             double total = 0.0;
             RootFileReader reader = new RootFileReader(file);
-            //List leaves = (List)tree.getLeaves();
-            // for (Object leaf : leaves)
-            //     System.out.println(((TLeaf)leaf).getName());
             String name = "ntuplemaker_H2DiMuonMaker";
             TKey key = reader.getKey(name);
             TDirectory dir = (TDirectory)reader.get(name);
@@ -101,47 +99,10 @@ public class TestReading {
 
             key = dir.getKey("Events");
             TTree tree = (TTree)key.getObject();
-//            List leaves = (List)tree.getLeaves();
-/*            TBranch branch = tree.getBranch("Muons");
-            long n = branch.getEntries();
-            System.out.println("NEVENTS = " + n);
-            for (int i=0; i<n; i++)
-            {
-                TCollection muons = (TCollection)branch.getEntry(i);
-            }
-*/
-            /*
-            TLeaf leaf = (TLeaf)bpt.getLeaves().get(0);
-            long[] startingEntries = bpt.getBasketEntry();
-
-            for (int i=0; i<startingEntries.length-1; i++)
-            {
-                long endEntry = startingEntries[i+1];
-                for (long entry = startingEntries[i]; entry<endEntry-1; entry++)
-                {
-                    RootInput in = bpt.setPosition(leaf, entry+1);
-                    long endPosition = in.getPosition();
-                    in = bpt.setPosition(leaf, entry);
-                    while (in.getPosition() < endPosition)
-                    {
-                        total += in.readInt();
-                    }
-                }
-            }
-            System.out.println("Total = " + total);
-            */
-
-            //TDirectory dir = (TDirectory)reader.get(name);
-            //assertEquals(dir.getName(), name);
-            
-//            TTree tree = (TTree)reader.get("ntuplemaker_H2DiMuonMaker/Events");
-//            TTree tree = (TTree)reader.get("Events");
-//            TBranch branch = tree.getBranch("Muons");
-//            assertEquals(branch.getName(), "Events");
         }
     }
     
-/*
+
     @Test
     public void testBacon() throws java.io.IOException, RootClassNotFound, NoSuchMethodException, IllegalAccessException, java.lang.reflect.InvocationTargetException {
         java.io.File file = new java.io.File("/home/pivarski/data/TTJets_13TeV_amcatnloFXFX_pythia8_2_77.root");
@@ -248,6 +209,5 @@ public class TestReading {
             assertEquals(total, 149084.45634351671, 1e-12);
         }
     }
-    */
 
 }
