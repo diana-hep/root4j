@@ -488,6 +488,11 @@ public class RootFileReader implements TFile
       return dir.nKeys();
    }
 
+   public TDirectory getTopDir() throws IOException
+   {
+       return dir;
+   }
+
    /**
     * Get the StreamerInfo
     */
