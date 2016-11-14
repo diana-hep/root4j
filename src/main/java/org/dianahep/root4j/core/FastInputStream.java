@@ -138,6 +138,21 @@ public class FastInputStream implements RootInput
       return data;
    }
 
+   /**
+    * reads an array of bools.
+    * Read Bytes and inefficiently convert one by one
+    *
+    * @return array of booleans
+    */
+   public boolean[] readVarWidthArrayBoolean() throws IOException
+   {
+       byte[] data = this.readVarWidthArrayByte();
+       boolean[] new_data = new boolean[data.length];
+       for (int i=0; i<data.length; i++)
+            new_data[i] = data[i]!=0;
+        return new_data;
+   }
+
    public int readArray(short[] data) throws IOException
    {
       int n = buffer.getInt();
@@ -175,6 +190,17 @@ public class FastInputStream implements RootInput
       buffer.asIntBuffer().get(data, 0, n);
       buffer.position(buffer.position() + (n * 4));
       return n;
+   }
+
+   public int readArray(boolean[] data) throws IOException
+   {
+       int n = buffer.getInt();
+       byte[] bytedata = new byte[n];
+       buffer.get(bytedata, 0, n);
+
+       for (int i=0; i<n; i++)
+           data[i] = bytedata[i]!=0;
+       return n;
    }
 
    public boolean readBoolean() throws java.io.IOException
@@ -239,6 +265,14 @@ public class FastInputStream implements RootInput
       buffer.position(buffer.position() + (data.length * 2));
    }
 
+   public void readFixedArray(boolean[] data) throws IOException
+   {
+       byte[] bytedata = new byte[data.length];
+       buffer.get(bytedata);
+       for (int i=0; i<bytedata.length; i++)
+           data[i] = bytedata[i]!=0;
+   }
+
    public float readFloat() throws java.io.IOException
    {
       return buffer.getFloat();
@@ -286,6 +320,8 @@ public class FastInputStream implements RootInput
             readFixedArray((int[]) o);
          else if (o instanceof long[])
             readFixedArray((long[]) o);
+         else if (o instanceof boolean[])
+             readFixedArray((boolean[])o);
          else if (o instanceof Object[])
             readMultiArray((Object[]) o);
          else

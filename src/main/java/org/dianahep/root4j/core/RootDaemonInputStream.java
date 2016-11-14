@@ -97,6 +97,11 @@ public class RootDaemonInputStream extends DataInputStream implements RootInput
       return RootInputStream.readVarWidthArrayDouble(this);
    }
 
+   public boolean[] readVarWidthArrayBoolean() throws IOException
+   {
+       return RootInputStream.readVarWidthArrayBoolean(this);
+   }
+
    public int readArray(int[] data) throws IOException
    {
       return RootInputStream.readArray(this, data);
@@ -120,6 +125,11 @@ public class RootDaemonInputStream extends DataInputStream implements RootInput
    public int readArray(double[] data) throws IOException
    {
       return RootInputStream.readArray(this, data);
+   }
+
+   public int readArray(boolean[] data) throws IOException
+   {
+       return RootInputStream.readArray(this, data);
    }
 
    public void readFixedArray(int[] data) throws IOException
@@ -156,6 +166,11 @@ public class RootDaemonInputStream extends DataInputStream implements RootInput
    public void readFixedArray(double[] data) throws IOException
    {
       RootInputStream.readFixedArray(this, data);
+   }
+
+   public void readFixedArray(boolean[] data) throws IOException
+   {
+       RootInputStream.readFixedArray(this, data);
    }
    
    public void readMultiArray(Object[] array) throws IOException

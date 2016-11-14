@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <url>https://github.com/diana-hep/root4j</url>
   <modelVersion>4.0.0</modelVersion>
 
   <!-- Renamed and associated with the org.diana-hep groupId so that we can post it to Maven Central. -->
   <!-- Reset the version numbers, too. -->
   <groupId>org.diana-hep</groupId>
   <artifactId>root4j</artifactId>
-  <version>1.0-pre2</version>
+  <version>0.1.2</version>
   <packaging>jar</packaging>
-  
+
   <name>root4j</name>
   <description>Derived from FreeHEP ROOT IO (http://java.freehep.org/freehep-rootio); modernized and GUI dropped.</description>
 
@@ -19,8 +20,29 @@
       <name>GNU LESSER GENERAL PUBLIC LICENSE Version 2.1</name>
       <url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</url>
     </license>
-  </licenses>
-  
+</licenses>
+
+    <developers>
+        <developer>
+            <name>Jim Pivarski</name>
+            <email>jpivarski@gmail.com</email>
+            <organization>DIANA-HEP</organization>
+            <organizationUrl>http://diana-hep.org</organizationUrl>
+        </developer>
+        <developer>
+            <name>Viktor Khristenko</name>
+            <email>vdkhristenko1991@gmail.com</email>
+            <organization>The University of Iowa</organization>
+            <organizationUrl>https://physics.uiowa.edu/</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git@github.com:diana-hep/root4j.git</connection>
+        <developerConnection>scm:git:git@github.com:diana-hep/root4j.git</developerConnection>
+        <url>git@github.com:diana-hep/root4j.git</url>
+    </scm>
+
   <dependencies>
     <!-- Used throughout: all data-reading code is JIT'ed (directly into bytecode!). -->
     <dependency>
@@ -35,7 +57,7 @@
       <artifactId>xz</artifactId>
       <version>1.2</version>
     </dependency>
-    
+
     <!-- Only used in the testing scope. -->
     <dependency>
       <groupId>junit</groupId>
@@ -43,9 +65,9 @@
       <version>4.12</version>
       <scope>test</scope>
     </dependency>
-    
+
   </dependencies>
-  
+
   <build>
     <plugins>
       <!-- Unit testing. -->
@@ -136,9 +158,83 @@
             </configuration>
           </execution>
         </executions>
+    </plugin>
+
+<!-- This is a requirement by maven central! -->
+    <plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-source-plugin</artifactId>
+  <executions>
+    <execution>
+      <id>attach-sources</id>
+      <goals>
+        <goal>jar</goal>
+      </goals>
+    </execution>
+  </executions>
+</plugin>
+
+<!-- This is a requirement by maven central! -->
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-javadoc-plugin</artifactId>
+  <executions>
+    <execution>
+      <id>attach-javadocs</id>
+      <goals>
+        <goal>jar</goal>
+    </goals>
+    <configuration>
+        <additionalparam>-Xdoclint:none</additionalparam>
+</configuration>
+    </execution>
+  </executions>
+</plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>1.6</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.7</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
       </plugin>
 
     </plugins>
+
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>2.5</version>
+          <configuration>
+            <useReleaseProfile>false</useReleaseProfile>
+            <pushChanges>false</pushChanges>
+            <localCheckout>true</localCheckout>
+            <goals>deploy</goals>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
 
     <!-- Example *.root files for tests. -->
     <testResources>

@@ -16,6 +16,9 @@ import org.apache.bcel.generic.Type;
 
 
 /**
+ * Class to represent Boolean data. 
+ * All Booleans are internally represented as Byte!
+ *
  * @author Tony Johnson
  * @version $Id: TLeafORep.java 10712 2007-04-25 21:42:28Z tonyj $
  */
@@ -42,7 +45,7 @@ public abstract class TLeafORep extends AbstractRootObject implements TLeafO, Co
             return lastBoolean;
 
          RootInput in = branch.setPosition(this, lastBooleanIndex = index);
-         return lastBoolean = in.readByte() != 0;
+         return lastBoolean = in.readBoolean();
       }
       catch (IOException x)
       {
@@ -62,18 +65,18 @@ public abstract class TLeafORep extends AbstractRootObject implements TLeafO, Co
          RootInput in = branch.setPosition(this, index);
          int arrayDim = getArrayDim();
          if (arrayDim == 0)
-            return lastValue = Boolean.valueOf(in.readByte() != 0);
+            return lastValue = in.readBoolean();
          else if (arrayDim == 1)
          {
             TLeafI count = (TLeafI) getLeafCount();
             int len = (count == null) ? getLen() : count.getValue(index);
-            byte[] array = new byte[len];
+            boolean[] array = new boolean[len];
             in.readFixedArray(array);
             return lastValue = array;
          }
          else
          {
-            return lastValue = readMultiArray(in, Byte.TYPE, index);
+            return lastValue = readMultiArray(in, Boolean.TYPE, index);
          }
       }
       catch (IOException x)
@@ -88,7 +91,7 @@ public abstract class TLeafORep extends AbstractRootObject implements TLeafO, Co
       String leafClassName = getClass().getName();
       int arrayDim = getArrayDim();
       if (arrayDim == 0)
-         il.append(factory.createInvoke(leafClassName, "getValue", Type.BYTE, new Type[]
+         il.append(factory.createInvoke(leafClassName, "getValue", Type.BOOLEAN, new Type[]
                {
                   Type.LONG
                }, INVOKEVIRTUAL));

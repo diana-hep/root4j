@@ -34,16 +34,21 @@ public abstract class TBasketRep extends AbstractRootObject implements org.diana
    private short fCycle;
    private short fKeylen; // number of bytes for the key structure              //
 
+   /**
+    * RootInput pointing to the byte to start reading from using leaf's offset.
+    * 
+    * @return RootInput
+    */
    public RootInput setPosition(long index, long offset, TLeaf leaf) throws IOException
    {
       int i = (int) (index - offset);
       if (fEntryOffset == null)
       {
-         data.setPosition(fKeylen + (i * fNevBufSize));
+         data.setPosition(fKeylen + (i * fNevBufSize) + leaf.getOffset());
       }
       else
       {
-         data.setPosition(fEntryOffset[i]);
+         data.setPosition(fEntryOffset[i] + leaf.getOffset());
       }
 
       data.setLast(fLast);

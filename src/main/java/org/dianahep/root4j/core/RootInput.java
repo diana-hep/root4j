@@ -45,6 +45,8 @@ public interface RootInput extends DataInput
    float[] readVarWidthArrayFloat() throws IOException;
 
    double[] readVarWidthArrayDouble() throws IOException;
+   
+   boolean[] readVarWidthArrayBoolean() throws IOException;
 
    int readArray(int[] data) throws IOException;
 
@@ -55,6 +57,8 @@ public interface RootInput extends DataInput
    int readArray(float[] data) throws IOException;
 
    int readArray(double[] data) throws IOException;
+   
+   int readArray(boolean[] data) throws IOException;
 
    void readFixedArray(int[] data) throws IOException;
 
@@ -67,6 +71,8 @@ public interface RootInput extends DataInput
    void readFixedArray(double[] data) throws IOException;
 
    void readFixedArray(long[] data) throws IOException;
+   
+   void readFixedArray(boolean[] data) throws IOException;
    
    void readMultiArray(Object[] array) throws IOException;
 

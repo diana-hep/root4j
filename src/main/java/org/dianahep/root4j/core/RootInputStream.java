@@ -127,6 +127,11 @@ class RootInputStream extends DataInputStream implements RootInput
       return RootInputStream.readVarWidthArrayDouble(this);
    }
 
+   public boolean[] readVarWidthArrayBoolean() throws IOException
+   {
+       return RootInputStream.readVarWidthArrayBoolean(this);
+   }
+
    public int readArray(int[] data) throws IOException
    {
       return RootInputStream.readArray(this, data);
@@ -150,6 +155,11 @@ class RootInputStream extends DataInputStream implements RootInput
    public int readArray(double[] data) throws IOException
    {
       return RootInputStream.readArray(this, data);
+   }
+
+   public int readArray(boolean[] data) throws IOException
+   {
+       return RootInputStream.readArray(this, data);
    }
    
    public void readFixedArray(int[] data) throws IOException
@@ -181,6 +191,11 @@ class RootInputStream extends DataInputStream implements RootInput
    public void readFixedArray(float[] data) throws IOException
    {
       RootInputStream.readFixedArray(this, data);
+   }
+
+   public void readFixedArray(boolean[] data) throws IOException
+   {
+       RootInputStream.readFixedArray(this, data);
    }
    
    public void readFixedArray(double[] data) throws IOException
@@ -294,6 +309,15 @@ class RootInputStream extends DataInputStream implements RootInput
        return data;
    }
 
+   static boolean[] readVarWidthArrayBoolean(RootInput in) throws IOException
+   {
+       int n = in.readInt();
+       boolean[] data = new boolean[n];
+       for (int i=0; i<n; i++)
+           data[i] = in.readBoolean();
+       return data;
+   }
+
    static int readArray(RootInput in, int[] data) throws IOException
    {
       int n = in.readInt();
@@ -332,6 +356,14 @@ class RootInputStream extends DataInputStream implements RootInput
       for (int i = 0; i < n; i++)
          data[i] = in.readDouble();
       return n;
+   }
+
+   static int readArray(RootInput in, boolean[] data) throws IOException
+   {
+       int n = in.readInt();
+       for (int i=0; i<n; i++)
+           data[i] = in.readBoolean();
+       return n;
    }
    
    static void readFixedArray(RootInput in, int[] data) throws IOException
@@ -375,7 +407,14 @@ class RootInputStream extends DataInputStream implements RootInput
       for (int i = 0; i < n; i++)
          data[i] = in.readDouble();
    }
-   
+
+   static void readFixedArray(RootInput in, boolean[] data) throws IOException
+   {
+       int n = data.length;
+       for (int i=0; i<n; i++)
+           data[i] = in.readBoolean();
+   }
+
    static void readMultiArray(RootInput in, Object[] array) throws IOException
    {
       for (int i = 0; i < array.length; i++)
@@ -393,6 +432,8 @@ class RootInputStream extends DataInputStream implements RootInput
             readFixedArray(in, (int[]) o);
          else if (o instanceof long[])
             readFixedArray(in, (long[]) o);
+         else if (o instanceof boolean[])
+             readFixedArray(in, (boolean[])o);
          else if (o instanceof Object[])
             readMultiArray(in, (Object[]) o);
          else

@@ -12,12 +12,16 @@ import org.dianahep.root4j.interfaces.TDatime;
 import org.dianahep.root4j.interfaces.TDirectory;
 import org.dianahep.root4j.interfaces.TFile;
 import org.dianahep.root4j.interfaces.TKey;
+import org.dianahep.root4j.interfaces.TStreamerInfo;
+import org.dianahep.root4j.interfaces.TStreamerElement;
+import org.dianahep.root4j.interfaces.TStreamerSTL;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
+import java.util.Iterator;
 import java.util.Map;
 
 
@@ -511,6 +515,58 @@ public class RootFileReader implements TFile
    public TKey streamerInfoKey()
    {
       return streamerInfo;
+   }
+
+   /**
+    * @return void - dump the Information from 1 TStreamerInfo 
+    */
+   private void showStreamerInfo(TStreamerInfo streamer)
+   {
+        List elements = streamer.getElements();
+        for (Iterator it=elements.iterator(); it.hasNext();)
+        {
+            TStreamerElement e = (TStreamerElement)it.next();
+            if (e instanceof TStreamerSTL)
+            {
+                TStreamerSTL estl = (TStreamerSTL)e;
+                System.out.format(
+                    ">>>  SClass=%s  name=%s  title=%s type=%d typeName=%s size=%d stl=%d ctype=%d\n", 
+                    e.getRootClass(), e.getName(), e.getTitle(), e.getType(), 
+                    e.getTypeName(), e.getSize(), estl.getSTLtype(), estl.getCtype());
+            }
+            else
+                System.out.format(
+                    ">>>  SClass=%s  name=%s  title=%s type=%d typeName=%s size=%d\n", 
+                    e.getRootClass(), e.getName(), e.getTitle(), e.getType(), 
+                    e.getTypeName(), e.getSize());
+        }
+   }
+   /**
+    * @return void - dump the Information from all the Streamers - "TStreamerInfo Record"
+    */
+   public void showStreamerRecord() throws IOException
+   {
+       try
+       {
+            List streamers = streamerInfo();
+            for (Iterator it= streamers.iterator(); it.hasNext();)
+            {
+                Object obj = it.next();
+                if (obj instanceof TStreamerInfo)
+                {
+                    TStreamerInfo streamer = (TStreamerInfo) obj;
+                    System.out.println("StreamerInfo for class: " + streamer.getName() +", "
+                        +"version="+streamer.getClassVersion() + ", "+
+                        "checksum="+Integer.toHexString(streamer.getCheckSum()));
+                    showStreamerInfo(streamer);
+                    System.out.println(""); System.out.println("");
+                }
+            }
+       }
+       catch (IOException x)
+       {
+           throw new IOException("IOException during the Streamer Record Iterating");
+       }
    }
 
    private static void welcome()
