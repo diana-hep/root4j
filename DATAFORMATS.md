@@ -28,8 +28,8 @@ Enumerator | Type | Description
 20 | void | Void
 21 | UInt | DataTypeAliasUnsigned Int
 22 | SignedChar | DataTypeAliasSigned Char
-23 | Other | Other type
-24 | NoType | ....
+-1 | Other | Other type
+0 | NoType | ....
 
 ## TTree
 - TBranch -> TLeaf
@@ -41,8 +41,8 @@ Each instance of the TBranchElement class identifies the type of the node it rep
 
 BranchElementType | Int | Description
 ------------------|-----|------------
-kLeafNode         | 0 | Leaf Node - a branch that is attached to a root and has no subbranches
-kBaseClassNode    | 1 | Base Class Node
+kLeafNode         | 0 | Leaf Node - not clear exactly what constitutes a leaf node
+kBaseClassNode    | 1 | Base Class Node - see ROOT src for TBranchElement.h
 kObjectNode       | 2 | Node to represent an object
 kClonesNode       | 3 | Node of Clones
 kSTLNode          | 4 | STL Container of some objects
