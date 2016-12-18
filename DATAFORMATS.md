@@ -90,8 +90,9 @@ kObject | 61 | Class derived from TObject
 kAny | 62 | Class not derived from TObject
 kObjectp | 63 | Pointer to a class derived from TObject and comment field
 kObjectP | 64 | POinter to a class derived from TObject and with NO comment field
-kTString | 65 | TString
-kTObject | 66 | TObject
+kTString | 65 | TString special case
+kTObject | 66 | TObject special case
+kTNamed | 67 | special case...
 kAnyp | 68 | Pointer to a class not derived from TObject with comment field
 kAnyP | 69 | POinter to a class not derived from TObject with NO comment field
 kAnyPnoVT | 70 | Pointer to a class not derived from TObject with NO comment field and no virtual table
