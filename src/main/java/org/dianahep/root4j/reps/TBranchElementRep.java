@@ -142,9 +142,13 @@ public abstract class TBranchElementRep extends AbstractRootObject implements or
       }
       catch (RootClassNotFound x)
       {
+          System.out.println("Could not find ROOT clas: " + className + 
+            ". Swallowing...");
+          /*
          IOException io = new IOException("Could not find root class " + className);
          io.initCause(x);
          throw io;
+         */
       }
    }
 }
