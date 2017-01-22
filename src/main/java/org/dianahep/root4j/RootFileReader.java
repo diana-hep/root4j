@@ -1,6 +1,7 @@
 package org.dianahep.root4j;
 
 import org.dianahep.root4j.core.DefaultClassFactory;
+import org.dianahep.root4j.core.RootHDFSInputStream;
 import org.dianahep.root4j.core.FastInputStream;
 import org.dianahep.root4j.core.FileClassFactory;
 import org.dianahep.root4j.core.RootClassFactory;
@@ -23,6 +24,11 @@ import java.net.URLConnection;
 import java.util.List;
 import java.util.Iterator;
 import java.util.Map;
+
+// hadoop hdfs
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
 
 
 /**
@@ -138,10 +144,11 @@ public class RootFileReader implements TFile
     * @param file The name of the file to open
     * @throws IOException If the file cannot be opened
     */
+   /*
    public RootFileReader(String file) throws IOException
    {
       init(new File(file),null);
-   }
+   }*/
 
    /**
     * Open a root file for reading
@@ -157,6 +164,24 @@ public class RootFileReader implements TFile
    {
       init(file,shared);
    }
+
+   public RootFileReader(String path) throws IOException
+   {
+       /*
+       FileSystem hdfs = FileSystem.get(hConf);
+       Path hPathName = new Path(pathName);
+       RootHDFSInputStream hdfsInput = new RootHDFSInputStream(hdfs.open(hPathName), 
+            this);
+       init(hdfsInput, null);
+       */
+
+       Configuration conf = new Configuration();
+       Path hPath = new Path(path);
+       FileSystem fs = hPath.getFileSystem(conf);
+       RootHDFSInputStream hdfsInput = new RootHDFSInputStream(fs.open(hPath), this);
+       init(hdfsInput, null);
+   }
+
    private void init(File file, RootFileReader shared) throws IOException
    {
       RootRandomAccessFile raf = new RootRandomAccessFile(file, this);

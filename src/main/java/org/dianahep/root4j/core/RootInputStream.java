@@ -564,10 +564,15 @@ class RootInputStream extends DataInputStream implements RootInput
       }
    }
    
+   // modified to accomodate the java byte [-128, 127]
    static String readString(DataInput in) throws IOException
    {
       int l = in.readByte();
-      if (l==-1) l = in.readInt();
+      if (l == 0) return "";
+      if (l == -1) l = in.readInt();
+      else if (l < 0) l = 256 - l;
+
+      // read
       byte[] data = new byte[l];
       for (int i = 0; i < l; i++)
          data[i] = in.readByte();
