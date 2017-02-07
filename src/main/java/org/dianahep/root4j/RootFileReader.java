@@ -39,7 +39,7 @@ import org.apache.hadoop.fs.Path;
 public class RootFileReader implements TFile
 {
    private static boolean welcome = true;
-   private static boolean debug = System.getProperty("debugRoot") != null;
+   private static boolean debug = System.getProperty("debug") != null;
    private ClassLoader classLoader;
    private java.util.Date fDatimeC;
    private java.util.Date fDatimeM;
@@ -174,6 +174,7 @@ public class RootFileReader implements TFile
             this);
        init(hdfsInput, null);
        */
+
 
        Configuration conf = new Configuration();
        Path hPath = new Path(path);

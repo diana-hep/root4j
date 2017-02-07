@@ -570,7 +570,7 @@ class RootInputStream extends DataInputStream implements RootInput
       int l = in.readByte();
       if (l == 0) return "";
       if (l == -1) l = in.readInt();
-      else if (l < 0) l = 256 - l;
+      else if (l < 0) l = 256 + l;
 
       // read
       byte[] data = new byte[l];

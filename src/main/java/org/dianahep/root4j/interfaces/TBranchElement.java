@@ -21,6 +21,9 @@ public interface TBranchElement extends org.dianahep.root4j.RootObject, TBranch
    /** Version number of class */
    short getClassVersion();
 
+   /** CheckSum */
+   int getCheckSum();
+
    Class getCloneClass();
 
    /** Name of class in TClonesArray (if any) */

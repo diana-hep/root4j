@@ -7,7 +7,7 @@
   <!-- Reset the version numbers, too. -->
   <groupId>org.diana-hep</groupId>
   <artifactId>root4j</artifactId>
-  <version>0.1.4</version>
+  <version>0.1.5</version>
   <packaging>jar</packaging>
 
   <name>root4j</name>
