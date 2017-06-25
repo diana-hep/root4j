@@ -10,7 +10,7 @@ public abstract class SRType<T extends RootInput>{
     String name;
     void read(RootInput b){};
     void read(){};
-    boolean hasNext(){};
+    boolean hasNext() {};
     long entry = 0L;
     String toName = name.replace('.','_');
     ArrayList<T> readArray(int size){};

@@ -10,4 +10,10 @@ public abstract class SRSimpleType extends SRType{
     String name;
     TBranch b;
     TLeaf l;
+
+    SRSimpleType(String name,TBranch b,TLeaf l){
+        this.name=name;
+        this.b=b;
+        this.l=l;
+    }
 }
