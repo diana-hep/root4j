@@ -1,8 +1,5 @@
 package org.dianahep.root4j.refactor;
 
-/**
- * Created by root on 25/6/17.
- */
 public abstract class SRCollection extends SRType {
     String name;
     boolean isTop;
