@@ -10,4 +10,9 @@ public abstract class SRCollection extends SRType {
         this.name=name;
         this.isTop=isTop;
     }
+
+    SRCollection(){
+        name=null;
+        isTop=false;
+    }
 }

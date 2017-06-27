@@ -1,42 +1,40 @@
 package org.dianahep.root4j.refactor;
 
-import org.dianahep.root4j.interfaces.*;
 import org.dianahep.root4j.core.*;
+import org.dianahep.root4j.interfaces.*;
 import java.io.*;
 
-public class SRString extends SRSimpleType{
+public class SRShort extends SRSimpleType {
     String name;
     TBranch b;
     TLeaf l;
 
-    SRString(String name,TBranch b,TLeaf l){
+    SRShort(String name,TBranch b,TLeaf l){
         super(name,b,l);
     }
 
     @Override void read(RootInput buffer)throws IOException{
-        String r=buffer.readString();
-        array.add((int)entry,r);
+        array.add((int)entry,buffer.readShort());
         entry+=1L;
     }
 
     @Override void read()throws IOException{
         RootInput buffer = b.setPosition(l,entry);
-        String data = buffer.readString();
-        array.add((int)entry,data);
+        array.add((int)entry,buffer.readShort());
         entry+=1L;
     }
 
-    @Override void readArray(RootInput buffer,int size)throws IOException{
+    @Override void readArray(RootInput buffer, int size)throws IOException{
         for (int i=0;i<size;i++){
-            array.add((int)entry + i,buffer.readString());
+            array.add((int)entry+i,buffer.readShort());
         }
         entry+=1L;
     }
 
-    @Override void readArray(int size) throws IOException{
+    @Override void readArray(int size)throws IOException{
         RootInput buffer = b.setPosition(l,entry);
         for (int i=0;i<size;i++){
-            array.add((int)entry+i,buffer.readString());
+            array.add((int)entry+i,buffer.readShort());
         }
         entry+=1L;
     }
