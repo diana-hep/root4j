@@ -7,30 +7,26 @@ public class SRUnknown extends SRType {
     static String name;
 
     SRUnknown(String name) {
-        this.name=name;
+        super(name);
     }
 
     @Override
     void read(RootInput b){
-        return;
+        array.add((int)entry,null);
     }
 
     @Override
     void read(){
-        return;
+        array.add((int)entry,null);
     }
 
      @Override
      void readArray(int size) {
-         for (int i = 0; i < size; i++) {
-             array.add(i, null);
-         }
+        array.add((int)entry,null);
      }
 
      @Override void readArray(RootInput buffer, int size){
-        for (int i=0;i<size;i++){
-            array.add(i,null);
-        }
+        array.add((int)entry,null);
      }
 
      @Override boolean hasNext(){

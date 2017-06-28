@@ -25,17 +25,21 @@ public class SRByte extends SRSimpleType {
     }
 
     @Override void readArray(RootInput buffer, int size)throws IOException{
+        byte arr[]=new byte[size];
         for (int i=0;i<size;i++){
-            array.add((int)entry+i,buffer.readByte());
+            arr[i]=buffer.readByte();
         }
+        array.add((int)entry,arr);
         entry+=1L;
     }
 
     @Override void readArray(int size)throws IOException{
         RootInput buffer = b.setPosition(l,entry);
+        byte arr[]=new byte[size];
         for (int i=0;i<size;i++){
-            array.add((int)entry+i,buffer.readByte());
+            arr[i]=buffer.readByte();
         }
+        array.add((int)entry,arr);
         entry+=1L;
     }
 

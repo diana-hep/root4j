@@ -27,17 +27,21 @@ public class SRString extends SRSimpleType{
     }
 
     @Override void readArray(RootInput buffer,int size)throws IOException{
+        String arr[]=new String[size];
         for (int i=0;i<size;i++){
-            array.add((int)entry + i,buffer.readString());
+            arr[i]=buffer.readString();
         }
+        array.add((int)entry,arr);
         entry+=1L;
     }
 
     @Override void readArray(int size) throws IOException{
         RootInput buffer = b.setPosition(l,entry);
+        String arr[]=new String[size];
         for (int i=0;i<size;i++){
-            array.add((int)entry+i,buffer.readString());
+            arr[i]=buffer.readString();
         }
+        array.add((int)entry,arr);
         entry+=1L;
     }
 

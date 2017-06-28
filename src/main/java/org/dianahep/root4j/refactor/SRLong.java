@@ -25,17 +25,21 @@ public class SRLong extends SRSimpleType {
     }
 
     @Override void readArray(RootInput buffer, int size)throws IOException{
+        Long arr[]=new Long[size];
         for (int i=0;i<size;i++){
-            array.add((int)entry+i,buffer.readLong());
+            arr[i]=buffer.readLong();
         }
+        array.add((int)entry,arr);
         entry+=1L;
     }
 
     @Override void readArray(int size)throws IOException{
         RootInput buffer = b.setPosition(l,entry);
+        Long arr[]=new Long[size];
         for (int i=0;i<size;i++){
-            array.add((int)entry+i,buffer.readLong());
+            arr[i]=buffer.readLong();
         }
+        array.add((int)entry,arr);
         entry+=1L;
     }
 

@@ -22,13 +22,18 @@ public abstract class SRType<T extends RootInput>{
 
     void readArray(RootInput buffer, int size)throws IOException{};
 
-    SRType(String name,List<T> array){
+    SRType(String name){
         this.name=name;
-        this.array=array;
+        this.array=null;
     }
 
     SRType(){
         this.name=null;
         this.array=null;
+    }
+
+    SRType(String name,List<T>array){
+        this.name=name;
+        this.array=array;
     }
 }

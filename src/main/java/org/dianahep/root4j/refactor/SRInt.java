@@ -25,17 +25,21 @@ public class SRInt extends SRSimpleType {
     }
 
     @Override void readArray(RootInput buffer, int size)throws IOException{
+        int arr[]=new int[size];
         for (int i=0;i<size;i++){
-            array.add((int)entry+i,buffer.readInt());
+            arr[i]=buffer.readInt();
         }
+        array.add((int)entry,arr);
         entry+=1L;
     }
 
     @Override void readArray(int size)throws IOException{
+        int arr[]=new int[size];
         RootInput buffer = b.setPosition(l,entry);
         for (int i=0;i<size;i++){
-            array.add((int)entry+i,buffer.readInt());
+            arr[i]=buffer.readInt();
         }
+        array.add((int)entry,arr);
         entry+=1L;
     }
 

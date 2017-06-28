@@ -16,10 +16,8 @@ public class SRSTLString extends SRCollection {
 
     @Override void read(RootInput buffer)throws IOException{
         if (isTop){
-            array.add((int)entry,buffer.readInt());
-            entry+=1L;
-            array.add((int)entry,buffer.readShort());
-            entry+=1L;
+            buffer.readInt();
+            buffer.readShort();
         }
         array.add((int)entry,buffer.readString());
         entry+=1L;
@@ -28,10 +26,8 @@ public class SRSTLString extends SRCollection {
     @Override void read()throws IOException{
         RootInput buffer = b.setPosition((TLeafElement)b.getLeaves().get(0), entry);
         if (isTop){
-            array.add((int)entry,buffer.readInt());
-            entry+=1L;
-            array.add((int)entry,buffer.readShort());
-            entry+=1L;
+            buffer.readInt();
+            buffer.readShort();
         }
         array.add((int)entry,buffer.readString());
         entry+=1L;
@@ -42,25 +38,25 @@ public class SRSTLString extends SRCollection {
     }
 
     @Override void readArray(RootInput buffer, int size)throws IOException{
-        array.add((int)entry,buffer.readInt());
-        entry+=1L;
-        array.add((int)entry,buffer.readShort());
-        entry+=1L;
+        buffer.readInt();
+        buffer.readShort();
+        String arr[]=new String[size];
         for (int i=0;i<size;i++){
-            array.add((int)entry+i,buffer.readString());
+            arr[i]=buffer.readString();
         }
+        array.add((int)entry,arr);
         entry+=1L;
     }
 
     @Override void readArray(int size)throws IOException{
         RootInput buffer = b.setPosition((TLeafElement)b.getLeaves().get(0), entry);
-        array.add((int)entry,buffer.readInt());
-        entry+=1L;
-        array.add((int)entry,buffer.readShort());
-        entry+=1L;
+        buffer.readInt();
+        buffer.readShort();
+        String arr[]=new String[size];
         for (int i=0;i<size;i++){
-            array.add((int)entry+i,buffer.readString());
+            arr[i]=buffer.readString();
         }
+        array.add((int)entry,arr);
         entry+=1L;
     }
 }

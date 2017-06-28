@@ -25,17 +25,21 @@ public class SRBoolean extends SRSimpleType {
     }
 
     @Override void readArray(RootInput buffer, int size)throws IOException{
+        boolean arr[]=new boolean[size];
         for (int i=0;i<size;i++){
-            array.add((int)entry+i,buffer.readBoolean());
+            arr[i]=buffer.readBoolean();
         }
+        array.add((int)entry,arr);
         entry+=1L;
     }
 
     @Override void readArray(int size)throws IOException{
         RootInput buffer = b.setPosition(l,entry);
+        boolean arr[]=new boolean[size];
         for (int i=0;i<size;i++){
-            array.add((int)entry+i,buffer.readBoolean());
+            arr[i]=buffer.readBoolean();
         }
+        array.add((int)entry,arr);
         entry+=1L;
     }
 

@@ -25,17 +25,21 @@ public class SRDouble extends SRSimpleType {
     }
 
     @Override void readArray(RootInput buffer, int size)throws IOException{
+        double arr[]=new double[size];
         for (int i=0;i<size;i++){
-            array.add((int)entry+i,buffer.readDouble());
+            arr[i]=buffer.readDouble();
         }
+        array.add((int)entry,arr);
         entry+=1L;
     }
 
     @Override void readArray(int size)throws IOException{
+        double arr[]=new double[size];
         RootInput buffer = b.setPosition(l,entry);
         for (int i=0;i<size;i++){
-            array.add((int)entry+i,buffer.readDouble());
+            arr[i]=buffer.readDouble();
         }
+        array.add((int)entry,arr);
         entry+=1L;
     }
 
