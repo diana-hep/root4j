@@ -2,13 +2,12 @@ package org.dianahep.root4j.refactor;
 
 import org.dianahep.root4j.core.*;
 
-public class SRNull extends SRType {
-
+public class SRNull extends SRType{
     SRNull(){
-        super("Null");
+        super(null);
     }
 
-    @Override void read(RootInput buffer){
+    @Override void read(RootInput b){
         array.add((int)entry,null);
     }
 
@@ -17,14 +16,22 @@ public class SRNull extends SRType {
     }
 
     @Override void readArray(RootInput buffer,int size){
-        array.add((int)entry,null);
+        String arr[]=new String[size];
+        for (int i=0;i<size;i++){
+            arr[i] = null;
+        }
+        array.add((int)entry,arr);
     }
 
     @Override void readArray(int size){
+        String arr[]=new String[size];
+        for (int i=0;i<size;i++){
+            arr[i]=null;
+        }
         array.add((int)entry,null);
     }
 
-    @Override boolean hasNext(){
+    boolean hasNext(){
         return false;
     }
 }

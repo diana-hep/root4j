@@ -12,9 +12,10 @@ public class SRArray extends SRSimpleType{
     SRType t;
     int n;
 
-    SRArray(String name,TBranch b,TLeaf l,int n){
+    SRArray(String name,TBranch b,TLeaf l,SRType t,int n){
         super(name,b,l);
         this.n=n;
+        this.t=t;
     }
 
     @Override void read(RootInput buffer)throws IOException{
