@@ -54,6 +54,44 @@ public class buildATT {
         }
     }
 
+    SRType synthesizeLeaf(TBranch b,TLeaf leaf){
+        String nameToUse;
+        if (b.getLeaves().size()==1){
+            nameToUse=b.getName();
+        }
+        else{
+            nameToUse=leaf.getName();
+        }
+        if (leaf instanceof TLeafElement){
+            return synthesizeLeafElement(b,(TLeafElement)leaf);
+        }
+        else{
+            if (leaf.getArrayDim()==0){
+                return synthesizeLeafType(b,leaf);
+            }
+            else{
+                return iterate(nameToUse,b,leaf,leaf.getArrayDim());
+            }
+        }
+    }
+
+    SRType iterate(String nameToUse,TBranch b,TLeaf leaf,int dimsToGo){
+        if (dimsToGo==1){
+            SRArray srarray = new SRArray(nameToUse,b,leaf,synthesizeLeafType(b,leaf),leaf.getMaxIndex()[leaf.getArrayDim()-1]);
+            return srarray;
+        }
+        else
+        {
+            SRArray srarray = new SRArray(nameToUse,b,leaf,iterate(nameToUse,b,leaf,dimsToGo-1),leaf.getMaxIndex()[leaf.getArrayDim()-dimsToGo]);
+            return srarray;
+        }
+    }
+
+    SRType synthesizeLeafElement(TBranch b,TLeafElement leaf){
+        SRNull srnull = new SRNull();
+        return srnull;
+    }
+
     SRType synthesizeBasicStreamerType(int typeCode){
         switch (typeCode){
             case 1 : SRByte srbyte1 = new SRByte("",null,null);
@@ -99,86 +137,6 @@ public class buildATT {
         }
     }
 
-    SRType synthesizeBasicStreamerType(String typeName){
-         if (typeName.equals("int") || typeName.equals("unsigned int")){
-            SRInt srint = new SRInt("",null,null);
-            return srint;
-         }
-         else if (typeName.equals("float") || typeName.equals("Double32_t")){
-             SRFloat srfloat = new SRFloat("",null,null);
-             return srfloat;
-         }
-         else if (typeName.equals("double")){
-            SRDouble srdouble = new SRDouble("",null,null);
-            return srdouble;
-         }
-         else if (typeName.equals("char") || typeName.equals("unsigned char")){
-             SRByte srbyte = new SRByte("",null,null);
-             return srbyte;
-         }
-         else if (typeName.equals("long") || typeName.equals("unsigned long")){
-             SRLong srlong = new SRLong("",null,null);
-             return srlong;
-         }
-         else if (typeName.equals("short") || typeName.equals("unsigned short")){
-             SRShort srshort = new SRShort("",null,null);
-             return srshort;
-         }
-         else if (typeName.equals("bool")){
-             SRBoolean srbool = new SRBoolean("",null,null);
-             return srbool;
-         }
-         else{
-             SRNull srnull = new SRNull();
-             return srnull;
-         }
-    }
-
-    SRType synthesizeLeaf(TBranch b,TLeaf leaf){
-        String nameToUse;
-        if (b.getLeaves().size()==1){
-            nameToUse=b.getName();
-        }
-        else{
-            nameToUse=leaf.getName();
-        }
-        if (leaf instanceof TLeafElement){
-            return synthesizeLeafElement(b,(TLeafElement)leaf);
-        }
-        else{
-            if (leaf.getArrayDim()==0){
-                return synthesizeLeafType(b,leaf);
-            }
-            else{
-                return iterate(nameToUse,b,leaf,leaf.getArrayDim());
-            }
-        }
-    }
-
-    SRType iterate(String nameToUse,TBranch b,TLeaf leaf,int dimsToGo){
-        if (dimsToGo==1){
-            SRArray srarray = new SRArray(nameToUse,b,leaf,synthesizeLeafType(b,leaf),leaf.getMaxIndex()[leaf.getArrayDim()-1]);
-            return srarray;
-        }
-        else
-        {
-            SRArray srarray = new SRArray(nameToUse,b,leaf,iterate(nameToUse,b,leaf,dimsToGo-1),leaf.getMaxIndex()[leaf.getArrayDim()-dimsToGo]);
-            return srarray;
-        }
-    }
-
-    SRType synthesizeLeafElement(TBranch b,TLeafElement leaf){
-        SRNull srnull = new SRNull();
-        return srnull;
-    }
-
-    SRType synthesizeTopBranch(TBranch b){
-        if (b instanceof TBranchElement){
-            TBranchElement be = (TBranchElement)b;
-            String streamerInfo = streamers.
-        }
-    }
-
     String formatNameForPointer(String className){
         if (className.charAt(className.length()-1)=='*'){
             String formattedClassName="";
@@ -220,6 +178,41 @@ public class buildATT {
             }
             SRArray srarray = new SRArray(streamerElement.getName(),b,temp,iterateArray(b,streamerElement,parentType,dimsToGo-1),streamerElement.getMaxIndex()[streamerElement.getArrayDim()-dimsToGo]);
             return srarray;
+        }
+    }
+
+    SRType synthesizeBasicTypeName(String typeName){
+        if (typeName.equals("int") || typeName.equals("unsigned int")){
+            SRInt srint = new SRInt("",null,null);
+            return srint;
+        }
+        else if (typeName.equals("float") || typeName.equals("Double32_t")){
+            SRFloat srfloat = new SRFloat("",null,null);
+            return srfloat;
+        }
+        else if (typeName.equals("double")){
+            SRDouble srdouble = new SRDouble("",null,null);
+            return srdouble;
+        }
+        else if (typeName.equals("char") || typeName.equals("unsigned char")){
+            SRByte srbyte = new SRByte("",null,null);
+            return srbyte;
+        }
+        else if (typeName.equals("long") || typeName.equals("unsigned long")){
+            SRLong srlong = new SRLong("",null,null);
+            return srlong;
+        }
+        else if (typeName.equals("short") || typeName.equals("unsigned short")){
+            SRShort srshort = new SRShort("",null,null);
+            return srshort;
+        }
+        else if (typeName.equals("bool")){
+            SRBoolean srbool = new SRBoolean("",null,null);
+            return srbool;
+        }
+        else{
+            SRNull srnull = new SRNull();
+            return srnull;
         }
     }
 
