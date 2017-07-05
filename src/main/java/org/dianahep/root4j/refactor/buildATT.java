@@ -2,7 +2,8 @@ package org.dianahep.root4j.refactor;
 
 import org.dianahep.root4j.interfaces.*;
 import java.util.*;
-import java.util.regex.Pattern;
+import java.io.*;
+import org.dianahep.root4j.*;
 
 public class buildATT {
     TTree tree;
@@ -150,12 +151,6 @@ public class buildATT {
         }
     }
 
-    SRType synthesizeStreamerElement(TBranchElement b,TStreamerElement streamerElement,SRType parentType){
-        TLeaf temp;
-        switch(streamerElement.getType()){
-            case 0 :
-        }
-    }
 
     SRType iterateArray(TBranchElement b,TStreamerElement streamerElement,SRType parentType,int dimsToGo){
         TLeaf temp;
@@ -241,6 +236,19 @@ public class buildATT {
     List<String> extractTemplateArguements(String fullTemplateString){
         List<String> arrreturn=new ArrayList();
         return iterate(fullTemplateString,0,0,0,arrreturn);
+    }
+
+    TTree findTree(TDirectory dir)throws RootClassNotFound,IOException{
+        for (int i=0;i<dir.nKeys();i++){
+            TKey key = dir.getKey(i);
+            if (key.getObjectClass().getClassName().equals("TDirectory")){
+                return findTree((TDirectory)key.getObject());
+            }
+            else if (key.getObjectClass().getClassName().equals("TTree")){
+                return (TTree)key.getObject();
+            }
+        }
+        return null;
     }
 
 
