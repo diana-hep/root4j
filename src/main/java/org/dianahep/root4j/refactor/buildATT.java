@@ -4,6 +4,7 @@ import org.dianahep.root4j.interfaces.*;
 import java.util.*;
 import java.io.*;
 import org.dianahep.root4j.*;
+import java.util.regex.*;
 
 public class buildATT {
     TTree tree;
@@ -91,6 +92,40 @@ public class buildATT {
     SRType synthesizeLeafElement(TBranch b,TLeafElement leaf){
         SRNull srnull = new SRNull();
         return srnull;
+    }
+
+    SRType synthesizeTopBranch(TBranch b){
+        SRRootType srroottype = new SRRootType();
+        if (b instanceof TBranchElement){
+            TBranchElement be = (TBranchElement)b;
+            TStreamerInfo streamerInfo;
+            try {
+                streamerInfo = streamers.get(be.getClassName());
+            }
+            catch (NullPointerException e){
+                streamerInfo = null;
+            }
+            if (streamerInfo==null){
+                return synthesizeClassName(be.getClassName(),be,srroottype);
+            }
+            else {
+                return synthesizeStreamerInfo(be,streamerInfo,null,srroottype);
+            }
+        }
+        else {
+            List<SRType> temp = new ArrayList();
+            TObjArray leaves = b.getLeaves();
+            if (leaves.size()>1){
+                for (int i=0;i<leaves.size();i++){
+                    temp.add(synthesizeLeaf(b,(TLeaf)leaves.get(i)));
+                }
+                SRComposite srcomposite = new SRComposite(b.getName(),b,temp,true,true);
+                return srcomposite;
+            }
+            else {
+                return synthesizeLeaf(b,(TLeaf)leaves.get(0));
+            }
+        }
     }
 
     SRType synthesizeBasicStreamerType(int typeCode){
@@ -236,6 +271,17 @@ public class buildATT {
     List<String> extractTemplateArguements(String fullTemplateString){
         List<String> arrreturn=new ArrayList();
         return iterate(fullTemplateString,0,0,0,arrreturn);
+    }
+
+    SRType synthesizeClassName(String className,TBranchElement b,SRTypeTag parentType){
+        List<String> stlLinear= Arrays.asList("vector","list","deque","set","multiset","forward_list","unordered_set","unordered_multiset");
+        List<String> stlAssociative = Arrays.asList("map","unordered map","multimap","unordered_multimap");
+        String stlPair = "pair";
+        String stlBitset = "bitset";
+        List<String> stlStrings = Arrays.asList("string","_basic_string_common<true>");
+        String classTypeRE = Pattern.quote("(.*?)<(.*?)>");
+        String classTypeString,arguementsTypeString;
+
     }
 
     TTree findTree(TDirectory dir)throws RootClassNotFound,IOException{
