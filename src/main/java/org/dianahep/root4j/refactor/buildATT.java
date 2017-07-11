@@ -230,7 +230,7 @@ public class buildATT {
                         return srcomposite;
                     }
                     else {
-                        synthesizeStreamerInfo(b,streamerInfo,streamerElement,parentType);
+                        return synthesizeStreamerInfo(b,streamerInfo,streamerElement,parentType);
                     }
                 }
                 break;
@@ -511,6 +511,15 @@ public class buildATT {
         String classTypeRE = Pattern.quote("(.*?)<(.*?)>");
         String classTypeString,arguementsTypeString;
 
+    }
+
+    SRType synthesizeBranchElement(TBranchElement b,TStreamerElement streamerElement,SRTypeTag parentType){
+        TObjArray subs=b.getBranches();
+        if (streamerElement == null){
+            SRNull srnull = new SRNull();
+            return srnull;
+        }
+        return synthesizeStreamerElement(b,streamerElement,parentType);
     }
 
     TTree findTree(TDirectory dir)throws RootClassNotFound,IOException{
