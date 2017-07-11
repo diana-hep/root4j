@@ -13,13 +13,17 @@ public class SRComposite extends SRType{
     boolean isTop;
     boolean isBase;
 
-    SRComposite(String name,TBranch b,List<SRType> members,boolean split,boolean isTop){
+    SRComposite(String name,TBranch b,List<SRType> members,boolean split,boolean isTop,boolean isBase){
         super(name);
         this.b=b;
         this.members=members;
         this.split=split;
         this.isTop=isTop;
-        isBase=false;
+        this.isBase = isBase;
+    }
+
+    SRComposite(){
+        this.isBase = false;
     }
 
     @Override void readArray(int size)throws IOException{
