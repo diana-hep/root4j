@@ -535,5 +535,11 @@ public class buildATT {
         return null;
     }
 
+    void columns(){
+        if (requiredColumns==null){
+
+        }
+    }
+
 
 }

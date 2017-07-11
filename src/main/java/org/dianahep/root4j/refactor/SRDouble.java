@@ -3,6 +3,7 @@ package org.dianahep.root4j.refactor;
 import org.dianahep.root4j.core.*;
 import org.dianahep.root4j.interfaces.*;
 import java.io.*;
+import java.util.*;
 
 public class SRDouble extends SRSimpleType {
     String name;
@@ -14,32 +15,38 @@ public class SRDouble extends SRSimpleType {
     }
 
     @Override void read(RootInput buffer)throws IOException{
-        array.add((int)entry,buffer.readDouble());
+        double t=buffer.readDouble();
+        array.add(t);
         entry+=1L;
     }
 
     @Override void read()throws IOException{
         RootInput buffer = b.setPosition(l,entry);
-        array.add((int)entry,buffer.readDouble());
+        double t = buffer.readDouble();
+        array.add(t);
         entry+=1L;
     }
 
     @Override void readArray(RootInput buffer, int size)throws IOException{
-        double arr[]=new double[size];
+        double t;
+        List<Double> temp = new ArrayList();
         for (int i=0;i<size;i++){
-            arr[i]=buffer.readDouble();
+            t=buffer.readDouble();
+            temp.add(t);
         }
-        array.add((int)entry,arr);
+        array.add(temp);
         entry+=1L;
     }
 
     @Override void readArray(int size)throws IOException{
-        double arr[]=new double[size];
+        double t;
+        List<Double> temp = new ArrayList();
         RootInput buffer = b.setPosition(l,entry);
         for (int i=0;i<size;i++){
-            arr[i]=buffer.readDouble();
+            t=buffer.readDouble();
+            temp.add(t);
         }
-        array.add((int)entry,arr);
+        array.add(temp);
         entry+=1L;
     }
 

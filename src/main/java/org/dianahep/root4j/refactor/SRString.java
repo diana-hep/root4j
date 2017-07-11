@@ -3,6 +3,7 @@ package org.dianahep.root4j.refactor;
 import org.dianahep.root4j.interfaces.*;
 import org.dianahep.root4j.core.*;
 import java.io.*;
+import java.util.*;
 
 public class SRString extends SRSimpleType{
     String name;
@@ -15,23 +16,25 @@ public class SRString extends SRSimpleType{
 
     @Override void read(RootInput buffer)throws IOException{
         String r=buffer.readString();
-        array.add((int)entry,r);
+        array.add(r);
         entry+=1L;
     }
 
     @Override void read()throws IOException{
         RootInput buffer = b.setPosition(l,entry);
         String data = buffer.readString();
-        array.add((int)entry,data);
+        array.add(data);
         entry+=1L;
     }
 
     @Override void readArray(RootInput buffer,int size)throws IOException{
-        String arr[]=new String[size];
+        List<String> temp = new ArrayList();
+        String t;
         for (int i=0;i<size;i++){
-            arr[i]=buffer.readString();
+            t=buffer.readString();
+            temp.add(t);
         }
-        array.add((int)entry,arr);
+        array.add(temp);
         entry+=1L;
     }
 

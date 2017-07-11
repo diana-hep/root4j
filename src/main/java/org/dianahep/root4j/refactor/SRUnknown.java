@@ -12,21 +12,30 @@ public class SRUnknown extends SRType {
 
     @Override
     void read(RootInput b){
-        array.add((int)entry,null);
+        array.add(null);
     }
 
     @Override
     void read(){
-        array.add((int)entry,null);
+        array.add(null);
     }
 
      @Override
      void readArray(int size) {
-        array.add((int)entry,null);
+        List<String> temp = new ArrayList();
+        for (int i=0;i<size;i++)
+        {
+            temp.add(null);
+        }
+        array.add(temp);
      }
 
      @Override void readArray(RootInput buffer, int size){
-        array.add((int)entry,null);
+        List<String> temp = new ArrayList();
+        for (int i=0;i<size;i++){
+            temp.add(null);
+        }
+        array.add(temp);
      }
 
      @Override boolean hasNext(){

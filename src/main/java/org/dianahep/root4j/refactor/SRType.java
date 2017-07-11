@@ -6,7 +6,7 @@ import java.io.*;
 
 public abstract class SRType<T extends RootInput>{
     String name;
-    List<T> array;
+    List<T> array = new ArrayList<T>();
     long entry = 0L;
     String toName = name.replace('.','_');
 

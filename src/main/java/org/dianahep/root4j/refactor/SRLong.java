@@ -3,6 +3,7 @@ package org.dianahep.root4j.refactor;
 import org.dianahep.root4j.core.*;
 import org.dianahep.root4j.interfaces.*;
 import java.io.*;
+import java.util.*;
 
 public class SRLong extends SRSimpleType {
     String name;
@@ -14,32 +15,38 @@ public class SRLong extends SRSimpleType {
     }
 
     @Override void read(RootInput buffer)throws IOException{
-        array.add((int)entry,buffer.readLong());
+        long t = buffer.readLong();
+        array.add(t);
         entry+=1L;
     }
 
     @Override void read()throws IOException{
         RootInput buffer = b.setPosition(l,entry);
-        array.add((int)entry,buffer.readLong());
+        long t = buffer.readLong();
+        array.add(t);
         entry+=1L;
     }
 
     @Override void readArray(RootInput buffer, int size)throws IOException{
-        Long arr[]=new Long[size];
+        long t;
+        List<Long> temp = new ArrayList();
         for (int i=0;i<size;i++){
-            arr[i]=buffer.readLong();
+            t=buffer.readLong();
+            temp.add(t);
         }
-        array.add((int)entry,arr);
+        array.add(temp);
         entry+=1L;
     }
 
     @Override void readArray(int size)throws IOException{
         RootInput buffer = b.setPosition(l,entry);
-        Long arr[]=new Long[size];
+        Long t;
+        List<Long> temp = new ArrayList();
         for (int i=0;i<size;i++){
-            arr[i]=buffer.readLong();
+            t=buffer.readLong();
+            temp.add(t);
         }
-        array.add((int)entry,arr);
+        array.add(temp);
         entry+=1L;
     }
 

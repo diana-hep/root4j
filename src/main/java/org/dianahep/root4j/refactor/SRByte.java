@@ -3,6 +3,7 @@ package org.dianahep.root4j.refactor;
 import org.dianahep.root4j.core.*;
 import org.dianahep.root4j.interfaces.*;
 import java.io.*;
+import java.util.*;
 
 public class SRByte extends SRSimpleType {
     String name;
@@ -14,32 +15,38 @@ public class SRByte extends SRSimpleType {
     }
 
     @Override void read(RootInput buffer)throws IOException{
-        array.add((int)entry,buffer.readByte());
+        byte t = buffer.readByte();
+        array.add(t);
         entry+=1L;
     }
 
     @Override void read()throws IOException{
         RootInput buffer = b.setPosition(l,entry);
-        array.add((int)entry,buffer.readByte());
+        byte t= buffer.readByte();
+        array.add(t);
         entry+=1L;
     }
 
     @Override void readArray(RootInput buffer, int size)throws IOException{
-        byte arr[]=new byte[size];
+        byte t;
+        List<Byte> temp = new ArrayList();
         for (int i=0;i<size;i++){
-            arr[i]=buffer.readByte();
+            t= buffer.readByte();
+            temp.add(t);
         }
-        array.add((int)entry,arr);
+        array.add(temp);
         entry+=1L;
     }
 
     @Override void readArray(int size)throws IOException{
         RootInput buffer = b.setPosition(l,entry);
-        byte arr[]=new byte[size];
+        byte t;
+        List<Byte> temp = new ArrayList();
         for (int i=0;i<size;i++){
-            arr[i]=buffer.readByte();
+            t=buffer.readByte();
+            temp.add(t);
         }
-        array.add((int)entry,arr);
+        array.add(temp);
         entry+=1L;
     }
 
