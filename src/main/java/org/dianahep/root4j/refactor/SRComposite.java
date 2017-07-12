@@ -22,7 +22,12 @@ public class SRComposite extends SRType{
         this.isBase = isBase;
     }
 
-    SRComposite(){
+    SRComposite(String name,TBranch b,List<SRType> members,boolean split,boolean isTop){
+        super(name);
+        this.b=b;
+        this.members=members;
+        this.split=split;
+        this.isTop=isTop;
         this.isBase = false;
     }
 

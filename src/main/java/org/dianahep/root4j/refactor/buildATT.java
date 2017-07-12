@@ -513,6 +513,151 @@ public class buildATT {
 
     }
 
+    SRType synthesizeStreamerInfo(TBranchElement b,TStreamerInfo streamerInfo,TStreamerElement streamerElement,SRTypeTag parentType,boolean flattenable){
+        TObjArray elements = streamerInfo.getElements();
+        for (int i=0;i<elements.size();i++){
+            TStreamerElement x = (TStreamerElement)elements.get(i);
+            String typeName = x.getTypeName();
+            String s="vector";
+            String temp="<$";
+            temp=temp+streamerInfo.getName();
+            temp=temp+">";
+            String t = s+temp;
+            if (typeName.equals(t) || typeName.equals(temp)){
+                SRNull srnull = new SRNull();
+                return srnull;
+            }
+        }
+        if (elements.size()==0){
+            String temp;
+            boolean t;
+            if (streamerElement!=null){
+                temp=streamerElement.getName();
+            }
+            else {
+                temp="<$";
+                temp=temp+streamerInfo.getName();
+                temp=temp+">";
+            }
+            if (streamerElement!=null){
+                if (streamerElement.getType()==0){
+                    t=true;
+                }
+                else {
+                    t=false;
+                }
+            }
+            else {
+                t=false;
+            }
+            SRComposite srcomposite = new SRComposite(temp,b,null,false,false,t);
+            return srcomposite;
+        }
+        else if (((TStreamerElement)elements.get(0)).getName().equals("This")){
+            return synthesizeStreamerElement(b,(TStreamerElement)elements.get(0),parentType);
+        }
+        else if (streamerInfo.getName().equals("TClonesArray")){
+            if (b==null){
+                SRNull srnull = new SRNull();
+                return srnull;
+            }
+            else {
+                String typeName = b.getClonesName();
+                String nameToSynthesize = "vector<$";
+                nameToSynthesize = nameToSynthesize+typeName;
+                nameToSynthesize = nameToSynthesize+">";
+                return synthesizeClassName(nameToSynthesize,b,parentType);
+            }
+        }
+        else {
+            if (b==null){
+                String temp1;
+                if (streamerElement==null){
+                    temp1="";
+                }
+                else {
+                    temp1 = streamerElement.getName();
+                }
+                List<SRType> temp = new ArrayList();
+                SRCompositeType srcompositetype = new SRCompositeType();
+                for (int i=0;i<elements.size();i++){
+                    temp.add(synthesizeStreamerElement(null,(TStreamerElement)elements.get(i),srcompositetype));
+                }
+                boolean temp2;
+                if (streamerElement==null){
+                    temp2=false;
+                }
+                else if (streamerElement.getType()==0){
+                    temp2=true;
+                }
+                else{
+                    temp2=false;
+                }
+                SRComposite srcomposite = new SRComposite(temp1,null,temp,false,false,temp2);
+                return srcomposite;
+            }
+            else if (b.getBranches().size()==0){
+                List<SRType> temp = new ArrayList();
+                SRCompositeType srcompositetype = new SRCompositeType();
+                for (int i=0;i<elements.size();i++){
+                    temp.add(synthesizeStreamerElement(null,(TStreamerElement)elements.get(i),srcompositetype));
+                }
+                SRRootType srroottype = new SRRootType();
+                boolean t;
+                if (parentType.equals(srroottype)){
+                    t=true;
+                }
+                else {
+                    t=false;
+                }
+                SRComposite srcomposite = new SRComposite(b.getName(),b,temp,false,t);
+                return srcomposite;
+            }
+            else {
+                if (b.getType()==1 || b.getType()==2 || b.getType()==3 || b.getType()==4){
+                    return synthesizeFlattenable(b,streamerInfo);
+                }
+                else {
+                    List<SRType> temp = new ArrayList();
+                    SRCompositeType srcompositetype = new SRCompositeType();
+                    for (int i=0;i<b.getBranches().getSize();i++){
+                        TBranchElement sub = (TBranchElement)b.getBranches().get(i);
+                        temp.add(synthesizeStreamerElement(sub,(TStreamerElement)elements.get(sub.getID()),srcompositetype));
+                    }
+                    boolean t;
+                    SRRootType srroottype = new SRRootType();
+                    if (parentType.equals(srroottype)){
+                        t=true;
+                    }
+                    else {
+                        t=false;
+                    }
+                    SRComposite srcomposite = new SRComposite(b.getName(),b,temp,true,t);
+                    return srcomposite;
+                }
+            }
+        }
+    }
+
+    List<TStreamerElement> shuffleStreamerInfo(TStreamerInfo sinfo){
+        TObjArray elems = sinfo.getElements();
+        List<TStreamerElement> bases = new ArrayList();
+        List<TStreamerElement> rest = new ArrayList();
+        for (int i=0;i<elems.size();i++){
+            TStreamerElement se = (TStreamerElement)elems.get(i);
+            if (se.getType()==0){
+                bases.add(se);
+            }
+            else{
+                rest.add(se);
+            }
+        }
+        List<TStreamerElement> re = new ArrayList();
+        re.addAll(bases);
+        re.addAll(rest);
+        return re;
+    }
+
     SRType synthesizeBranchElement(TBranchElement b,TStreamerElement streamerElement,SRTypeTag parentType){
         TObjArray subs=b.getBranches();
         if (streamerElement == null){
