@@ -3,6 +3,7 @@ package org.dianahep.root4j.refactor;
 import org.dianahep.root4j.core.*;
 import org.dianahep.root4j.interfaces.*;
 import java.io.*;
+import java.util.*;
 
 public class SRSTLString extends SRCollection {
     String name;
@@ -19,7 +20,7 @@ public class SRSTLString extends SRCollection {
             buffer.readInt();
             buffer.readShort();
         }
-        array.add((int)entry,buffer.readString());
+        array.add(buffer.readString());
         entry+=1L;
     }
 
@@ -29,7 +30,7 @@ public class SRSTLString extends SRCollection {
             buffer.readInt();
             buffer.readShort();
         }
-        array.add((int)entry,buffer.readString());
+        array.add(buffer.readString());
         entry+=1L;
     }
 
@@ -40,11 +41,13 @@ public class SRSTLString extends SRCollection {
     @Override void readArray(RootInput buffer, int size)throws IOException{
         buffer.readInt();
         buffer.readShort();
-        String arr[]=new String[size];
+        String t;
+        List<String> temp = new ArrayList();
         for (int i=0;i<size;i++){
-            arr[i]=buffer.readString();
+            t=buffer.readString();
+            temp.add(t);
         }
-        array.add((int)entry,arr);
+        array.add(temp);
         entry+=1L;
     }
 
@@ -52,11 +55,13 @@ public class SRSTLString extends SRCollection {
         RootInput buffer = b.setPosition((TLeafElement)b.getLeaves().get(0), entry);
         buffer.readInt();
         buffer.readShort();
-        String arr[]=new String[size];
+        List<String> temp = new ArrayList();
+        String t;
         for (int i=0;i<size;i++){
-            arr[i]=buffer.readString();
+            t=buffer.readString();
+            temp.add(t);
         }
-        array.add((int)entry,arr);
+        array.add(temp);
         entry+=1L;
     }
 }

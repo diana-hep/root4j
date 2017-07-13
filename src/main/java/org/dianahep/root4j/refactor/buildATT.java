@@ -226,7 +226,8 @@ public class buildATT {
                 }
                 else {
                     if (streamerInfo.getElements().size()==0){
-                        SRComposite srcomposite = new SRComposite(streamerElement.getName(),b,null,false,false,true);
+                        List<SRType> sub = new ArrayList();
+                        SRComposite srcomposite = new SRComposite(streamerElement.getName(),b,sub,false,false,true);
                         return srcomposite;
                     }
                     else {
@@ -550,7 +551,8 @@ public class buildATT {
             else {
                 t=false;
             }
-            SRComposite srcomposite = new SRComposite(temp,b,null,false,false,t);
+            List<SRType> sub = new ArrayList();
+            SRComposite srcomposite = new SRComposite(temp,b,sub,false,false,t);
             return srcomposite;
         }
         else if (((TStreamerElement)elements.get(0)).getName().equals("This")){
@@ -637,6 +639,110 @@ public class buildATT {
                 }
             }
         }
+    }
+
+    SRType synthesizeFlattenable(TBranchElement b,TStreamerInfo streamerInfo){
+        List<SRType> sub = new ArrayList();
+        SRComposite srcomposite = new SRComposite(b.getName(),b,iterate(streamerInfo,sub),true,false);
+        return srcomposite;
+    }
+
+    TBranchElement findBranch(String objectName,List<String> history,TBranchElement b){
+        String fullName="";
+        String temp="";
+        List<String> t1 = new ArrayList();
+        if (b.getType()==1){
+            int t=0;
+            int stub=0;
+            for (int i=0;i<b.getName().length();i++){
+                if (b.getName().charAt(i)=='.'){
+                    t++;
+                }
+            }
+            if (t==0){
+                history.add(objectName);
+                t1.addAll(history);
+            }
+            else {
+                for (int i=0;i<b.getName().length();i++){
+                    if (b.getName().charAt(i)=='.'){
+                        stub=i;
+                        break;
+                    }
+                }
+                for (int i=0;i<stub;i++){
+                    temp=temp+b.getName().charAt(i);
+                }
+                t1.add(temp);
+                temp="";
+                for (int i=stub+1;i<b.getName().length();i++){
+                    temp = temp+b.getName().charAt(i);
+                }
+                t1.add(temp);
+                t1.addAll(history);
+                t1.add(objectName);
+            }
+        }
+        else {
+            int t=0;
+            int stub=0;
+            for (int i=0;i<b.getName().length();i++){
+                if (b.getName().charAt(i)=='.'){
+                    t++;
+                }
+            }
+            if (t==0){
+                t1.add(b.getName());
+                t1.addAll(history);
+                t1.add(objectName);
+            }
+            else {
+                for (int i=0;i<b.getName().length();i++){
+                    if (b.getName().charAt(i)=='.'){
+                        stub=i;
+                        break;
+                    }
+                }
+                for (int i=0;i<stub;i++){
+                    temp=temp+b.getName().charAt(i);
+                }
+                t1.add(temp);
+                temp="";
+                for (int i=stub+1;i<b.getName().length();i++){
+                    temp = temp+b.getName().charAt(i);
+                }
+                t1.add(temp);
+                t1.addAll(history);
+                t1.add(objectName);
+            }
+        }
+        for (int i=0;i<t1.size();i++){
+            fullName = fullName+t1.get(i);
+            if (i!=(t1.size()-1)){
+                fullName=fullName+".";
+            }
+        }
+        String subName;
+        TBranchElement sub;
+        List<TBranchElement> store = new ArrayList();
+        for (int i=0;i<b.getBranches().size();i++){
+            sub = (TBranchElement)b.getBranches().get(i);
+            if (sub.getName().indexOf('[')>0){
+                subName=sub.getName().substring(0,sub.getName().indexOf('['));
+            }
+            else {
+                subName = sub.getName();
+            }
+            if (subName.equals(fullName)){
+                store.add(sub);
+            }
+        }
+        return store.get(0);
+    }
+
+
+    List<SRType> iterate(TStreamerInfo streamerInfo,List<SRType> history){
+
     }
 
     List<TStreamerElement> shuffleStreamerInfo(TStreamerInfo sinfo){

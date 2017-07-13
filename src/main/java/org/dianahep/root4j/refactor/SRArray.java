@@ -3,6 +3,7 @@ package org.dianahep.root4j.refactor;
 import org.dianahep.root4j.core.*;
 import org.dianahep.root4j.interfaces.*;
 import java.io.*;
+import java.util.*;
 
 public class SRArray extends SRSimpleType{
 
@@ -21,7 +22,7 @@ public class SRArray extends SRSimpleType{
     @Override void read(RootInput buffer)throws IOException{
         if (n==-1) {
             for (int i = 0; i < (Integer) l.getLeafCount().getWrappedValue(entry); i++) {
-                t.read(buffer);
+               t.read(buffer);
             }
         }
         else{
