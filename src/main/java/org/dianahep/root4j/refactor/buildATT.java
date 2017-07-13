@@ -109,7 +109,7 @@ public class buildATT {
                 return synthesizeClassName(be.getClassName(),be,srroottype);
             }
             else {
-                return synthesizeStreamerInfo(be,streamerInfo,null,srroottype);
+                return synthesizeStreamerInfo(be,streamerInfo,null,srroottype,false);
             }
         }
         else {
@@ -231,7 +231,7 @@ public class buildATT {
                         return srcomposite;
                     }
                     else {
-                        return synthesizeStreamerInfo(b,streamerInfo,streamerElement,parentType);
+                        return synthesizeStreamerInfo(b,streamerInfo,streamerElement,parentType,false);
                     }
                 }
                 break;
@@ -325,7 +325,7 @@ public class buildATT {
                     return srunknown;
                 }
                 else {
-                    return synthesizeStreamerInfo(b,streamerInfo,streamerElement,parentType);
+                    return synthesizeStreamerInfo(b,streamerInfo,streamerElement,parentType,false);
                 }
             case 62 :
                 try {
@@ -347,7 +347,7 @@ public class buildATT {
                     }
                 }
                 else {
-                    return synthesizeStreamerInfo(b,streamerInfo,streamerElement,parentType);
+                    return synthesizeStreamerInfo(b,streamerInfo,streamerElement,parentType,false);
                 }
             case 63 :
                 try{
@@ -361,7 +361,7 @@ public class buildATT {
                     return srunknown;
                 }
                 else {
-                    return synthesizeStreamerInfo(b,streamerInfo,streamerElement,parentType);
+                    return synthesizeStreamerInfo(b,streamerInfo,streamerElement,parentType,false);
                 }
             case 65 :
                 SRString srstring2 = new SRString(streamerElement.getName(),b,temp);
@@ -378,7 +378,7 @@ public class buildATT {
                     return srunknown;
                 }
                 else {
-                    return synthesizeStreamerInfo(b,streamerInfo,streamerElement,parentType);
+                    return synthesizeStreamerInfo(b,streamerInfo,streamerElement,parentType,false);
                 }
             case 67 :
                 try {
@@ -392,7 +392,7 @@ public class buildATT {
                     return srunknown;
                 }
                 else{
-                    return synthesizeStreamerInfo(b,streamerInfo,streamerElement,parentType);
+                    return synthesizeStreamerInfo(b,streamerInfo,streamerElement,parentType,false);
                 }
             case 69 :
                 try {
@@ -406,7 +406,7 @@ public class buildATT {
                     return srunknown;
                 }
                 else {
-                    return synthesizeStreamerInfo(b,streamerInfo,streamerElement,parentType);
+                    return synthesizeStreamerInfo(b,streamerInfo,streamerElement,parentType,false);
                 }
             case 500 :
                 return synthesizeStreamerSTL(b,(TStreamerSTL)streamerElement,parentType);
@@ -741,8 +741,72 @@ public class buildATT {
     }
 
 
-    List<SRType> iterate(TStreamerInfo streamerInfo,List<SRType> history){
-
+    List<SRType> iterate(TStreamerInfo info,List<String> history,TBranchElement b){
+        TStreamerElement streamerElement;
+        List<SRType> temp = new ArrayList();
+        TStreamerInfo sinfo;
+        TBranchElement sub;
+        for (int i=0;i<info.getElements().size();i++){
+            streamerElement = (TStreamerElement)info.getElements().get(i);
+            if (streamerElement.getType()>=0){
+                int ttt=streamerElement.getType();
+                if (ttt==0){
+                    if (b.getType()==4 || b.getType()==3){
+                        try{
+                            sinfo = streamers.get(streamerElement.getName());
+                        }
+                        catch (NullPointerException e){
+                            sinfo = null;
+                        }
+                        SRComposite srcomposite = new SRComposite(streamerElement.getName(),null,iterate(sinfo,history,b),true,false);
+                        temp.add(srcomposite);
+                    }
+                    else {
+                        sub = findBranch(streamerElement.getName(),history,b);
+                        try {
+                            sinfo = streamers.get(streamerElement.getName());
+                        }
+                        catch (NullPointerException e){
+                            sinfo=null;
+                        }
+                        SRCompositeType srcompositetype = new SRCompositeType();
+                        temp.add(synthesizeStreamerInfo(sub,sinfo,streamerElement,srcompositetype,true));
+                    }
+                }
+                else if (ttt < 61 || ttt ==500){
+                    sub = findBranch(streamerElement.getName(),history,b);
+                    SRCompositeType srcompositetype = new SRCompositeType();
+                    temp.add(synthesizeStreamerElement(sub,streamerElement,srcompositetype));
+                }
+                else {
+                    try {
+                        sinfo = streamers.get(formatNameForPointer(streamerElement.getTypeName()));
+                    }
+                    catch (NullPointerException e){
+                        sinfo = null;
+                    }
+                    if (sinfo == null){
+                        SRUnknown srunknown = new SRUnknown(streamerElement.getName());
+                        temp.add(srunknown);
+                    }
+                    else {
+                        try {
+                            List<String> t1 = new ArrayList();
+                            t1.addAll(history);
+                            t1.add(streamerElement.getName());
+                            SRComposite srcomposite = new SRComposite(streamerElement.getName(),null,iterate(sinfo,t1,b),true,false);
+                            temp.add(srcomposite);
+                        }
+                        catch (Throwable ex){
+                            sub = findBranch(streamerElement.getName(),history,b);
+                            SRCompositeType srcompositetype = new SRCompositeType();
+                            temp.add(synthesizeStreamerInfo(sub,sinfo,streamerElement,srcompositetype,false));
+                        }
+                    }
+                }
+            }
+        }
+        return temp;
     }
 
     List<TStreamerElement> shuffleStreamerInfo(TStreamerInfo sinfo){
