@@ -235,7 +235,6 @@ public class buildATT {
                         return synthesizeStreamerInfo(b,streamerInfo,streamerElement,parentType,false);
                     }
                 }
-                break;
             case 1 :
                 SRByte srbyte = new SRByte(streamerElement.getName(),b,temp);
                 return srbyte;
@@ -313,7 +312,7 @@ public class buildATT {
             case 38 :
             case 39 :
             case 40 :
-                    return iterateArray(b,streamerElement,parentType,streamerElement.getArrayDim());tr
+                    return iterateArray(b,streamerElement,parentType,streamerElement.getArrayDim());
             case 61 :
                 try {
                     streamerInfo = streamers.get(formatNameForPointer(streamerElement.getTypeName()));
@@ -512,6 +511,62 @@ public class buildATT {
         List<String> stlStrings = Arrays.asList("string","_basic_string_common<true>");
         String classTypeRE = Pattern.quote("(.*?)<(.*?)>");
         String classTypeString,arguementsTypeString;
+        //Insert regex part here
+        SRCollectionType srcollectiontype = new SRCollectionType();
+        if (stlStrings.contains(className)){
+            if (b==null){
+                if (parentType.equals(srcollectiontype)){
+                    SRSTLString srstlstring = new SRSTLString("",null,false);
+                    return srstlstring;
+                }
+                else {
+                    SRSTLString srstlstring = new SRSTLString("",null,true);
+                    return srstlstring;
+                }
+            }
+            else {
+                if (parentType.equals(srcollectiontype)){
+                    SRSTLString srstlstring = new SRSTLString(b.getName(),b,false);
+                    return srstlstring;
+                }
+                else {
+                    SRSTLString srstlstring = new SRSTLString(b.getName(),b,true);
+                    return srstlstring;
+                }
+            }
+        }
+        SRType isCustom;
+        Map<String,SRType> customStreamers = new HashMap();
+        SRInt srintm = new SRInt("",null,null);
+        customStreamers.put("trigger::TriggerObjectType",srintm);
+        customStreamers.put("reco::Muon::MuonTrackType",srintm);
+        customStreamers.put("pat::IsolationKeys",srintm);
+        customStreamers.put("reco::IsoDeposit",srintm);
+        SRShort srshortm1 = new SRShort("f1",null,null);
+        SRShort srshortm2 = new SRShort("f2",null,null);
+        SRInt srintm3 = new SRInt("f3",null,null);
+        SRShort srshortm4 = new SRShort("f4",null,null);
+        List<SRType> tempparameter = new ArrayList();
+        tempparameter.add(srshortm1);
+        tempparameter.add(srshortm2);
+        tempparameter.add(srintm3);
+        tempparameter.add(srshortm4);
+        SRComposite srcompositem=new SRComposite("product_",null,tempparameter,false,false,false);
+        customStreamers.put("edm::RefCoreWithIndex",srcompositem);
+        SRNull srnull = new SRNull();
+        try {
+            isCustom = customStreamers.get(className);
+        }
+        catch (NullPointerException e){
+            isCustom = srnull;
+        }
+        if (isCustom != srnull){
+            return isCustom;
+        }
+        if (classTypeString == null || arguementsTypeString == null){
+            SRUnknown srunknown = new SRUnknown(className);
+            return srunknown;
+        }
 
     }
 
@@ -751,8 +806,8 @@ public class buildATT {
     }
 
     SRType synthesizeFlattenable(TBranchElement b,TStreamerInfo streamerInfo){
-        List<SRType> sub = new ArrayList();
-        SRComposite srcomposite = new SRComposite(b.getName(),b,iterate(streamerInfo,sub),true,false);
+        List<String> sub = new ArrayList();
+        SRComposite srcomposite = new SRComposite(b.getName(),b,iterate(streamerInfo,sub,b),true,false);
         return srcomposite;
     }
 

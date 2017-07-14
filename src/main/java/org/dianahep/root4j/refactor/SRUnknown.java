@@ -10,8 +10,7 @@ public class SRUnknown extends SRType {
         super(name);
     }
 
-    @Override
-    void read(RootInput b){
+    @Override void read(RootInput b){
         array.add(null);
     }
 

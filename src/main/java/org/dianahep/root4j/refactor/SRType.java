@@ -4,9 +4,8 @@ import org.dianahep.root4j.core.*;
 import java.util.*;
 import java.io.*;
 
-public abstract class SRType<T extends RootInput>{
+public abstract class SRType<T>{
     String name;
-    List<T> array = new ArrayList<T>();
     long entry = 0L;
     String toName = name.replace('.','_');
 
@@ -24,16 +23,10 @@ public abstract class SRType<T extends RootInput>{
 
     SRType(String name){
         this.name=name;
-        this.array=null;
     }
 
     SRType(){
         this.name=null;
-        this.array=null;
     }
 
-    SRType(String name,List<T>array){
-        this.name=name;
-        this.array=array;
-    }
 }
