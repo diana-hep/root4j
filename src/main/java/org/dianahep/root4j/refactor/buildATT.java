@@ -1,5 +1,6 @@
 package org.dianahep.root4j.refactor;
 
+import org.apache.hadoop.yarn.webapp.hamlet.Hamlet;
 import org.dianahep.root4j.interfaces.*;
 import java.util.*;
 import java.io.*;
@@ -638,6 +639,114 @@ public class buildATT {
                     return srcomposite;
                 }
             }
+        }
+    }
+
+    SRType synthesizeStreamerSTL(TBranchElement b,TStreamerSTL streamerSTL,SRTypeTag parentType){
+        switch (streamerSTL.getSTLtype()){
+            case 1 :
+                int ctype = streamerSTL.getCtype();
+                SRType t;
+                if (ctype<61){
+                    if (streamerSTL.getTypeName().contains("bool") && ctype==21){
+                        t=synthesizeBasicStreamerType(18);
+                    }
+                    else {
+                        t=synthesizeBasicStreamerType(ctype);
+                    }
+                }
+                else {
+                    String memberClassName="";
+                    for (int i=streamerSTL.getTypeName().indexOf('<')+1;i<streamerSTL.getTypeName().length()-1;i++){
+                        memberClassName=memberClassName+streamerSTL.getTypeName().charAt(i);
+                    }
+                    memberClassName = memberClassName.trim();
+                    TStreamerInfo streamerInfo;
+                    try {
+                        streamerInfo = streamers.get(formatNameForPointer(memberClassName));
+                    }
+                    catch (NullPointerException e){
+                        streamerInfo = null;
+                    }
+                    if (streamerInfo == null){
+                        SRCollectionType srcollectiontype = new SRCollectionType();
+                        t=synthesizeClassName(memberClassName,null,srcollectiontype);
+                    }
+                    else {
+                        SRCollectionType srcollectiontype = new SRCollectionType();
+                        TBranchElement temp;
+                        if (b==null || b.getBranches().size()==0){
+                            temp = null;
+                        }
+                        else {
+                            temp = b;
+                        }
+                        t=synthesizeStreamerInfo(temp,streamerInfo,null,srcollectiontype,false);
+                    }
+                }
+                if (b==null){
+                        SRCollectionType srcollectiontype = new SRCollectionType();
+                        if (parentType.equals(srcollectiontype)){
+                            SRVector srvector = new SRVector("",b,t,false,false);
+                            return srvector;
+                    }
+                    else {
+                            SRVector srvector = new SRVector(streamerSTL.getName(),b,t,false,true);
+                            return srvector;
+                        }
+                }
+                else {
+                    SRCollectionType srcollectiontype = new SRCollectionType();
+                    if (parentType.equals(srcollectiontype)){
+                        SRVector srvector = new SRVector(b.getName(),b,t,false,false);
+                        return srvector;
+                    }
+                    else {
+                        boolean temp;
+                        if (b.getBranches().size()==0){
+                            temp = false;
+                        }
+                        else {
+                            temp = true;
+                        }
+                        SRVector srvector = new SRVector(b.getName(),b,t,temp,true);
+                        return srvector;
+                    }
+                }
+            case 4 :
+                return synthesizeClassName(streamerSTL.getTypeName(),b,parentType);
+            case 5 :
+                return synthesizeClassName(streamerSTL.getTypeName(),b,parentType);
+            case 6 :
+                return synthesizeClassName(streamerSTL.getTypeName(),b,parentType);
+            case 8 :
+                return synthesizeClassName("vector<bool>",b,parentType);
+            case 365 :
+                if (b==null){
+                    SRCollectionType srcollectiontype = new SRCollectionType();
+                    if (parentType.equals(srcollectiontype)){
+                        SRSTLString srstlstring = new SRSTLString("",null,false);
+                        return srstlstring;
+                    }
+                    else {
+                        SRSTLString srstlstring = new SRSTLString(streamerSTL.getName(),null,true);
+                        return srstlstring;
+                    }
+                }
+                else {
+                    SRCollectionType srcollectiontype = new SRCollectionType();
+                    if (parentType.equals(srcollectiontype)){
+                        SRSTLString srstlstring = new SRSTLString(b.getName(),b,false);
+                        return srstlstring;
+                    }
+                    else {
+                        SRSTLString srstlstring = new SRSTLString(streamerSTL.getName(),b,true);
+                        return srstlstring;
+                    }
+                }
+            default :
+                SRNull srnull = new SRNull();
+                return srnull;
         }
     }
 
