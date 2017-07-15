@@ -31,21 +31,22 @@ public class SRComposite extends SRType{
         this.isBase = false;
     }
 
-    @Override void readArray(int size)throws IOException{
-        List<SRType> data = new ArrayList();
+    List<List<Vector>> readArray(int size)throws IOException{
+        List<List<Vector>> data = new ArrayList();
+        List<Vector> temp = new ArrayList();
         if (split){
             if (members.size()==0){
                 for (int i=0;i<size;i++){
-                    data.add(null);
+                    data.add(temp);
                 }
             }
             else {
-                for (int i=0;i<members.size();i++){
-                    data.add(members.get(i));
+                for (SRType m : members){
+                    data.add(m.readArray(size));
                 }
             }
             entry+=1L;
-            array.add(data);
+            return data;
         }
         else {
             RootInput buffer = b.setPosition((TLeafElement)b.getLeaves().get(0), entry);
@@ -53,21 +54,21 @@ public class SRComposite extends SRType{
         }
     }
 
-    @Override void readArray(RootInput buffer,int size)throws IOException{
-        List<SRType> data = new ArrayList();
+    List<List<Vector>> readArray(RootInput buffer,int size)throws IOException{
+        List<List<Vector>> data = new ArrayList();
+        List<Vector> temp = new ArrayList();
         if (isBase){
             if (members.size()==0){
                 for (int i=0;i<size;i++){
-                    data.add(null);
+                    data.add(temp);
                 }
             }
             else {
-                for (int i=0;i<members.size();i++){
-                    data.add(members.get(i));
+                for (SRType m : members)
+                    data.add(m.readArray(buffer,size));
                 }
-            }
             entry+=1L;
-            array.add(data);
+            return data;
         }
         else {
             for (int i=0;i<size;i++){
@@ -75,12 +76,12 @@ public class SRComposite extends SRType{
                 if (version==0) {
                     buffer.readInt();
                 }
-                for (int j=0;j<members.size();j++){
-                    data.add(members.get(i));
+                for (SRType m : members)
+                    temp.add(m.read(buffer));
                 }
-            }
+            data.add(temp);
             entry+=1L;
-            array.add(data);
+            return data;
         }
     }
 

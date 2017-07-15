@@ -10,31 +10,29 @@ public class SRUnknown extends SRType {
         super(name);
     }
 
-    @Override void read(RootInput b){
-        array.add(null);
+    String readroot(RootInput b){
+        return null;
     }
 
-    @Override
-    void read(){
-        array.add(null);
+    String readroot(){
+        return null;
     }
 
-     @Override
-     void readArray(int size) {
+     List<String> readArrayroot(int size) {
         List<String> temp = new ArrayList();
         for (int i=0;i<size;i++)
         {
             temp.add(null);
         }
-        array.add(temp);
+        return temp;
      }
 
-     @Override void readArray(RootInput buffer, int size){
+     List<String> readArrayroot(RootInput buffer, int size){
         List<String> temp = new ArrayList();
         for (int i=0;i<size;i++){
             temp.add(null);
         }
-        array.add(temp);
+        return temp;
      }
 
      @Override boolean hasNext(){

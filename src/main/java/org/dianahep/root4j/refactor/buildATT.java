@@ -1,5 +1,6 @@
 package org.dianahep.root4j.refactor;
 
+import jdk.nashorn.internal.runtime.arrays.ArrayIndex;
 import org.apache.hadoop.yarn.webapp.hamlet.Hamlet;
 import org.dianahep.root4j.interfaces.*;
 import java.util.*;
@@ -103,7 +104,7 @@ public class buildATT {
             try {
                 streamerInfo = streamers.get(be.getClassName());
             }
-            catch (NullPointerException e){
+            catch (ArrayIndexOutOfBoundsException e){
                 streamerInfo = null;
             }
             if (streamerInfo==null){
@@ -218,7 +219,7 @@ public class buildATT {
                 try {
                     streamerInfo = streamers.get(streamerElement.getName());
                 }
-                catch (NullPointerException e){
+                catch (ArrayIndexOutOfBoundsException e){
                     streamerInfo = null;
                 }
                 if (streamerInfo == null){
@@ -317,7 +318,7 @@ public class buildATT {
                 try {
                     streamerInfo = streamers.get(formatNameForPointer(streamerElement.getTypeName()));
                 }
-                catch (NullPointerException e){
+                catch (ArrayIndexOutOfBoundsException e){
                     streamerInfo=null;
                 }
                 if (streamerInfo==null){
@@ -331,7 +332,7 @@ public class buildATT {
                 try {
                     streamerInfo = streamers.get(formatNameForPointer(streamerElement.getTypeName()));
                 }
-                catch (NullPointerException e){
+                catch (ArrayIndexOutOfBoundsException e){
                     streamerInfo = null;
                 }
                 if (streamerInfo==null) {
@@ -339,7 +340,7 @@ public class buildATT {
                     try {
                         isCustom = customStreamers.get(formatNameForPointer(streamerElement.getTypeName()));
                         return isCustom;
-                    } catch (NullPointerException e){
+                    } catch (ArrayIndexOutOfBoundsException e){
                         SRNull srnull = new SRNull();
                         isCustom = srnull;
                         SRUnknown srunknown = new SRUnknown(streamerElement.getName());
@@ -353,7 +354,7 @@ public class buildATT {
                 try{
                     streamerInfo = streamers.get(formatNameForPointer(streamerElement.getTypeName()));
                 }
-                catch (NullPointerException e){
+                catch (ArrayIndexOutOfBoundsException e){
                     streamerInfo = null;
                 }
                 if (streamerInfo == null){
@@ -370,7 +371,7 @@ public class buildATT {
                 try {
                     streamerInfo = streamers.get(streamerElement.getName());
                 }
-                catch (NullPointerException e){
+                catch (ArrayIndexOutOfBoundsException e){
                     streamerInfo = null;
                 }
                 if (streamerInfo == null){
@@ -384,7 +385,7 @@ public class buildATT {
                 try {
                     streamerInfo = streamers.get(streamerElement.getName());
                 }
-                catch (NullPointerException e){
+                catch (ArrayIndexOutOfBoundsException e){
                     streamerInfo = null;
                 }
                 if (streamerInfo == null){
@@ -398,7 +399,7 @@ public class buildATT {
                 try {
                     streamerInfo = streamers.get(formatNameForPointer(streamerElement.getTypeName()));
                 }
-                catch (NullPointerException e){
+                catch (ArrayIndexOutOfBoundsException e){
                     streamerInfo = null;
                 }
                 if (streamerInfo == null){
@@ -511,7 +512,9 @@ public class buildATT {
         List<String> stlStrings = Arrays.asList("string","_basic_string_common<true>");
         String classTypeRE = Pattern.quote("(.*?)<(.*?)>");
         String classTypeString,arguementsTypeString;
+
         //Insert regex part here
+
         SRCollectionType srcollectiontype = new SRCollectionType();
         if (stlStrings.contains(className)){
             if (b==null){
@@ -557,7 +560,7 @@ public class buildATT {
         try {
             isCustom = customStreamers.get(className);
         }
-        catch (NullPointerException e){
+        catch (ArrayIndexOutOfBoundsException e){
             isCustom = srnull;
         }
         if (isCustom != srnull){
@@ -566,6 +569,123 @@ public class buildATT {
         if (classTypeString == null || arguementsTypeString == null){
             SRUnknown srunknown = new SRUnknown(className);
             return srunknown;
+        }
+        if (stlBitset.equals(classTypeString)){
+            return synthesizeClassName("vector<bool>", b, parentType);
+        }
+        else if (stlLinear.contains(classTypeString)){
+            List<String> templateArguements = extractTemplateArguements(arguementsTypeString);
+            String valueTypeName;
+            if (templateArguements.size()>0) {
+                valueTypeName = templateArguements.get(0);
+            }
+            else {
+                valueTypeName = arguementsTypeString;
+            }
+            TStreamerInfo streamerInfo;
+            try {
+                streamerInfo = streamers.get(formatNameForPointer(valueTypeName));
+            }
+            catch (ArrayIndexOutOfBoundsException e) {
+                streamerInfo = null;
+            }
+            SRType valueType ;
+            if (streamerInfo == null) {
+                SRType basicType = synthesizeBasicTypeName(valueTypeName);
+                if (basicType.equals(srnull)) {
+                    valueType = synthesizeClassName(valueTypeName, null, srcollectiontype);
+                }
+                else {
+                    valueType = basicType;
+                }
+            }
+            else {
+                valueType = synthesizeStreamerInfo(b, streamerInfo, null, srcollectiontype, false);
+            }
+            if (b==null){
+                if (parentType.equals(srcollectiontype)) {
+                    SRVector srvector = new SRVector("", b, valueType, false, false);
+                    return srvector;
+                }
+                else {
+                    SRVector srvector = new SRVector("", b, valueType, false, true);
+                    return srvector;
+                }
+            }
+            else {
+                if (parentType.equals(srcollectiontype)) {
+                    SRVector srvector = new SRVector(b.getName(), b, valueType, false, false);
+                    return srvector;
+                }
+                else{
+                    boolean temp;
+                    if (b.getBranches().size()==0) {
+                        temp = false;
+                    }
+                    else {
+                        temp = true;
+                    }
+                    SRVector srvector = new SRVector(b.getName(),b,valueType,temp,true);
+                    return srvector;
+                }
+             }
+        }
+        else if (stlAssociative.contains(classTypeString)){
+            boolean isMulti = classTypeString.contains("multi");
+            List<String> templateArguements = extractTemplateArguements(arguementsTypeString);
+            String keyTypeString;
+            if (templateArguements.size()>2){
+                keyTypeString = templateArguements.get(0);
+            }
+            else {
+                keyTypeString = null;
+            }
+            String valueTypeString;
+            if (templateArguements.size()>2){
+                valueTypeString = templateArguements.get(1);
+            }
+            else {
+                valueTypeString = null;
+            }
+            if (keyTypeString == null || valueTypeString == null){
+                return srnull;
+            }
+            TStreamerInfo keyStreamerInfo;
+            try {
+                keyStreamerInfo = streamers.get(formatNameForPointer(keyTypeString));
+            }
+            catch (NullPointerException e){
+                keyStreamerInfo = null;
+            }
+            SRType keyType;
+            if (keyStreamerInfo == null){
+                if (synthesizeBasicTypeName(keyTypeString).equals(srnull)){
+                    keyType = synthesizeClassName(keyTypeString,null,srcollectiontype);
+                }
+                else {
+                    keyType = synthesizeBasicTypeName(keyTypeString);
+                }
+            }
+            else {
+                keyType = synthesizeStreamerInfo(null,keyStreamerInfo,null,srcollectiontype,false);
+            }
+            TStreamerInfo streamerInfo;
+            try {
+                streamerInfo = streamers.get(formatNameForPointer(valueTypeString));
+            }
+            catch (ArrayIndexOutOfBoundsException e){
+                streamerInfo = null;
+            }
+            SRType valueType;
+            if (streamerInfo == null){
+                SRType basicType = synthesizeBasicTypeName(valueTypeString);
+                if (basicType.equals(srnull)){
+                    valueType = synthesizeClassName(valueTypeString,null,srcollectiontype);
+                }
+                else {
+                    valueType = basicType;
+                }
+            }
         }
 
     }
@@ -720,7 +840,7 @@ public class buildATT {
                     try {
                         streamerInfo = streamers.get(formatNameForPointer(memberClassName));
                     }
-                    catch (NullPointerException e){
+                    catch (ArrayIndexOutOfBoundsException e){
                         streamerInfo = null;
                     }
                     if (streamerInfo == null){
@@ -919,7 +1039,7 @@ public class buildATT {
                         try{
                             sinfo = streamers.get(streamerElement.getName());
                         }
-                        catch (NullPointerException e){
+                        catch (ArrayIndexOutOfBoundsException e){
                             sinfo = null;
                         }
                         SRComposite srcomposite = new SRComposite(streamerElement.getName(),null,iterate(sinfo,history,b),true,false);
@@ -930,7 +1050,7 @@ public class buildATT {
                         try {
                             sinfo = streamers.get(streamerElement.getName());
                         }
-                        catch (NullPointerException e){
+                        catch (ArrayIndexOutOfBoundsException e){
                             sinfo=null;
                         }
                         SRCompositeType srcompositetype = new SRCompositeType();
@@ -946,7 +1066,7 @@ public class buildATT {
                     try {
                         sinfo = streamers.get(formatNameForPointer(streamerElement.getTypeName()));
                     }
-                    catch (NullPointerException e){
+                    catch (ArrayIndexOutOfBoundsException e){
                         sinfo = null;
                     }
                     if (sinfo == null){

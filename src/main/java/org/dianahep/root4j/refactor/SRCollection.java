@@ -7,7 +7,7 @@ public abstract class SRCollection extends SRType {
 
 
     SRCollection(String name,boolean isTop){
-        this.name=name;
+        super(name);
         this.isTop=isTop;
     }
 
