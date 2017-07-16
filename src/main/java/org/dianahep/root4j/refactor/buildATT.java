@@ -686,10 +686,150 @@ public class buildATT {
                     valueType = basicType;
                 }
             }
+            else {
+                valueType = synthesizeStreamerInfo(b,streamerInfo,null,srcollectiontype,false);
+            }
+            if (b==null){
+                if (parentType.equals(srcollectiontype)){
+                    if (isMulti){
+                        SRMultiMap srmultimap = new SRMultiMap("",b,keyType,valueType,false,true);
+                        return srmultimap;
+                    }
+                    else {
+                        SRMap srmap = new SRMap("",b,keyType,valueType,false,false);
+                        return srmap;
+                    }
+                }
+                else {
+                    if (isMulti){
+                        SRMultiMap srmultimap = new SRMultiMap("",b,keyType,valueType,false,true);
+                        return srmultimap;
+                    }
+                    else {
+                        SRMap srmap = new SRMap("",b,keyType,valueType,false,true);
+                        return srmap;
+                    }
+                }
+            }
+            else {
+                if (parentType.equals(srcollectiontype)){
+                    if (isMulti){
+                        SRMultiMap srmultimap = new SRMultiMap(b.getName(),b,keyType,valueType,false,true);
+                        return srmultimap;
+                    }
+                    else {
+                        SRMap srmap = new SRMap(b.getName(),b,keyType,valueType,false,false);
+                        return srmap;
+                    }
+                }
+                else {
+                    if (isMulti){
+                        boolean temp;
+                        if (b.getBranches().size()==0){
+                            temp=false;
+                        }
+                        else {
+                            temp = true;
+                        }
+                        SRMultiMap srmultimap = new SRMultiMap(b.getName(),b,keyType,valueType,temp,true);
+                        return srmultimap;
+                    }
+                    else {
+                        boolean temp;
+                        if (b.getBranches().size()==0){
+                            temp=false;
+                        }
+                        else {
+                            temp = true;
+                        }
+                        SRMap srmap = new SRMap(b.getName(),b,keyType,valueType,temp,true);
+                        return srmap;
+                    }
+                }
+            }
+        }
+        else if (classTypeString.equals(stlPair)){
+            List<String> templateArguements = extractTemplateArguements(arguementsTypeString);
+            String firstTypeString;
+            if (templateArguements.size()==2){
+                firstTypeString = templateArguements.get(0);
+            }
+            else {
+                firstTypeString = null;
+            }
+            String secondTypeString;
+            if (templateArguements.size()==2){
+                secondTypeString = templateArguements.get(1);
+            }
+            else {
+                secondTypeString = null;
+            }
+            if (firstTypeString == null || secondTypeString == null){
+                return srnull;
+            }
+            TStreamerInfo streamerInfoFirst;
+            try {
+                streamerInfoFirst = streamers.get(formatNameForPointer(firstTypeString));
+            }
+            catch (ArrayIndexOutOfBoundsException e){
+                streamerInfoFirst = null;
+            }
+            TStreamerInfo streamerInfoSecond;
+            try {
+                streamerInfoSecond = streamers.get(formatNameForPointer(secondTypeString));
+            }
+            catch (ArrayIndexOutOfBoundsException e){
+                streamerInfoSecond = null;
+            }
+            SRType firstType;
+            TBranchElement temp;
+            SRCompositeType srcompositetype = new SRCompositeType();
+            if (streamerInfoFirst == null){
+                SRType basicType = synthesizeBasicTypeName(firstTypeString);
+                if (basicType.equals(srnull)){
+                    if (b==null || b.getBranches().size()==0){
+                        temp = null;
+                    }
+                    else {
+                        temp = (TBranchElement)b.getBranches().get(0);
+                    }
+                    firstType = synthesizeClassName(firstTypeString,temp,srcompositetype);
+                }
+                else {
+                    firstType = basicType;
+                }
+            }
+            else {
+                firstType = synthesizeStreamerInfo(null,streamerInfoFirst,null,srcollectiontype,false);
+            }
+            SRType secondType;
+            if (streamerInfoSecond == null){
+                SRType basicType = synthesizeBasicTypeName(secondTypeString);
+                if (basicType.equals(srnull)){
+                        if (b==null || b.getBranches().size()==0){
+                            temp = null;
+                        }
+                        else {
+                            temp = (TBranchElement)b.getBranches().get(1);
+                        }
+                        secondType = synthesizeClassName(secondTypeString,temp,srcompositetype);
+                }
+                else {
+                        secondType = basicType;
+                }
+            }
+            else{
+                secondType = synthesizeStreamerInfo(null,streamerInfoSecond,null,srcompositetype,false);
+            }
+            if (b==null){
+                if (parentType.equals(srcollectiontype)){
+                    List<SRType> t = new ArrayList();
+                    SRComposite srcomposite = new SRComposite("",b,t.add)
+                }
+            }
         }
 
     }
-
     SRType synthesizeStreamerInfo(TBranchElement b,TStreamerInfo streamerInfo,TStreamerElement streamerElement,SRTypeTag parentType,boolean flattenable){
         TObjArray elements = streamerInfo.getElements();
         for (int i=0;i<elements.size();i++){
