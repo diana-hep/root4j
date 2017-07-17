@@ -14,13 +14,13 @@ public class SRLong extends SRSimpleType {
         super(name,b,l);
     }
 
-    @Override long read(RootInput buffer)throws IOException{
+    @Override Long read(RootInput buffer)throws IOException{
         long t = buffer.readLong();
         entry+=1L;
         return t;
     }
 
-    @Override long read()throws IOException{
+    @Override Long read()throws IOException{
         RootInput buffer = b.setPosition(l,entry);
         long t = buffer.readLong();
         entry+=1L;

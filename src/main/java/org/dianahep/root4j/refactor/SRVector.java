@@ -24,25 +24,12 @@ public class SRVector extends SRCollection{
         return entry<b.getEntries();
     }
 
-    List<List<Vector>> transpose(List<List<Vector>> table) {
-        List<List<Vector>> ret = new ArrayList();
-        final int N = table.get(0).size();
-        for (int i = 0; i < N; i++) {
-            List<Vector> col = new ArrayList();
-            for (List<Vector> row : table) {
-                col.add(row.get(i));
-            }
-            ret.add(col);
-        }
-        return ret;
-    }
-
     List<List<Vector>> readArray(RootInput buffer,int size)throws IOException{
         entry+=1L;
         SRNull srnull = new SRNull();
         List<List<Vector>> temp = new ArrayList();
         List<Vector> temp1 = new ArrayList();
-        List<List<Vector>> temp2 = new ArrayList();
+        List<Vector> temp2 = new ArrayList();
         if (split)
         {
             return null;

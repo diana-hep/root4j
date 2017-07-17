@@ -14,13 +14,13 @@ public class SRFloat extends SRSimpleType {
         super(name,b,l);
     }
 
-    @Override float read(RootInput buffer)throws IOException{
+    @Override Float read(RootInput buffer)throws IOException{
         float t = buffer.readFloat();
         entry+=1L;
         return t;
     }
 
-    @Override float read()throws IOException{
+    @Override Float read()throws IOException{
         RootInput buffer = b.setPosition(l,entry);
         float t= buffer.readFloat();
         entry+=1L;

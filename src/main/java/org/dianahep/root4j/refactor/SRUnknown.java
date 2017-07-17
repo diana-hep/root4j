@@ -10,15 +10,16 @@ public class SRUnknown extends SRType {
         super(name);
     }
 
-    String readroot(RootInput b){
+    @Override String read(RootInput b){
         return null;
     }
 
-    String readroot(){
+    @Override String read(){
         return null;
     }
 
-     List<String> readArrayroot(int size) {
+     @Override
+     List<String> readArray(int size) {
         List<String> temp = new ArrayList();
         for (int i=0;i<size;i++)
         {
@@ -27,7 +28,8 @@ public class SRUnknown extends SRType {
         return temp;
      }
 
-     List<String> readArrayroot(RootInput buffer, int size){
+     @Override
+     List<String> readArray(RootInput buffer, int size){
         List<String> temp = new ArrayList();
         for (int i=0;i<size;i++){
             temp.add(null);

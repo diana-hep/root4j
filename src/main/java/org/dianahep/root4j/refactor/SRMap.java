@@ -23,6 +23,7 @@ public class SRMap extends SRCollection {
 
     SRMap(String name,TBranchElement b,SRComposite types,boolean split,boolean isTop){
         super(name,isTop);
+        SRCollection srcollection = new SRCollection(name,isTop);
         this.b=b;
         this.keyType = types.members.get(0);
         this.valueType = types.members.get(1);

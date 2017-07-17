@@ -5,7 +5,7 @@ import org.dianahep.root4j.core.*;
 import java.util.*;
 import java.io.*;
 
-public class SRComposite extends SRType{
+public class SRComposite<T> extends SRType{
     String name;
     TBranch b;
     List<SRType> members;
@@ -31,9 +31,11 @@ public class SRComposite extends SRType{
         this.isBase = false;
     }
 
-    List<List<Vector>> readArray(int size)throws IOException{
-        List<List<Vector>> data = new ArrayList();
-        List<Vector> temp = new ArrayList();
+    //Reimplement following functions
+
+    @Override List<List<Object>> readArray(int size)throws IOException{
+        List<List<Object>> data = new ArrayList();
+        List<Object> temp = new ArrayList();
         if (split){
             if (members.size()==0){
                 for (int i=0;i<size;i++){
@@ -54,9 +56,9 @@ public class SRComposite extends SRType{
         }
     }
 
-    List<List<Vector>> readArray(RootInput buffer,int size)throws IOException{
-        List<List<Vector>> data = new ArrayList();
-        List<Vector> temp = new ArrayList();
+    List<List<Object>> readArray(RootInput buffer,int size)throws IOException{
+        List<List<Object>> data = new ArrayList();
+        List<Object> temp = new ArrayList();
         if (isBase){
             if (members.size()==0){
                 for (int i=0;i<size;i++){
@@ -85,13 +87,14 @@ public class SRComposite extends SRType{
         }
     }
 
-    @Override void read()throws IOException{
-        List<SRType> data = new ArrayList();
+    @Override List<Object> read()throws IOException{
+        List<Object> data = new ArrayList();
         if (split){
             entry+=1L;
-            for (int i=0;i<members.size();i++){
-                data.add(members.get(i));
+            for (SRType m : members){
+                data.add(m.read());
             }
+            return data;
         }
         else {
             if (members.isEmpty()){

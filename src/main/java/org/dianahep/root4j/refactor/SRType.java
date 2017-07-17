@@ -9,17 +9,17 @@ public abstract class SRType<T>{
     long entry = 0L;
     String toName = name.replace('.','_');
 
-    void read(RootInput b) throws IOException{};
+    abstract T read(RootInput b) throws IOException;
 
-    void read()throws IOException{};
+    abstract T read()throws IOException;
 
     boolean hasNext() {
         return false;
     };
 
-    List<T> readArray(int size)throws IOException{};
+    abstract List<T> readArray(int size)throws IOException;
 
-    List<T> readArray(RootInput buffer, int size)throws IOException{};
+    abstract List<T> readArray(RootInput buffer, int size)throws IOException;
 
     SRType(String name){
         this.name=name;

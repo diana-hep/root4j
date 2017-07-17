@@ -14,13 +14,13 @@ public class SRDouble extends SRSimpleType {
         super(name,b,l);
     }
 
-    @Override double read(RootInput buffer)throws IOException{
+    @Override Double read(RootInput buffer)throws IOException{
         double t=buffer.readDouble();
         entry+=1L;
         return t;
     }
 
-    @Override double read()throws IOException{
+    @Override Double read()throws IOException{
         RootInput buffer = b.setPosition(l,entry);
         double t = buffer.readDouble();
         entry+=1L;

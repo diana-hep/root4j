@@ -14,13 +14,13 @@ public class SRBoolean extends SRSimpleType {
         super(name,b,l);
     }
 
-    @Override boolean read(RootInput buffer)throws IOException{
+    @Override Boolean read(RootInput buffer)throws IOException{
         boolean t = buffer.readBoolean();
         entry+=1L;
         return t;
     }
 
-    @Override boolean read()throws IOException{
+    @Override Boolean read()throws IOException{
         RootInput buffer = b.setPosition(l,entry);
         boolean t= buffer.readBoolean();
         entry+=1L;

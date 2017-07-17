@@ -14,13 +14,13 @@ public class SRByte extends SRSimpleType {
         super(name,b,l);
     }
 
-    @Override byte read(RootInput buffer)throws IOException{
+    @Override Byte read(RootInput buffer)throws IOException{
         byte t = buffer.readByte();
         entry+=1L;
         return t;
     }
 
-    @Override byte read()throws IOException{
+    @Override Byte read()throws IOException{
         RootInput buffer = b.setPosition(l,entry);
         byte t= buffer.readByte();
         entry+=1L;

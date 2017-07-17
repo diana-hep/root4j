@@ -14,13 +14,13 @@ public class SRShort extends SRSimpleType {
         super(name,b,l);
     }
 
-    @Override short read(RootInput buffer)throws IOException{
+    @Override Short read(RootInput buffer)throws IOException{
         short temp = buffer.readShort();
         entry+=1L;
         return temp;
     }
 
-    @Override short read()throws IOException{
+    @Override Short read()throws IOException{
         RootInput buffer = b.setPosition(l,entry);
         short temp = buffer.readShort();
         entry+=1L;

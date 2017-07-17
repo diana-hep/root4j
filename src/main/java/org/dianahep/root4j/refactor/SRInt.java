@@ -14,13 +14,13 @@ public class SRInt extends SRSimpleType {
         super(name,b,l);
     }
 
-    @Override int read(RootInput buffer)throws IOException{
+    @Override Integer read(RootInput buffer)throws IOException{
         int t = buffer.readInt();
         entry+=1L;
         return t;
     }
 
-    @Override int read()throws IOException{
+    @Override Integer read()throws IOException{
         RootInput buffer = b.setPosition(l,entry);
         int t = buffer.readInt();
         entry+=1L;
