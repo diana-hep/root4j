@@ -114,4 +114,8 @@ public class SRMap extends SRCollection {
         }
     }
 
+    @Override boolean hasNext(){
+        return entry<b.getEntries();
+    }
+
 }

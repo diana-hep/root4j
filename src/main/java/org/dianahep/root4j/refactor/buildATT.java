@@ -510,10 +510,33 @@ public class buildATT {
         String stlPair = "pair";
         String stlBitset = "bitset";
         List<String> stlStrings = Arrays.asList("string","_basic_string_common<true>");
-        String classTypeRE = Pattern.quote("(.*?)<(.*?)>");
         String classTypeString,arguementsTypeString;
 
-        //Insert regex part here
+
+        //Not sure if this will work(replacing regex)
+        String temp ="";
+        int temp1=0,temp2=0;
+        for (int i=0;i<className.length();i++){
+            temp=temp+className.charAt(i);
+            if (temp.length()==3){
+                if (temp.equals("aaa")){
+                    temp1=1;
+                    temp="";
+                }
+                if (temp.equals("bbb")){
+                    temp2=1;
+                    temp="";
+                }
+            }
+        }
+        if (temp1==1 && temp2==1){
+            classTypeString = "aaa";
+            arguementsTypeString = "bbb".trim();
+        }
+        else {
+            classTypeString = null;
+            arguementsTypeString = null;
+        }
 
         SRCollectionType srcollectiontype = new SRCollectionType();
         if (stlStrings.contains(className)){
@@ -824,7 +847,8 @@ public class buildATT {
             if (b==null){
                 if (parentType.equals(srcollectiontype)){
                     List<SRType> t = new ArrayList();
-                    SRComposite srcomposite = new SRComposite("",b,t.add)
+                    t.add();
+                    SRComposite srcomposite = new SRComposite("",b,)
                 }
             }
         }
