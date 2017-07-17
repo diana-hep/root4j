@@ -13,25 +13,25 @@ public class SRRoot extends SRType{
         this.types=types;
     }
 
-    @Override void read(){
+    @Override List<SRType> read(){
         List<SRType> temp = new ArrayList();
-        for (int i=0;i<types.size();i++){
-            temp.add(types.get(i));
+        for (SRType t : types){
+            temp.add(types.read());
         }
-        array.add(temp);
         entries-=1L;
+        return temp;
     }
 
-    @Override void read(RootInput buffer){
-        array.add(null);
+    @Override SRType read(RootInput buffer){
+        return null;
     }
 
-    @Override void readArray(RootInput buffer, int size){
-        array.add(null);
+    @Override List<SRType> readArray(RootInput buffer, int size){
+        return null;
     }
 
-    @Override void readArray(int size){
-        array.add(null);
+    @Override List<SRType> readArray(int size){
+        return null;
     }
 
     @Override boolean hasNext(){

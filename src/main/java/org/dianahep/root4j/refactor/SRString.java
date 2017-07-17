@@ -14,38 +14,40 @@ public class SRString extends SRSimpleType{
         super(name,b,l);
     }
 
-    @Override void read(RootInput buffer)throws IOException{
+    @Override String read(RootInput buffer)throws IOException{
         String r=buffer.readString();
-        array.add(r);
         entry+=1L;
+        return r;
     }
 
-    @Override void read()throws IOException{
+    @Override String read()throws IOException{
         RootInput buffer = b.setPosition(l,entry);
         String data = buffer.readString();
-        array.add(data);
         entry+=1L;
+        return data;
     }
 
-    @Override void readArray(RootInput buffer,int size)throws IOException{
+    @Override List<String> readArray(RootInput buffer,int size)throws IOException{
         List<String> temp = new ArrayList();
         String t;
         for (int i=0;i<size;i++){
             t=buffer.readString();
             temp.add(t);
         }
-        array.add(temp);
         entry+=1L;
+        return temp;
     }
 
-    @Override void readArray(int size) throws IOException{
+    @Override List<String> readArray(int size) throws IOException{
         RootInput buffer = b.setPosition(l,entry);
-        String arr[]=new String[size];
+        List<String> temp = new ArrayList();
+        String t;
         for (int i=0;i<size;i++){
-            arr[i]=buffer.readString();
+            t=buffer.readString();
+            temp.add(t);
         }
-        array.add((int)entry,arr);
         entry+=1L;
+        return temp;
     }
 
     @Override boolean hasNext(){

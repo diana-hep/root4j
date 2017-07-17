@@ -15,30 +15,32 @@ public class SRSTLString extends SRCollection {
         this.b=b;
     }
 
-    @Override void read(RootInput buffer)throws IOException{
+    @Override String read(RootInput buffer)throws IOException{
         if (isTop){
             buffer.readInt();
             buffer.readShort();
         }
-        array.add(buffer.readString());
+        String temp = buffer.readString();
         entry+=1L;
+        return temp;
     }
 
-    @Override void read()throws IOException{
+    @Override String read()throws IOException{
         RootInput buffer = b.setPosition((TLeafElement)b.getLeaves().get(0), entry);
         if (isTop){
             buffer.readInt();
             buffer.readShort();
         }
-        array.add(buffer.readString());
+        String temp = buffer.readString();
         entry+=1L;
+        return temp;
     }
 
     @Override boolean hasNext(){
         return entry<b.getEntries();
     }
 
-    @Override void readArray(RootInput buffer, int size)throws IOException{
+    @Override List<String> readArray(RootInput buffer, int size)throws IOException{
         buffer.readInt();
         buffer.readShort();
         String t;
@@ -47,11 +49,11 @@ public class SRSTLString extends SRCollection {
             t=buffer.readString();
             temp.add(t);
         }
-        array.add(temp);
         entry+=1L;
+        return temp;
     }
 
-    @Override void readArray(int size)throws IOException{
+    @Override List<String> readArray(int size)throws IOException{
         RootInput buffer = b.setPosition((TLeafElement)b.getLeaves().get(0), entry);
         buffer.readInt();
         buffer.readShort();
@@ -61,7 +63,7 @@ public class SRSTLString extends SRCollection {
             t=buffer.readString();
             temp.add(t);
         }
-        array.add(temp);
         entry+=1L;
+        return temp;
     }
 }

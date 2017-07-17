@@ -8,28 +8,28 @@ public class SRNull extends SRType{
         super(null);
     }
 
-    @Override void read(RootInput b){
-        array.add(null);
+    @Override SRType read(RootInput b){
+        return null;
     }
 
-    @Override void read(){
-        array.add(null);
+    @Override SRType read(){
+        return null;
     }
 
-    @Override void readArray(RootInput buffer,int size){
-        List<String> temp=new ArrayList();
+    @Override List<SRType> readArray(RootInput buffer,int size){
+        List<SRType> temp=new ArrayList();
         for (int i=0;i<size;i++){
             temp.add(null);
         }
-        array.add(temp);
+        return temp;
     }
 
-    @Override void readArray(int size){
-        List<String> temp = new ArrayList();
+    @Override List<SRType> readArray(int size){
+        List<SRType> temp = new ArrayList();
         for (int i=0;i<size;i++){
             temp.add(null);
         }
-        array.add(null);
+        return temp;
     }
 
     boolean hasNext(){

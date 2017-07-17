@@ -1,6 +1,7 @@
 package org.dianahep.root4j.refactor;
 
 import org.dianahep.root4j.core.*;
+import java.util.*;
 
 public class SREmptyRoot extends SRType{
     String name;
@@ -11,21 +12,22 @@ public class SREmptyRoot extends SRType{
         this.entries=entries;
     }
 
-    @Override void read(RootInput b){
-        array.add(null);
+    @Override SRType read(RootInput b){
+        return null;
     }
 
-    @Override void read(){
+    @Override List<SRType> read(){
         entries-=1L;
-        array.add(null);
+        List<SRType> temp = new ArrayList();
+        return temp;
     }
 
-    @Override void readArray(RootInput b,int size){
-        array.add(null);
+    @Override List<SRType> readArray(RootInput b,int size){
+        return null;
     }
 
-    @Override void readArray(int size){
-        array.add(null);
+    @Override List<SRType> readArray(int size){
+        return null;
     }
 
     @Override boolean hasNext(){

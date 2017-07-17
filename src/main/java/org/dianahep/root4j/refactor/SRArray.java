@@ -19,66 +19,74 @@ public class SRArray extends SRSimpleType{
         this.t=t;
     }
 
-    @Override void read(RootInput buffer)throws IOException{
+    @Override List<SRType> read(RootInput buffer)throws IOException{
+        List<SRType> data = new ArrayList();
         if (n==-1) {
             for (int i = 0; i < (Integer) l.getLeafCount().getWrappedValue(entry); i++) {
-               t.read(buffer);
+               data.add(t.read(buffer));
             }
         }
         else{
                 for(int i=0;i<n;i++) {
-                    t.read(buffer);
+                    data.add(t.read(buffer));
                 }
             }
         entry+=1L;
+        return data;
     }
 
-    @Override void read()throws IOException{
+    @Override List<SRType> read()throws IOException{
         RootInput buffer = b.setPosition(l,entry);
+        List<SRType> data = new ArrayList();
         if (n==-1) {
             for (int i = 0; i < (Integer) l.getLeafCount().getWrappedValue(entry); i++) {
-                t.read(buffer);
+                data.add(t.read(buffer));
             }
         }
         else{
             for(int i=0;i<n;i++) {
-                t.read(buffer);
+                data.add(t.read(buffer));
             }
         }
         entry+=1L;
+        return data;
     }
 
-    @Override void readArray(RootInput buffer, int size) throws IOException{
+    @Override List<SRType> readArray(RootInput buffer, int size) throws IOException{
+        List<SRType> data = new ArrayList();
         for (int i=0;i<size;i++){
             if (n==-1){
                 for (int j=0; j<(Integer)l.getLeafCount().getWrappedValue(entry);j++){
-                    t.read(buffer);
+                    data.add(t.read(buffer));
                 }
             }
             else {
                 for (int j=0;j<size;j++){
-                    t.read(buffer);
+                    data.add(t.read(buffer));
                 }
             }
         }
         entry+=1L;
+        return data;
     }
 
-    @Override void readArray(int size)throws IOException{
+    @Override List<SRType> readArray(int size)throws IOException{
         RootInput buffer = b.setPosition(l,entry);
+        List<SRType> data = new ArrayList();
         for (int i=0;i<size;i++){
             if (n==-1){
                 for (int j=0; j<(Integer)l.getLeafCount().getWrappedValue(entry);j++){
-                    t.read(buffer);
+                    data.add(t.read(buffer));
                 }
             }
             else {
                 for (int j=0;j<size;j++){
-                    t.read(buffer);
+                    data.add(t.read(buffer));
                 }
             }
         }
         entry+=1L;
+        return data;
     }
 
     @Override boolean hasNext(){
