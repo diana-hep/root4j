@@ -5,7 +5,7 @@ import org.dianahep.root4j.core.*;
 import java.util.*;
 import java.io.*;
 
-public class SRComposite<T> extends SRType{
+public class SRComposite extends SRType{
     String name;
     TBranch b;
     List<SRType> members;
@@ -33,8 +33,8 @@ public class SRComposite<T> extends SRType{
 
     //Reimplement following functions
 
-    @Override List<List<Object>> readArray(int size)throws IOException{
-        List<List<Object>> data = new ArrayList();
+    @Override List<Object> readArray(int size)throws IOException{
+        List<Object> data = new ArrayList();
         List<Object> temp = new ArrayList();
         if (split){
             if (members.size()==0){
@@ -46,18 +46,21 @@ public class SRComposite<T> extends SRType{
                 for (SRType m : members){
                     data.add(m.readArray(size));
                 }
+
+                //Transpose to Map
+
             }
             entry+=1L;
             return data;
         }
         else {
             RootInput buffer = b.setPosition((TLeafElement)b.getLeaves().get(0), entry);
-            readArray(buffer,size);
+            return readArray(buffer,size);
         }
     }
 
-    List<List<Object>> readArray(RootInput buffer,int size)throws IOException{
-        List<List<Object>> data = new ArrayList();
+    List<Object> readArray(RootInput buffer,int size)throws IOException{
+        List<Object> data = new ArrayList();
         List<Object> temp = new ArrayList();
         if (isBase){
             if (members.size()==0){
@@ -69,6 +72,9 @@ public class SRComposite<T> extends SRType{
                 for (SRType m : members)
                     data.add(m.readArray(buffer,size));
                 }
+
+                //Transpose to Map
+
             entry+=1L;
             return data;
         }
@@ -81,6 +87,9 @@ public class SRComposite<T> extends SRType{
                 for (SRType m : members)
                     temp.add(m.read(buffer));
                 }
+
+                //Transpose to Map
+
             data.add(temp);
             entry+=1L;
             return data;
@@ -94,19 +103,27 @@ public class SRComposite<T> extends SRType{
             for (SRType m : members){
                 data.add(m.read());
             }
+
+            //Transpose to map
+
             return data;
         }
         else {
-            if (members.isEmpty()){
+            if (members.size()==0){
                 entry+=1L;
-                data.add(null);
+                List<Object> temp = new ArrayList();
+                return temp;
             }
             RootInput buffer = b.setPosition((TLeaf)b.getLeaves().get(0),entry);
             if (isTop){
                 entry+=1L;
-                for (int i=0;i<members.size();i++){
-                    data.add(members.get(i));
+                for (SRType m : members){
+                    data.add(m.read(buffer));
                 }
+
+                //Transpose to map
+
+                return data;
             }
             else {
                 int version = buffer.readVersion();
@@ -114,25 +131,31 @@ public class SRComposite<T> extends SRType{
                     buffer.readInt();
                 }
                 entry+=1L;
-                for (int i=0;i<members.size();i++){
-                    data.add(members.get(i));
+                for (SRType m : members){
+                    data.add(m.read(buffer));
                 }
+
+                //Transpose to map
+
+                return data;
             }
         }
-        array.add(data);
     }
 
-    @Override void read(RootInput buffer)throws IOException{
-        List<SRType> data = new ArrayList();
+    @Override List<Object> read(RootInput buffer)throws IOException{
+        List<Object> data = new ArrayList();
         entry+=1L;
         int version = buffer.readVersion();
         if (version==0){
             buffer.readInt();
         }
-        for (int i=0;i<members.size();i++){
-            data.add(members.get(i));
+        for (SRType m : members){
+            data.add(m.read(buffer));
         }
-        array.add(data);
+
+        //Transpose to map
+
+        return data;
     }
 
     @Override boolean hasNext(){

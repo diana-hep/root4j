@@ -17,9 +17,9 @@ public abstract class SRType<T>{
         return false;
     };
 
-    abstract List<T> readArray(int size)throws IOException;
+    abstract T readArray(int size)throws IOException;
 
-    abstract List<T> readArray(RootInput buffer, int size)throws IOException;
+    abstract T readArray(RootInput buffer, int size)throws IOException;
 
     SRType(String name){
         this.name=name;

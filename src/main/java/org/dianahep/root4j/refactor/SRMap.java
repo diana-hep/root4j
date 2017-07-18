@@ -23,15 +23,14 @@ public class SRMap extends SRCollection {
 
     SRMap(String name,TBranchElement b,SRComposite types,boolean split,boolean isTop){
         super(name,isTop);
-        SRCollection srcollection = new SRCollection(name,isTop);
         this.b=b;
         this.keyType = types.members.get(0);
         this.valueType = types.members.get(1);
         this.split=split;
     }
 
-    @Override Map<SRType,SRType> readArray(RootInput buffer, int size)throws IOException {
-        Map<SRType,SRType> data = new HashMap();
+    @Override Map<Object,Object> readArray(RootInput buffer, int size)throws IOException {
+        Map<Object,Object> data = new HashMap();
         int nn;
         if (split){
             return null;
@@ -53,13 +52,13 @@ public class SRMap extends SRCollection {
         }
     }
 
-    @Override Map<SRType,SRType> readArray(int size)throws IOException {
+    @Override Map<Object,Object> readArray(int size)throws IOException {
         RootInput buffer = b.setPosition((TLeafElement)b.getLeaves().get(0),entry);
         return readArray(buffer,size);
     }
 
-    @Override Map<SRType,SRType> read()throws IOException{
-        Map<SRType,SRType> data = new HashMap();
+    @Override Map<Object,Object> read()throws IOException{
+        Map<Object,Object> data = new HashMap();
         if (split){
             TLeaf leaf = (TLeaf)b.getLeaves().get(0);
             RootInput buffer = b.setPosition(leaf,entry);
@@ -84,8 +83,8 @@ public class SRMap extends SRCollection {
         }
     }
 
-    @Override Map<SRType,SRType> read(RootInput buffer)throws IOException{
-        Map<SRType,SRType> data = new HashMap();
+    @Override Map<Object,Object> read(RootInput buffer)throws IOException{
+        Map<Object,Object> data = new HashMap();
         if (split){
             return null;
         }

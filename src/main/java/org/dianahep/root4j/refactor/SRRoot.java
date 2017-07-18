@@ -2,6 +2,7 @@ package org.dianahep.root4j.refactor;
 
 import java.util.*;
 import org.dianahep.root4j.core.*;
+import java.io.*;
 
 public class SRRoot extends SRType{
     String name;
@@ -13,7 +14,7 @@ public class SRRoot extends SRType{
         this.types=types;
     }
 
-    @Override List<SRType> read(){
+    @Override List<SRType> read()throws IOException{
         List<SRType> temp = new ArrayList();
         for (SRType t : types){
             temp.add(types.read());

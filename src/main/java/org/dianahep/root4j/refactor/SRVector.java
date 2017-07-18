@@ -24,12 +24,12 @@ public class SRVector extends SRCollection{
         return entry<b.getEntries();
     }
 
-    List<List<Vector>> readArray(RootInput buffer,int size)throws IOException{
+    @Override List<Object> readArray(RootInput buffer,int size)throws IOException{
+        List<Object> data = new ArrayList();
+        List<Object> temp1 = new ArrayList();
         entry+=1L;
         SRNull srnull = new SRNull();
-        List<List<Vector>> temp = new ArrayList();
-        List<Vector> temp1 = new ArrayList();
-        List<Vector> temp2 = new ArrayList();
+        int nn;
         if (split)
         {
             return null;
@@ -40,9 +40,9 @@ public class SRVector extends SRCollection{
             if (version >0 && kMemberWiseStreaming > 0){
                 if (t.equals(srnull) || t instanceof SRUnknown){
                     for (int i=0;i<size;i++){
-                        temp.add(temp1);
+                        data.add(temp1);
                     }
-                    return temp;
+                    return data;
                 }
                 else {
                     short memberVersion = buffer.readShort();
@@ -50,21 +50,142 @@ public class SRVector extends SRCollection{
                         buffer.readInt();
                     }
                     SRComposite composite = (SRComposite)t;
-                    int nn=0;
                     for (int i=0;i<size;i++){
                         nn = buffer.readInt();
                         if (nn==0){
-                            temp.add(temp1);
+                            data.add(temp1);
                         }
                         else{
                             for (SRType x : composite.members){
-                                temp2.add(x.readArray(buffer,nn));
+                                data.add(x.readArray(buffer,nn));
                             }
+
+                            //Transpose to map
                         }
                     }
-                    temp.add(temp2);
-                    return temp;
+                    entry+=1L;
+                    return data;
                 }
+            }
+            else {
+                for (int i=0;i<size;i++){
+                    nn=buffer.readInt();
+                    for (int j=0;j<nn;j++){
+                        data.add(t.read(buffer));
+                    }
+                }
+                entry+=1L;
+                return data;
+            }
+        }
+    }
+
+    @Override List<Object> readArray(int size)throws IOException{
+        RootInput buffer = b.setPosition((TLeafElement)b.getLeaves().get(0),entry);
+        return readArray(buffer,size);
+    }
+
+    @Override List<Object> read()throws IOException{
+        List<Object> data = new ArrayList();
+        List<Object> empty = new ArrayList();
+        TLeaf leaf = (TLeaf)b.getLeaves().get(0);
+        RootInput buffer = b.setPosition(leaf,entry);
+        int size= buffer.readInt();
+        SRNull srnull = new SRNull();
+        if (split){
+            if (t.equals(srnull) || t instanceof SRUnknown){
+                data.add(empty);
+            }
+            else {
+                SRComposite composite = (SRComposite)t;
+                for (SRType x : composite.members){
+                    data.add(x.readArray(size));
+                }
+
+                //Transpose to map
+
+            }
+            entry+=1L;
+            return data;
+        }
+        else {
+            int byteCount = buffer.readInt();
+            int version = buffer.readVersion();
+            if (version>0 && kMemberWiseStreaming>0){
+                if (t.equals(srnull) || t instanceof SRUnknown){
+                    data.add(empty);
+                }
+                else {
+                    SRComposite composite = (SRComposite)t;
+                    short memberVersion = buffer.readShort();
+                    if (memberVersion == 0){
+                        buffer.readInt();
+                    }
+                    for (SRType x : composite.members){
+                        data.add(x.readArray(buffer,size));
+                    }
+
+                    //Transpose to map
+
+                }
+                entry +=1L;
+                return data;
+            }
+            else {
+                entry+=1L;
+                for (int i=0;i<size;i++){
+                    data.add(t.read(buffer));
+                }
+                return data;
+            }
+        }
+    }
+
+    @Override List<Object> read(RootInput buffer)throws IOException{
+        SRNull srnull = new SRNull();
+        List<Object> empty = new ArrayList();
+        List<Object> data = new ArrayList();
+        if (split){
+            return null;
+        }
+        else {
+            if (isTop){
+                int byteCount = buffer.readInt();
+                int version = buffer.readVersion();
+                if (version>0 && kMemberWiseStreaming>0){
+                    if (t.equals(srnull) || t instanceof SRUnknown){
+                        data.add(empty);
+                    }
+                    else {
+                        SRComposite composite = (SRComposite)t;
+                        short memberVersion = buffer.readShort();
+                        int size = buffer.readInt();
+                        for (SRType x: composite.members){
+                            data.add(x.readArray(buffer,size));
+                        }
+
+                        //Transpose to map
+
+                    }
+                    entry+=1L;
+                    return data;
+                }
+                else {
+                    int size = buffer.readInt();
+                    entry+=1L;
+                    for (int i=0;i<size;i++){
+                        data.add(t.read(buffer));
+                    }
+                    return data;
+                }
+            }
+            else {
+                int size = buffer.readInt();
+                entry+=1L;
+                for (int i=0;i<size;i++){
+                    data.add(t.read(buffer));
+                }
+                return data;
             }
         }
     }
