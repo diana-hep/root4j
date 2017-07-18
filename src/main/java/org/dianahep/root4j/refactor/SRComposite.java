@@ -31,8 +31,6 @@ public class SRComposite extends SRType{
         this.isBase = false;
     }
 
-    //Reimplement following functions
-
     @Override List<Object> readArray(int size)throws IOException{
         List<Object> data = new ArrayList();
         List<Object> temp = new ArrayList();
