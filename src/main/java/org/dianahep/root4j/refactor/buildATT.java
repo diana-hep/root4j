@@ -1244,25 +1244,6 @@ public class buildATT {
         return temp;
     }
 
-    List<TStreamerElement> shuffleStreamerInfo(TStreamerInfo sinfo){
-        TObjArray elems = sinfo.getElements();
-        List<TStreamerElement> bases = new ArrayList();
-        List<TStreamerElement> rest = new ArrayList();
-        for (int i=0;i<elems.size();i++){
-            TStreamerElement se = (TStreamerElement)elems.get(i);
-            if (se.getType()==0){
-                bases.add(se);
-            }
-            else{
-                rest.add(se);
-            }
-        }
-        List<TStreamerElement> re = new ArrayList();
-        re.addAll(bases);
-        re.addAll(rest);
-        return re;
-    }
-
     SRType synthesizeBranchElement(TBranchElement b,TStreamerElement streamerElement,SRTypeTag parentType){
         TObjArray subs=b.getBranches();
         if (streamerElement == null){
