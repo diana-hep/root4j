@@ -5,7 +5,7 @@ import org.dianahep.root4j.core.*;
 import java.util.*;
 import java.io.*;
 
-public class SRComposite extends SRType{
+public class SRComposite<T> extends SRType{
     String name;
     TBranch b;
     List<SRType> members;

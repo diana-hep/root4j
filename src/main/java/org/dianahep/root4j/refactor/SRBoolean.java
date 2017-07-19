@@ -22,9 +22,7 @@ public class SRBoolean extends SRSimpleType {
 
     @Override Boolean read()throws IOException{
         RootInput buffer = b.setPosition(l,entry);
-        boolean t= buffer.readBoolean();
-        entry+=1L;
-        return t;
+        return read(buffer);
     }
 
     @Override List<Boolean> readArray(RootInput buffer, int size)throws IOException{
@@ -40,14 +38,7 @@ public class SRBoolean extends SRSimpleType {
 
     @Override List<Boolean> readArray(int size)throws IOException{
         RootInput buffer = b.setPosition(l,entry);
-        boolean t;
-        List<Boolean> temp = new ArrayList();
-        for (int i=0;i<size;i++){
-            t=buffer.readBoolean();
-            temp.add(t);
-        }
-        entry+=1L;
-        return temp;
+        return readArray(buffer,size);
     }
 
     @Override boolean hasNext(){

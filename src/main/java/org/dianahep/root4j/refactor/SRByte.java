@@ -22,9 +22,7 @@ public class SRByte extends SRSimpleType {
 
     @Override Byte read()throws IOException{
         RootInput buffer = b.setPosition(l,entry);
-        byte t= buffer.readByte();
-        entry+=1L;
-        return t;
+        return read(buffer);
     }
 
     @Override List<Byte> readArray(RootInput buffer, int size)throws IOException{
@@ -40,14 +38,7 @@ public class SRByte extends SRSimpleType {
 
     @Override List<Byte> readArray(int size)throws IOException{
         RootInput buffer = b.setPosition(l,entry);
-        byte t;
-        List<Byte> temp = new ArrayList();
-        for (int i=0;i<size;i++){
-            t=buffer.readByte();
-            temp.add(t);
-        }
-        entry+=1L;
-        return temp;
+        return readArray(buffer,size);
     }
 
     @Override boolean hasNext(){

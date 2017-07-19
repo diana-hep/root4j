@@ -22,9 +22,7 @@ public class SRString extends SRSimpleType{
 
     @Override String read()throws IOException{
         RootInput buffer = b.setPosition(l,entry);
-        String data = buffer.readString();
-        entry+=1L;
-        return data;
+        return read(buffer);
     }
 
     @Override List<String> readArray(RootInput buffer,int size)throws IOException{
@@ -40,14 +38,7 @@ public class SRString extends SRSimpleType{
 
     @Override List<String> readArray(int size) throws IOException{
         RootInput buffer = b.setPosition(l,entry);
-        List<String> temp = new ArrayList();
-        String t;
-        for (int i=0;i<size;i++){
-            t=buffer.readString();
-            temp.add(t);
-        }
-        entry+=1L;
-        return temp;
+        return readArray(buffer,size);
     }
 
     @Override boolean hasNext(){

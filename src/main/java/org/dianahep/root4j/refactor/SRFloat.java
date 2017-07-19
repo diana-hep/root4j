@@ -22,9 +22,7 @@ public class SRFloat extends SRSimpleType {
 
     @Override Float read()throws IOException{
         RootInput buffer = b.setPosition(l,entry);
-        float t= buffer.readFloat();
-        entry+=1L;
-        return t;
+        return read(buffer);
     }
 
     @Override List<Float> readArray(RootInput buffer, int size)throws IOException{
@@ -40,14 +38,7 @@ public class SRFloat extends SRSimpleType {
 
     @Override List<Float> readArray(int size)throws IOException{
         RootInput buffer = b.setPosition(l,entry);
-        List<Float> temp = new ArrayList();
-        float t;
-        for (int i=0;i<size;i++){
-            t=buffer.readFloat();
-            temp.add(t);
-        }
-        entry+=1L;
-        return temp;
+        return readArray(buffer,size);
     }
 
     @Override boolean hasNext(){

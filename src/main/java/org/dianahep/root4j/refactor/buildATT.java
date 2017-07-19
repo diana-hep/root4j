@@ -19,6 +19,7 @@ public class buildATT {
         this.streamers=streamers;
     }
 
+
     SRType synthesizeLeafType(TBranch b,TLeaf leaf){
         String nameToUse;
         if (b.getLeaves().size()==1){
@@ -831,16 +832,62 @@ public class buildATT {
             else{
                 secondType = synthesizeStreamerInfo(null,streamerInfoSecond,null,srcompositetype,false);
             }
+
+            Pair<SRType,SRType> pair = new Pair(firstType,secondType);
+            pair.setL(firstType);
+            pair.setR(secondType);
+            List<Pair<SRType,SRType>> p = new ArrayList();
+
+            SRRootType srroottype = new SRRootType();
             if (b==null){
                 if (parentType.equals(srcollectiontype)){
-                    List<SRType> t = new ArrayList();
-                    t.add();
-                    SRComposite srcomposite = new SRComposite("",b,)
+                    SRComposite srcomposite = new SRComposite("",b,p,false,false);
+                    return srcomposite;
+                }
+                else {
+                    SRComposite srcomposite = new SRComposite("",b,p,false,false);
+                    return srcomposite;
+                }
+            }
+            else {
+                if (parentType.equals(srcollectiontype)){
+                    boolean tempbool;
+                    if (b.getBranches().size()==0){
+                        tempbool = false;
+                    }
+                    else {
+                        tempbool = true;
+                    }
+                    SRComposite srcomposite = new SRComposite(b.getName(),b,p,tempbool,false);
+                    return srcomposite;
+                }
+                else if (parentType.equals(srcollectiontype)){
+                    boolean tempbool;
+                    if (b.getBranches().size()==0){
+                        tempbool = false;
+                    }
+                    else {
+                        tempbool = true;
+                    }
+                    SRComposite srcomposite = new SRComposite(b.getName(),b,p,tempbool,true);
+                    return srcomposite;
+                }
+                else {
+                    boolean tempbool;
+                    if (b.getBranches().size()==0){
+                        tempbool = false;
+                    }
+                    else {
+                        tempbool = true;
+                    }
+                    SRComposite srcomposite = new SRComposite(b.getName(),b,p,tempbool,false);
+                    return srcomposite;
                 }
             }
         }
-
+        return srnull;
     }
+
     SRType synthesizeStreamerInfo(TBranchElement b,TStreamerInfo streamerInfo,TStreamerElement streamerElement,SRTypeTag parentType,boolean flattenable){
         TObjArray elements = streamerInfo.getElements();
         for (int i=0;i<elements.size();i++){
