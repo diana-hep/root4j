@@ -1,5 +1,6 @@
 package org.dianahep.root4j.refactor;
 
+import jdk.nashorn.internal.codegen.types.BooleanType;
 import org.dianahep.root4j.core.*;
 import org.dianahep.root4j.interfaces.*;
 import java.io.*;
@@ -41,7 +42,7 @@ public class SRBoolean extends SRSimpleType {
         return readArray(buffer,size);
     }
 
-    @Override boolean hasNext(){
+    @Override public boolean hasNext(){
         return entry<b.getEntries();
     }
 
