@@ -30,7 +30,7 @@ public class SRMultiMap<T> extends SRCollection{
         this.split=split;
     }
 
-    @Override Map<Object,Object> readArray(RootInput buffer,int size)throws IOException{
+    @Override public Map<Object,Object> readArray(RootInput buffer,int size)throws IOException{
         Map<Object,Object> data = new HashMap();
         int nn;
         if (split){
@@ -56,12 +56,12 @@ public class SRMultiMap<T> extends SRCollection{
         }
     }
 
-    @Override Map<Object,Object> readArray(int size)throws IOException{
+    @Override public Map<Object,Object> readArray(int size)throws IOException{
         RootInput buffer = b.setPosition((TLeafElement)b.getLeaves().get(0),entry);
         return readArray(buffer,size);
     }
 
-    @Override Map<Object,Object> read()throws IOException{
+    @Override public Map<Object,Object> read()throws IOException{
         Map<Object,Object> data = new HashMap();
         TLeaf leaf = (TLeaf)b.getLeaves().get(0);
         RootInput buffer = b.setPosition(leaf,entry);
@@ -89,7 +89,7 @@ public class SRMultiMap<T> extends SRCollection{
         }
     }
 
-    @Override Map<Object,Object> read(RootInput buffer)throws IOException{
+    @Override public Map<Object,Object> read(RootInput buffer)throws IOException{
         Map<Object,Object> data = new HashMap();
         if (split){
             return null;
@@ -127,7 +127,7 @@ public class SRMultiMap<T> extends SRCollection{
         }
     }
 
-    @Override boolean hasNext(){
+    @Override public boolean hasNext(){
         return entry<b.getEntries();
     }
 }

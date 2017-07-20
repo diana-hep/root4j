@@ -14,18 +14,18 @@ public class SRBoolean extends SRSimpleType {
         super(name,b,l);
     }
 
-    @Override Boolean read(RootInput buffer)throws IOException{
+    @Override public Boolean read(RootInput buffer)throws IOException{
         boolean t = buffer.readBoolean();
         entry+=1L;
         return t;
     }
 
-    @Override Boolean read()throws IOException{
+    @Override public Boolean read()throws IOException{
         RootInput buffer = b.setPosition(l,entry);
         return read(buffer);
     }
 
-    @Override List<Boolean> readArray(RootInput buffer, int size)throws IOException{
+    @Override public List<Boolean> readArray(RootInput buffer, int size)throws IOException{
         boolean t;
         List<Boolean> temp = new ArrayList();
         for (int i=0;i<size;i++){
@@ -36,7 +36,7 @@ public class SRBoolean extends SRSimpleType {
         return temp;
     }
 
-    @Override List<Boolean> readArray(int size)throws IOException{
+    @Override public List<Boolean> readArray(int size)throws IOException{
         RootInput buffer = b.setPosition(l,entry);
         return readArray(buffer,size);
     }

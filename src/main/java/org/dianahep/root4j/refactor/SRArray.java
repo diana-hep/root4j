@@ -19,7 +19,7 @@ public class SRArray extends SRSimpleType{
         this.t=t;
     }
 
-    @Override List<Object> read(RootInput buffer)throws IOException{
+    @Override public List<Object> read(RootInput buffer)throws IOException{
         List<Object> data = new ArrayList();
         if (n==-1) {
             for (int i = 0; i < (Integer) l.getLeafCount().getWrappedValue(entry); i++) {
@@ -35,7 +35,7 @@ public class SRArray extends SRSimpleType{
         return data;
     }
 
-    @Override List<Object> read()throws IOException{
+    @Override public List<Object> read()throws IOException{
         RootInput buffer = b.setPosition(l,entry);
         List<Object> data = new ArrayList();
         if (n==-1) {
@@ -52,7 +52,7 @@ public class SRArray extends SRSimpleType{
         return data;
     }
 
-    @Override List<Object> readArray(RootInput buffer, int size) throws IOException{
+    @Override public List<Object> readArray(RootInput buffer, int size) throws IOException{
         List<Object> data = new ArrayList();
         for (int i=0;i<size;i++){
             if (n==-1){
@@ -70,7 +70,7 @@ public class SRArray extends SRSimpleType{
         return data;
     }
 
-    @Override List<Object> readArray(int size)throws IOException{
+    @Override public List<Object> readArray(int size)throws IOException{
         RootInput buffer = b.setPosition(l,entry);
         List<Object> data = new ArrayList();
         for (int i=0;i<size;i++){
@@ -89,7 +89,7 @@ public class SRArray extends SRSimpleType{
         return data;
     }
 
-    @Override boolean hasNext(){
+    @Override public boolean hasNext(){
         return entry<b.getEntries();
     }
 }

@@ -8,15 +8,19 @@ public class SRNull extends SRType{
         super(null);
     }
 
-    @Override SRType read(RootInput b){
+    SRNull(String name){
+        super(name);
+    }
+
+    @Override public SRType read(RootInput b){
         return null;
     }
 
-    @Override SRType read(){
+    @Override public SRType read(){
         return null;
     }
 
-    @Override List<SRType> readArray(RootInput buffer,int size){
+    @Override public List<SRType> readArray(RootInput buffer,int size){
         List<SRType> temp=new ArrayList();
         for (int i=0;i<size;i++){
             temp.add(null);
@@ -24,7 +28,7 @@ public class SRNull extends SRType{
         return temp;
     }
 
-    @Override List<SRType> readArray(int size){
+    @Override public List<SRType> readArray(int size){
         List<SRType> temp = new ArrayList();
         for (int i=0;i<size;i++){
             temp.add(null);
@@ -32,7 +36,7 @@ public class SRNull extends SRType{
         return temp;
     }
 
-    boolean hasNext(){
+    @Override public boolean hasNext(){
         return false;
     }
 }

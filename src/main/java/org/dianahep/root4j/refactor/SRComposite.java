@@ -31,7 +31,7 @@ public class SRComposite<T> extends SRType{
         this.isBase = false;
     }
 
-    @Override List<Object> readArray(int size)throws IOException{
+    @Override public List<Object> readArray(int size)throws IOException{
         List<Object> data = new ArrayList();
         List<Object> temp = new ArrayList();
         if (split){
@@ -57,7 +57,7 @@ public class SRComposite<T> extends SRType{
         }
     }
 
-    List<Object> readArray(RootInput buffer,int size)throws IOException{
+    @Override public List<Object> readArray(RootInput buffer,int size)throws IOException{
         List<Object> data = new ArrayList();
         List<Object> temp = new ArrayList();
         if (isBase){
@@ -94,7 +94,7 @@ public class SRComposite<T> extends SRType{
         }
     }
 
-    @Override List<Object> read()throws IOException{
+    @Override public List<Object> read()throws IOException{
         List<Object> data = new ArrayList();
         if (split){
             entry+=1L;
@@ -140,7 +140,7 @@ public class SRComposite<T> extends SRType{
         }
     }
 
-    @Override List<Object> read(RootInput buffer)throws IOException{
+    @Override public List<Object> read(RootInput buffer)throws IOException{
         List<Object> data = new ArrayList();
         entry+=1L;
         int version = buffer.readVersion();

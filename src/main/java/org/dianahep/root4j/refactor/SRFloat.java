@@ -14,18 +14,18 @@ public class SRFloat extends SRSimpleType {
         super(name,b,l);
     }
 
-    @Override Float read(RootInput buffer)throws IOException{
+    @Override public Float read(RootInput buffer)throws IOException{
         float t = buffer.readFloat();
         entry+=1L;
         return t;
     }
 
-    @Override Float read()throws IOException{
+    @Override public Float read()throws IOException{
         RootInput buffer = b.setPosition(l,entry);
         return read(buffer);
     }
 
-    @Override List<Float> readArray(RootInput buffer, int size)throws IOException{
+    @Override public List<Float> readArray(RootInput buffer, int size)throws IOException{
         float t;
         List<Float> temp = new ArrayList();
         for (int i=0;i<size;i++) {
@@ -36,12 +36,12 @@ public class SRFloat extends SRSimpleType {
         return temp;
     }
 
-    @Override List<Float> readArray(int size)throws IOException{
+    @Override public List<Float> readArray(int size)throws IOException{
         RootInput buffer = b.setPosition(l,entry);
         return readArray(buffer,size);
     }
 
-    @Override boolean hasNext(){
+    @Override public boolean hasNext(){
         return entry<b.getEntries();
     }
 

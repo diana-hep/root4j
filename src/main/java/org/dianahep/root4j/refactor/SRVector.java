@@ -20,11 +20,11 @@ public class SRVector<T> extends SRCollection{
     }
 
     @Override
-    boolean hasNext(){
+    public boolean hasNext(){
         return entry<b.getEntries();
     }
 
-    @Override List<Object> readArray(RootInput buffer,int size)throws IOException{
+    @Override public List<Object> readArray(RootInput buffer,int size)throws IOException{
         List<Object> data = new ArrayList();
         List<Object> temp1 = new ArrayList();
         entry+=1L;
@@ -80,12 +80,12 @@ public class SRVector<T> extends SRCollection{
         }
     }
 
-    @Override List<Object> readArray(int size)throws IOException{
+    @Override public List<Object> readArray(int size)throws IOException{
         RootInput buffer = b.setPosition((TLeafElement)b.getLeaves().get(0),entry);
         return readArray(buffer,size);
     }
 
-    @Override List<Object> read()throws IOException{
+    @Override public List<Object> read()throws IOException{
         List<Object> data = new ArrayList();
         List<Object> empty = new ArrayList();
         TLeaf leaf = (TLeaf)b.getLeaves().get(0);
@@ -141,7 +141,7 @@ public class SRVector<T> extends SRCollection{
         }
     }
 
-    @Override List<Object> read(RootInput buffer)throws IOException{
+    @Override public List<Object> read(RootInput buffer)throws IOException{
         SRNull srnull = new SRNull();
         List<Object> empty = new ArrayList();
         List<Object> data = new ArrayList();

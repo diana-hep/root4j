@@ -14,7 +14,7 @@ public class SRRoot extends SRType{
         this.types=types;
     }
 
-    @Override List<Object> read()throws IOException{
+    @Override public List<Object> read()throws IOException{
         List<Object> temp = new ArrayList();
         for (SRType t : types){
             temp.add(t.read());
@@ -23,19 +23,19 @@ public class SRRoot extends SRType{
         return temp;
     }
 
-    @Override SRType read(RootInput buffer)throws IOException{
+    @Override public SRType read(RootInput buffer)throws IOException{
         return null;
     }
 
-    @Override List<SRType> readArray(RootInput buffer, int size)throws IOException{
+    @Override public List<SRType> readArray(RootInput buffer, int size)throws IOException{
         return null;
     }
 
-    @Override List<SRType> readArray(int size)throws IOException{
+    @Override public List<SRType> readArray(int size)throws IOException{
         return null;
     }
 
-    @Override boolean hasNext(){
+    @Override public boolean hasNext(){
         return entries>0;
     }
 }

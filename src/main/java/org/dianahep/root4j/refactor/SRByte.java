@@ -14,18 +14,18 @@ public class SRByte extends SRSimpleType {
         super(name,b,l);
     }
 
-    @Override Byte read(RootInput buffer)throws IOException{
+    @Override public Byte read(RootInput buffer)throws IOException{
         byte t = buffer.readByte();
         entry+=1L;
         return t;
     }
 
-    @Override Byte read()throws IOException{
+    @Override public Byte read()throws IOException{
         RootInput buffer = b.setPosition(l,entry);
         return read(buffer);
     }
 
-    @Override List<Byte> readArray(RootInput buffer, int size)throws IOException{
+    @Override public List<Byte> readArray(RootInput buffer, int size)throws IOException{
         byte t;
         List<Byte> temp = new ArrayList();
         for (int i=0;i<size;i++){
@@ -36,12 +36,12 @@ public class SRByte extends SRSimpleType {
         return temp;
     }
 
-    @Override List<Byte> readArray(int size)throws IOException{
+    @Override public List<Byte> readArray(int size)throws IOException{
         RootInput buffer = b.setPosition(l,entry);
         return readArray(buffer,size);
     }
 
-    @Override boolean hasNext(){
+    @Override public boolean hasNext(){
         return entry<b.getEntries();
     }
 

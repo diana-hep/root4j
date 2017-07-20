@@ -12,25 +12,25 @@ public class SREmptyRoot extends SRType{
         this.entries=entries;
     }
 
-    @Override SRType read(RootInput b){
+    @Override public SRType read(RootInput b){
         return null;
     }
 
-    @Override List<SRType> read(){
+    @Override public List<SRType> read(){
         entries-=1L;
         List<SRType> temp = new ArrayList();
         return temp;
     }
 
-    @Override List<SRType> readArray(RootInput b,int size){
+    @Override public List<SRType> readArray(RootInput b,int size){
         return null;
     }
 
-    @Override List<SRType> readArray(int size){
+    @Override public List<SRType> readArray(int size){
         return null;
     }
 
-    @Override boolean hasNext(){
+    @Override public boolean hasNext(){
         return entries>0;
     }
 }

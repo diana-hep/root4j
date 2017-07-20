@@ -18,7 +18,7 @@ public class buildATT {
     }
 
 
-    SRType synthesizeLeafType(TBranch b,TLeaf leaf){
+    public SRType synthesizeLeafType(TBranch b,TLeaf leaf){
         String nameToUse;
         if (b.getLeaves().size()==1){
             nameToUse=b.getName();
@@ -57,7 +57,7 @@ public class buildATT {
         }
     }
 
-    SRType synthesizeLeaf(TBranch b,TLeaf leaf){
+    public SRType synthesizeLeaf(TBranch b,TLeaf leaf){
         String nameToUse;
         if (b.getLeaves().size()==1){
             nameToUse=b.getName();
@@ -78,7 +78,7 @@ public class buildATT {
         }
     }
 
-    SRType iterate(String nameToUse,TBranch b,TLeaf leaf,int dimsToGo){
+    public SRType iterate(String nameToUse,TBranch b,TLeaf leaf,int dimsToGo){
         if (dimsToGo==1){
             SRArray srarray = new SRArray(nameToUse,b,leaf,synthesizeLeafType(b,leaf),leaf.getMaxIndex()[leaf.getArrayDim()-1]);
             return srarray;
@@ -90,12 +90,12 @@ public class buildATT {
         }
     }
 
-    SRType synthesizeLeafElement(TBranch b,TLeafElement leaf){
+    public SRType synthesizeLeafElement(TBranch b,TLeafElement leaf){
         SRNull srnull = new SRNull();
         return srnull;
     }
 
-    SRType synthesizeTopBranch(TBranch b){
+    public SRType synthesizeTopBranch(TBranch b){
         SRRootType srroottype = new SRRootType();
         if (b instanceof TBranchElement){
             TBranchElement be = (TBranchElement)b;
@@ -129,7 +129,7 @@ public class buildATT {
         }
     }
 
-    SRType synthesizeBasicStreamerType(int typeCode){
+    public SRType synthesizeBasicStreamerType(int typeCode){
         switch (typeCode){
             case 1 : SRByte srbyte1 = new SRByte("",null,null);
                         return srbyte1;
@@ -174,7 +174,7 @@ public class buildATT {
         }
     }
 
-    String formatNameForPointer(String className){
+    public String formatNameForPointer(String className){
         if (className.charAt(className.length()-1)=='*'){
             String formattedClassName="";
             for (int i=0;i<className.length()-2;i++){
@@ -187,7 +187,7 @@ public class buildATT {
         }
     }
 
-    SRType synthesizeStreamerElement(TBranchElement b,TStreamerElement streamerElement,SRTypeTag parentType){
+    public SRType synthesizeStreamerElement(TBranchElement b,TStreamerElement streamerElement,SRTypeTag parentType){
         Map<String,SRType> customStreamers = new HashMap();
         SRInt srintm = new SRInt("",null,null);
         customStreamers.put("trigger::TriggerObjectType",srintm);
@@ -417,7 +417,7 @@ public class buildATT {
     }
 
 
-    SRType iterateArray(TBranchElement b,TStreamerElement streamerElement,SRTypeTag parentType,int dimsToGo){
+    public SRType iterateArray(TBranchElement b,TStreamerElement streamerElement,SRTypeTag parentType,int dimsToGo){
         TLeaf temp;
         if (dimsToGo == 1){
             if (b==null){
@@ -441,7 +441,7 @@ public class buildATT {
         }
     }
 
-    SRType synthesizeBasicTypeName(String typeName){
+    public SRType synthesizeBasicTypeName(String typeName){
         if (typeName.equals("int") || typeName.equals("unsigned int")){
             SRInt srint = new SRInt("",null,null);
             return srint;
@@ -476,7 +476,7 @@ public class buildATT {
         }
     }
 
-    List<String> iterate(String fullTemplateString, int n,Integer from,Integer currentPos,List<String> acc){
+    public List<String> iterate(String fullTemplateString, int n,Integer from,Integer currentPos,List<String> acc){
         if (currentPos==fullTemplateString.length()){
             acc.add(fullTemplateString.substring(from));
             return acc;
@@ -498,12 +498,12 @@ public class buildATT {
         }
     }
 
-    List<String> extractTemplateArguements(String fullTemplateString){
+    public List<String> extractTemplateArguements(String fullTemplateString){
         List<String> arrreturn=new ArrayList();
         return iterate(fullTemplateString,0,0,0,arrreturn);
     }
 
-    SRType synthesizeClassName(String className,TBranchElement b,SRTypeTag parentType){
+    public SRType synthesizeClassName(String className,TBranchElement b,SRTypeTag parentType){
         List<String> stlLinear= Arrays.asList("vector","list","deque","set","multiset","forward_list","unordered_set","unordered_multiset");
         List<String> stlAssociative = Arrays.asList("map","unordered map","multimap","unordered_multimap");
         String stlPair = "pair";
@@ -884,7 +884,7 @@ public class buildATT {
         return srnull;
     }
 
-    SRType synthesizeStreamerInfo(TBranchElement b,TStreamerInfo streamerInfo,TStreamerElement streamerElement,SRTypeTag parentType,boolean flattenable){
+    public SRType synthesizeStreamerInfo(TBranchElement b,TStreamerInfo streamerInfo,TStreamerElement streamerElement,SRTypeTag parentType,boolean flattenable){
         TObjArray elements = streamerInfo.getElements();
         for (int i=0;i<elements.size();i++){
             TStreamerElement x = (TStreamerElement)elements.get(i);
@@ -1011,7 +1011,7 @@ public class buildATT {
         }
     }
 
-    SRType synthesizeStreamerSTL(TBranchElement b,TStreamerSTL streamerSTL,SRTypeTag parentType){
+    public SRType synthesizeStreamerSTL(TBranchElement b,TStreamerSTL streamerSTL,SRTypeTag parentType){
         switch (streamerSTL.getSTLtype()){
             case 1 :
                 int ctype = streamerSTL.getCtype();
@@ -1119,13 +1119,13 @@ public class buildATT {
         }
     }
 
-    SRType synthesizeFlattenable(TBranchElement b,TStreamerInfo streamerInfo){
+    public SRType synthesizeFlattenable(TBranchElement b,TStreamerInfo streamerInfo){
         List<String> sub = new ArrayList();
         SRComposite srcomposite = new SRComposite(b.getName(),b,iterate(streamerInfo,sub,b),true,false);
         return srcomposite;
     }
 
-    TBranchElement findBranch(String objectName,List<String> history,TBranchElement b){
+    public TBranchElement findBranch(String objectName,List<String> history,TBranchElement b){
         String fullName="";
         String temp="";
         List<String> t1 = new ArrayList();
@@ -1219,7 +1219,7 @@ public class buildATT {
     }
 
 
-    List<SRType> iterate(TStreamerInfo info,List<String> history,TBranchElement b){
+    public List<SRType> iterate(TStreamerInfo info,List<String> history,TBranchElement b){
         TStreamerElement streamerElement;
         List<SRType> temp = new ArrayList();
         TStreamerInfo sinfo;
@@ -1287,7 +1287,7 @@ public class buildATT {
         return temp;
     }
 
-    SRType synthesizeBranchElement(TBranchElement b,TStreamerElement streamerElement,SRTypeTag parentType){
+    public SRType synthesizeBranchElement(TBranchElement b,TStreamerElement streamerElement,SRTypeTag parentType){
         TObjArray subs=b.getBranches();
         if (streamerElement == null){
             SRNull srnull = new SRNull();
@@ -1296,7 +1296,7 @@ public class buildATT {
         return synthesizeStreamerElement(b,streamerElement,parentType);
     }
 
-    TTree findTree(TDirectory dir)throws RootClassNotFound,IOException{
+    public TTree findTree(TDirectory dir)throws RootClassNotFound,IOException{
         for (int i=0;i<dir.nKeys();i++){
             TKey key = dir.getKey(i);
             if (key.getObjectClass().getClassName().equals("TDirectory")){
@@ -1309,11 +1309,34 @@ public class buildATT {
         return null;
     }
 
-    void columns(){
-        if (requiredColumns==null){
-
+    SRType recolumns(){
+        SRNull srnull = new SRNull();
+        if (requiredColumns.equals(null)){
+            List<SRType> temp = new ArrayList();
+            for (int i=0;i<tree.getNBranches();i++){
+                TBranch b = tree.getBranch(i);
+                temp.add(synthesizeTopBranch(b));
+            }
+            SRRoot srroot = new SRRoot(tree.getName(),tree.getEntries(),temp);
+            return srroot;
+        }
+        else if (requiredColumns.length == 0){
+            SREmptyRoot sremptyroot = new SREmptyRoot(tree.getName(),tree.getEntries());
+            return sremptyroot;
+        }
+        else {
+            List<SRType> temp = new ArrayList();
+            for (int i=0;i<tree.getNBranches();i++){
+                TBranch b = tree.getBranch(i);
+                for (int j=0;j<requiredColumns.length;i++){
+                    if (requiredColumns[i].equals(b.getName().replace(".","_"))){
+                        temp.add(synthesizeTopBranch(b));
+                    }
+                }
+            }
+            SRRoot srroot = new SRRoot(tree.getName(),tree.getEntries(),temp);
+            return srroot;
         }
     }
-
 
 }

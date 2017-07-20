@@ -1,7 +1,6 @@
 package org.dianahep.root4j.refactor;
 
 import org.dianahep.root4j.core.*;
-import java.util.*;
 import java.io.*;
 
 public abstract class SRType<T>{
