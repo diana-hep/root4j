@@ -5,7 +5,7 @@ import org.dianahep.root4j.interfaces.*;
 import java.io.*;
 import java.util.*;
 
-public class SRMap extends SRCollection {
+public class SRMap<T> extends SRCollection {
     String name;
     TBranchElement b;
     SRType keyType;
@@ -21,7 +21,7 @@ public class SRMap extends SRCollection {
         this.split = split;
     }
 
-    SRMap(String name,TBranchElement b,SRComposite types,boolean split,boolean isTop){
+    SRMap(String name,TBranchElement b,SRComposite<T> types,boolean split,boolean isTop){
         super(name,isTop);
         this.b=b;
         this.keyType = types.members.get(0);

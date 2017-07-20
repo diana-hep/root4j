@@ -14,24 +14,24 @@ public class SRRoot extends SRType{
         this.types=types;
     }
 
-    @Override List<SRType> read()throws IOException{
-        List<SRType> temp = new ArrayList();
+    @Override List<Object> read()throws IOException{
+        List<Object> temp = new ArrayList();
         for (SRType t : types){
-            temp.add(types.read());
+            temp.add(t.read());
         }
         entries-=1L;
         return temp;
     }
 
-    @Override SRType read(RootInput buffer){
+    @Override SRType read(RootInput buffer)throws IOException{
         return null;
     }
 
-    @Override List<SRType> readArray(RootInput buffer, int size){
+    @Override List<SRType> readArray(RootInput buffer, int size)throws IOException{
         return null;
     }
 
-    @Override List<SRType> readArray(int size){
+    @Override List<SRType> readArray(int size)throws IOException{
         return null;
     }
 

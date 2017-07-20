@@ -5,7 +5,7 @@ import org.dianahep.root4j.interfaces.*;
 import java.util.*;
 import java.io.*;
 
-public class SRVector extends SRCollection{
+public class SRVector<T> extends SRCollection{
     String name;
     TBranchElement b;
     SRType t;
@@ -49,7 +49,7 @@ public class SRVector extends SRCollection{
                     if (memberVersion == 0){
                         buffer.readInt();
                     }
-                    SRComposite composite = (SRComposite)t;
+                    SRComposite<T> composite = (SRComposite)t;
                     for (int i=0;i<size;i++){
                         nn = buffer.readInt();
                         if (nn==0){
@@ -97,7 +97,7 @@ public class SRVector extends SRCollection{
                 data.add(empty);
             }
             else {
-                SRComposite composite = (SRComposite)t;
+                SRComposite<T> composite = (SRComposite)t;
                 for (SRType x : composite.members){
                     data.add(x.readArray(size));
                 }
@@ -116,7 +116,7 @@ public class SRVector extends SRCollection{
                     data.add(empty);
                 }
                 else {
-                    SRComposite composite = (SRComposite)t;
+                    SRComposite<T> composite = (SRComposite)t;
                     short memberVersion = buffer.readShort();
                     if (memberVersion == 0){
                         buffer.readInt();
@@ -157,7 +157,7 @@ public class SRVector extends SRCollection{
                         data.add(empty);
                     }
                     else {
-                        SRComposite composite = (SRComposite)t;
+                        SRComposite<T> composite = (SRComposite)t;
                         short memberVersion = buffer.readShort();
                         int size = buffer.readInt();
                         for (SRType x: composite.members){

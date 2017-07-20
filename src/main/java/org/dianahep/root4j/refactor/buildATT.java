@@ -1,7 +1,5 @@
 package org.dianahep.root4j.refactor;
 
-import jdk.nashorn.internal.runtime.arrays.ArrayIndex;
-import org.apache.hadoop.yarn.webapp.hamlet.Hamlet;
 import org.dianahep.root4j.interfaces.*;
 import java.util.*;
 import java.io.*;
@@ -834,8 +832,6 @@ public class buildATT {
             }
 
             Pair<SRType,SRType> pair = new Pair(firstType,secondType);
-            pair.setL(firstType);
-            pair.setR(secondType);
             List<Pair<SRType,SRType>> p = new ArrayList();
 
             SRRootType srroottype = new SRRootType();

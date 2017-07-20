@@ -5,7 +5,7 @@ import org.dianahep.root4j.interfaces.*;
 import java.util.*;
 import java.io.*;
 
-public class SRMultiMap extends SRCollection{
+public class SRMultiMap<T> extends SRCollection{
     String name;
     TBranchElement b;
     SRType keyType;
@@ -22,7 +22,7 @@ public class SRMultiMap extends SRCollection{
         this.isTop = isTop;
     }
 
-    SRMultiMap(String name,TBranchElement b,SRComposite types,boolean split,boolean isTop){
+    SRMultiMap(String name,TBranchElement b,SRComposite<T> types,boolean split,boolean isTop){
         super(name,isTop);
         this.b=b;
         this.keyType = types.members.get(0);
