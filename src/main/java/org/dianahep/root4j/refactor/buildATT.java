@@ -1296,19 +1296,6 @@ public class buildATT {
         return synthesizeStreamerElement(b,streamerElement,parentType);
     }
 
-    public TTree findTree(TDirectory dir)throws RootClassNotFound,IOException{
-        for (int i=0;i<dir.nKeys();i++){
-            TKey key = dir.getKey(i);
-            if (key.getObjectClass().getClassName().equals("TDirectory")){
-                return findTree((TDirectory)key.getObject());
-            }
-            else if (key.getObjectClass().getClassName().equals("TTree")){
-                return (TTree)key.getObject();
-            }
-        }
-        return null;
-    }
-
     public SRType recolumns(){
         SRNull srnull = new SRNull();
         if (requiredColumns.equals(null)){
