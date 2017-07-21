@@ -13,7 +13,7 @@ public class streamerArrange {
         this.reader = reader;
     }
 
-    Map<String,TStreamerInfo> arrangeStreamers()throws IOException{
+    public Map<String,TStreamerInfo> arrangeStreamers()throws IOException{
         List<TStreamerInfo> lll = reader.streamerInfo();
         Map<String,TStreamerInfo> streamers = new HashMap();
         TStreamerInfo s;
@@ -26,7 +26,7 @@ public class streamerArrange {
         return streamers;
     }
 
-    TStreamerInfo iterate(int indx,TStreamerInfo s1,TStreamerInfo s2,Map<String,TStreamerInfo> streamers) {
+    public TStreamerInfo iterate(int indx,TStreamerInfo s1,TStreamerInfo s2,Map<String,TStreamerInfo> streamers) {
         if (indx == s1.getElements().size()){
             return s1;
         }
@@ -63,7 +63,7 @@ public class streamerArrange {
         }
     }
 
-    TStreamerInfo selectOne(TStreamerInfo s1,TStreamerInfo s2,Map<String,TStreamerInfo> streamers){
+    public TStreamerInfo selectOne(TStreamerInfo s1,TStreamerInfo s2,Map<String,TStreamerInfo> streamers){
         if (s1.getElements().size()!=s2.getElements().size()){
             return s1;
         }
@@ -72,7 +72,7 @@ public class streamerArrange {
         }
     }
 
-    Map<String,TStreamerInfo> returning()throws IOException{
+    public Map<String,TStreamerInfo> returning()throws IOException{
         Map<String,TStreamerInfo> streamers = arrangeStreamers();
         int i=0;
         TStreamerInfo temp = null;

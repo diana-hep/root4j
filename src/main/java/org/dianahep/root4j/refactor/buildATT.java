@@ -1309,7 +1309,7 @@ public class buildATT {
         return null;
     }
 
-    SRType recolumns(){
+    public SRType recolumns(){
         SRNull srnull = new SRNull();
         if (requiredColumns.equals(null)){
             List<SRType> temp = new ArrayList();
