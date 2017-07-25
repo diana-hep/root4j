@@ -9,12 +9,15 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.fs.PathFilter;
 import java.io.*;
 import java.util.*;
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 public class test {
 
+
     public static void main(String[] args)throws IOException,RootClassNotFound{
-        Path hPath = new Path("file://home/pratyush/Downloads/CERN/Test Files/test_root4j.root");
-        FileSystem fs = hPath.getFileSystem(/*Insert configuration */);
+        Path hPath = new Path("file:/home/pratyush/Downloads/CERN/Test Files/test_root4j.root");
+        FileSystem fs = hPath.getFileSystem(new Configuration());
         PathFilter pathFilter = new PathFilter(){
             public boolean accept(Path ppp){
                 return ppp.getName().endsWith(".root");
@@ -44,13 +47,9 @@ public class test {
 
     public static List<Path> iterate(Path p,FileSystem fs)throws IOException{
         if (fs.isDirectory(p)){
-            List<Path> toreturn = new ArrayList();
-            FileStatus[] f = fs.listStatus(p).
-
-            for (int i=0;i<f.length;i++){
-                toreturn.add(iterate(f[i].getPath(),fs));
-            }
-            return toreturn;
+            FileStatus f[] = fs.listStatus(p);
+            Stream<FileStatus> f1 = Arrays.stream(f);
+            return f1.flatMap(x -> iterate(x.getPath(),fs));
         }
         else {
             List<Path> toreturn = new ArrayList();
