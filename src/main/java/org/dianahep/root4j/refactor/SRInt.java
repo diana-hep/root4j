@@ -6,9 +6,9 @@ import java.io.*;
 import java.util.*;
 
 public class SRInt extends SRSimpleType {
-    String name;
-    TBranch b;
-    TLeaf l;
+    static String name;
+    static TBranch b;
+    static TLeaf l;
 
     SRInt(String name,TBranch b,TLeaf l){
         super(name,b,l);

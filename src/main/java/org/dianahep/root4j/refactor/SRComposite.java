@@ -6,12 +6,12 @@ import java.util.*;
 import java.io.*;
 
 public class SRComposite<T> extends SRType{
-    String name;
-    TBranch b;
-    List<SRType> members;
-    boolean split;
-    boolean isTop;
-    boolean isBase;
+    static String name;
+    static TBranch b;
+    static List<SRType> members;
+    static boolean split;
+    static boolean isTop;
+    static boolean isBase;
 
     SRComposite(String name,TBranch b,List<SRType> members,boolean split,boolean isTop,boolean isBase){
         super(name);

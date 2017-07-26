@@ -1,15 +1,14 @@
 package org.dianahep.root4j.refactor;
 
-import jdk.nashorn.internal.codegen.types.BooleanType;
 import org.dianahep.root4j.core.*;
 import org.dianahep.root4j.interfaces.*;
 import java.io.*;
 import java.util.*;
 
 public class SRBoolean extends SRSimpleType {
-    String name;
-    TBranch b;
-    TLeaf l;
+    static String name;
+    static TBranch b;
+    static TLeaf l;
 
     SRBoolean(String name,TBranch b,TLeaf l){
         super(name,b,l);

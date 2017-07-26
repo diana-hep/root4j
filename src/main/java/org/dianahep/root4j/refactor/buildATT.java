@@ -7,11 +7,11 @@ import org.dianahep.root4j.*;
 import java.util.regex.*;
 
 public class buildATT {
-    TTree tree;
-    String requiredColumns[];
-    Map<String,TStreamerInfo> streamers;
+    static TTree tree;
+    static String requiredColumns[];
+    static Map<String,TStreamerInfo> streamers;
 
-    buildATT(TTree tree,String requiredColumns[],Map<String,TStreamerInfo> streamers){
+    buildATT(TTree tree,Map<String,TStreamerInfo> streamers,String requiredColumns[]){
         this.tree=tree;
         this.requiredColumns=requiredColumns;
         this.streamers=streamers;

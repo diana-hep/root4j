@@ -6,11 +6,12 @@ import java.util.*;
 import java.io.*;
 
 public class SRVector<T> extends SRCollection{
-    String name;
-    TBranchElement b;
-    SRType t;
-    boolean split;
-    boolean isTop;
+
+    static String name;
+    static TBranchElement b;
+    static SRType t;
+    static boolean split;
+    static boolean isTop;
 
     SRVector(String name,TBranchElement b,SRType t,boolean split,boolean isTop){
         super(name,isTop);

@@ -6,12 +6,12 @@ import java.io.*;
 import java.util.*;
 
 public class SRMap<T> extends SRCollection {
-    String name;
-    TBranchElement b;
-    SRType keyType;
-    SRType valueType;
-    boolean split;
-    boolean isTop;
+    static String name;
+    static TBranchElement b;
+    static SRType keyType;
+    static SRType valueType;
+    static boolean split;
+    static boolean isTop;
 
     SRMap(String name,TBranchElement b,SRType keyType,SRType valueType,boolean split,boolean isTop){
         super(name,isTop);

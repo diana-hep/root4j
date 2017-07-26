@@ -96,7 +96,7 @@
             <artifactId>surefire-junit47</artifactId>
             <version>2.19.1</version>
           </dependency>
-        </dependencies>
+	 </dependencies>
         <configuration>
           <trimStackTrace>false</trimStackTrace>
           <useFile>false</useFile>
@@ -148,8 +148,8 @@
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>1.5</source>
-          <target>1.5</target>
+          <source>1.8</source>
+          <target>1.8</target>
           <debug>true</debug>
           <!-- Debug level used for source line granularity in coverage analysis. Disable for production. -->
           <debuglevel>lines,vars,source</debuglevel>

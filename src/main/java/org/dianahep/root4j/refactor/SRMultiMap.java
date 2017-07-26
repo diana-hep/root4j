@@ -6,12 +6,12 @@ import java.util.*;
 import java.io.*;
 
 public class SRMultiMap<T> extends SRCollection{
-    String name;
-    TBranchElement b;
-    SRType keyType;
-    SRType valueType;
-    boolean split;
-    boolean isTop;
+    static String name;
+    static TBranchElement b;
+    static SRType keyType;
+    static SRType valueType;
+    static boolean split;
+    static boolean isTop;
 
     SRMultiMap(String name,TBranchElement b,SRType keyType,SRType valueType,boolean split,boolean isTop){
         this.name = name;

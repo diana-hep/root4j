@@ -4,6 +4,7 @@ import org.dianahep.root4j.core.*;
 import java.util.*;
 
 public class SRUnknown extends SRType {
+
     static String name;
 
     SRUnknown(String name) {

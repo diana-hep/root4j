@@ -1,6 +1,5 @@
 package org.dianahep.root4j.refactor;
 
-import jdk.nashorn.internal.runtime.regexp.joni.constants.StringType;
 import org.dianahep.root4j.core.*;
 import org.dianahep.root4j.interfaces.*;
 import java.io.*;
@@ -8,11 +7,11 @@ import java.util.*;
 
 public class SRArray extends SRSimpleType{
 
-    String name;
-    TBranch b;
-    TLeaf l;
-    SRType t;
-    int n;
+    static String name;
+    static TBranch b;
+    static TLeaf l;
+    static SRType t;
+    static int n;
 
     SRArray(String name,TBranch b,TLeaf l,SRType t,int n){
         super(name,b,l);

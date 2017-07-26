@@ -6,9 +6,10 @@ import java.io.*;
 import java.util.*;
 
 public class SRByte extends SRSimpleType {
-    String name;
-    TBranch b;
-    TLeaf l;
+
+    static String name;
+    static TBranch b;
+    static TLeaf l;
 
     SRByte(String name,TBranch b,TLeaf l){
         super(name,b,l);

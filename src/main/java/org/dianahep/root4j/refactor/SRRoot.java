@@ -5,9 +5,11 @@ import org.dianahep.root4j.core.*;
 import java.io.*;
 
 public class SRRoot extends SRType{
-    String name;
-    long entries;
-    List<SRType> types;
+
+    static String name;
+    static long entries;
+    static List<SRType> types;
+
     SRRoot(String name,long entries,List<SRType> types){
         super(name);
         this.entries=entries;

@@ -4,8 +4,8 @@ import org.dianahep.root4j.core.*;
 import java.util.*;
 
 public class SREmptyRoot extends SRType{
-    String name;
-    long entries;
+    static String name;
+    static long entries;
 
     SREmptyRoot(String name,long entries){
         super(name);

@@ -7,7 +7,7 @@ import java.io.*;
 
 public class streamerArrange {
 
-    RootFileReader reader;
+    static RootFileReader reader;
 
     streamerArrange(RootFileReader reader){
         this.reader = reader;
