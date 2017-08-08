@@ -7,7 +7,7 @@ public class SREmptyRoot extends SRType{
     static String name;
     static long entries;
 
-    SREmptyRoot(String name,long entries){
+    public SREmptyRoot(String name,long entries){
         super(name);
         this.entries=entries;
     }

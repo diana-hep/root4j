@@ -13,7 +13,7 @@ public class SRMultiMap<T> extends SRCollection{
     static boolean split;
     static boolean isTop;
 
-    SRMultiMap(String name,TBranchElement b,SRType keyType,SRType valueType,boolean split,boolean isTop){
+    public SRMultiMap(String name,TBranchElement b,SRType keyType,SRType valueType,boolean split,boolean isTop){
         this.name = name;
         this.b = b;
         this.keyType = keyType;
@@ -22,7 +22,7 @@ public class SRMultiMap<T> extends SRCollection{
         this.isTop = isTop;
     }
 
-    SRMultiMap(String name,TBranchElement b,SRComposite<T> types,boolean split,boolean isTop){
+    public SRMultiMap(String name,TBranchElement b,SRComposite<T> types,boolean split,boolean isTop){
         super(name,isTop);
         this.b=b;
         this.keyType = types.members.get(0);

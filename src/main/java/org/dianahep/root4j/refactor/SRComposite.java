@@ -13,7 +13,7 @@ public class SRComposite<T> extends SRType{
     static boolean isTop;
     static boolean isBase;
 
-    SRComposite(String name,TBranch b,List<SRType> members,boolean split,boolean isTop,boolean isBase){
+    public SRComposite(String name,TBranch b,List<SRType> members,boolean split,boolean isTop,boolean isBase){
         super(name);
         this.b=b;
         this.members=members;
@@ -22,7 +22,7 @@ public class SRComposite<T> extends SRType{
         this.isBase = isBase;
     }
 
-    SRComposite(String name,TBranch b,List<SRType> members,boolean split,boolean isTop){
+    public SRComposite(String name,TBranch b,List<SRType> members,boolean split,boolean isTop){
         super(name);
         this.b=b;
         this.members=members;
@@ -45,7 +45,7 @@ public class SRComposite<T> extends SRType{
                     data.add(m.readArray(size));
                 }
 
-                //Transpose to Map
+                //Transpose to Map?
 
             }
             entry+=1L;
@@ -71,7 +71,7 @@ public class SRComposite<T> extends SRType{
                     data.add(m.readArray(buffer,size));
                 }
 
-                //Transpose to Map
+                //Transpose to Map?
 
             entry+=1L;
             return data;
@@ -86,7 +86,7 @@ public class SRComposite<T> extends SRType{
                     temp.add(m.read(buffer));
                 }
 
-                //Transpose to Map
+                //Transpose to Map?
 
             data.add(temp);
             entry+=1L;
@@ -102,7 +102,7 @@ public class SRComposite<T> extends SRType{
                 data.add(m.read());
             }
 
-            //Transpose to map
+            //Transpose to map?
 
             return data;
         }
@@ -119,7 +119,7 @@ public class SRComposite<T> extends SRType{
                     data.add(m.read(buffer));
                 }
 
-                //Transpose to map
+                //Transpose to map?
 
                 return data;
             }
@@ -133,7 +133,7 @@ public class SRComposite<T> extends SRType{
                     data.add(m.read(buffer));
                 }
 
-                //Transpose to map
+                //Transpose to map?
 
                 return data;
             }
@@ -151,7 +151,7 @@ public class SRComposite<T> extends SRType{
             data.add(m.read(buffer));
         }
 
-        //Transpose to map
+        //Transpose to map?
 
         return data;
     }

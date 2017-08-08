@@ -10,7 +10,7 @@ public class SRFloat extends SRSimpleType {
     static TBranch b;
     static TLeaf l;
 
-    SRFloat(String name,TBranch b,TLeaf l){
+    public SRFloat(String name,TBranch b,TLeaf l){
         super(name,b,l);
     }
 

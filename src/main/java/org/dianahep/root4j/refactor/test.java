@@ -14,10 +14,14 @@ import java.util.stream.Stream;
 
 public class test {
 
+//Trying to integrate HDFS into the program to load local files
 
     public static void main(String[] args)throws IOException,RootClassNotFound{
-        Path hPath = new Path("file:/home/pratyush/Downloads/CERN/Test Files/test_root4j.root");
-        FileSystem fs = hPath.getFileSystem(new Configuration());
+        Configuration conf = new Configuration();
+        conf.addResource("/etc/hadoop/conf/core-site.xml");
+        conf.addResource("/etc/hadoop/conf/hdfs-site.xml");
+        Path hPath = new Path("test_root4j.root");
+        FileSystem fs = hPath.getFileSystem(conf);
         PathFilter pathFilter = new PathFilter(){
             public boolean accept(Path ppp){
                 return ppp.getName().endsWith(".root");
@@ -49,7 +53,8 @@ public class test {
         if (fs.isDirectory(p)){
             FileStatus f[] = fs.listStatus(p);
             Stream<FileStatus> f1 = Arrays.stream(f);
-            return f1.flatMap(x -> iterate(x.getPath(),fs));
+            return null;
+            //return f1.flatMap(x -> iterate(x.getPath(),fs));
         }
         else {
             List<Path> toreturn = new ArrayList();

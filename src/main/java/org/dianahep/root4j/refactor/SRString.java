@@ -11,7 +11,7 @@ public class SRString extends SRSimpleType{
     static TBranch b;
     static TLeaf l;
 
-    SRString(String name,TBranch b,TLeaf l){
+    public SRString(String name,TBranch b,TLeaf l){
         super(name,b,l);
     }
 

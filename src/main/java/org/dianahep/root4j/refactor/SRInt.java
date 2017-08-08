@@ -10,7 +10,7 @@ public class SRInt extends SRSimpleType {
     static TBranch b;
     static TLeaf l;
 
-    SRInt(String name,TBranch b,TLeaf l){
+    public SRInt(String name,TBranch b,TLeaf l){
         super(name,b,l);
     }
 

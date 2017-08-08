@@ -9,7 +9,7 @@ public class streamerArrange {
 
     static RootFileReader reader;
 
-    streamerArrange(RootFileReader reader){
+    public streamerArrange(RootFileReader reader){
         this.reader = reader;
     }
 

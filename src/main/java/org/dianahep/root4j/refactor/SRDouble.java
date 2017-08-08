@@ -10,7 +10,7 @@ public class SRDouble extends SRSimpleType {
     static TBranch b;
     static TLeaf l;
 
-    SRDouble(String name,TBranch b,TLeaf l){
+    public SRDouble(String name,TBranch b,TLeaf l){
         super(name,b,l);
     }
 

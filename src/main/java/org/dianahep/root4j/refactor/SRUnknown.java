@@ -7,7 +7,7 @@ public class SRUnknown extends SRType {
 
     static String name;
 
-    SRUnknown(String name) {
+    public SRUnknown(String name) {
         super(name);
     }
 

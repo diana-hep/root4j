@@ -8,14 +8,14 @@ public abstract class SRSimpleType extends SRType{
     static TBranch b;
     static TLeaf l;
 
-    SRSimpleType()
+    public SRSimpleType()
     {
         name=null;
         b=null;
         l=null;
     }
 
-    SRSimpleType(String name,TBranch b,TLeaf l){
+    public SRSimpleType(String name,TBranch b,TLeaf l){
         this.name=name;
         this.b=b;
         this.l=l;

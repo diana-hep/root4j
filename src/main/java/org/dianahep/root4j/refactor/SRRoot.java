@@ -10,7 +10,7 @@ public class SRRoot extends SRType{
     static long entries;
     static List<SRType> types;
 
-    SRRoot(String name,long entries,List<SRType> types){
+    public SRRoot(String name,long entries,List<SRType> types){
         super(name);
         this.entries=entries;
         this.types=types;

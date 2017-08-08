@@ -1,5 +1,7 @@
 package org.dianahep.root4j.refactor;
 
+//A class I created to take a list of <SRType,SRType>
+
 public class Pair<L,R> {
     private L l;
     private R r;

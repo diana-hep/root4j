@@ -6,12 +6,12 @@ public abstract class SRCollection extends SRType {
     static long kMemberWiseStreaming = 0x4000;
 
 
-    SRCollection(String name,boolean isTop){
+    public SRCollection(String name,boolean isTop){
         super(name);
         this.isTop=isTop;
     }
 
-    SRCollection(){
+    public SRCollection(){
         name=null;
         isTop=false;
     }

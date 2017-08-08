@@ -10,7 +10,7 @@ public class SRBoolean extends SRSimpleType {
     static TBranch b;
     static TLeaf l;
 
-    SRBoolean(String name,TBranch b,TLeaf l){
+    public SRBoolean(String name,TBranch b,TLeaf l){
         super(name,b,l);
     }
 

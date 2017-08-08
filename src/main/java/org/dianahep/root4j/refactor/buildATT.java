@@ -11,7 +11,7 @@ public class buildATT {
     static String requiredColumns[];
     static Map<String,TStreamerInfo> streamers;
 
-    buildATT(TTree tree,Map<String,TStreamerInfo> streamers,String requiredColumns[]){
+    public buildATT(TTree tree,Map<String,TStreamerInfo> streamers,String requiredColumns[]){
         this.tree=tree;
         this.requiredColumns=requiredColumns;
         this.streamers=streamers;
@@ -103,7 +103,7 @@ public class buildATT {
             try {
                 streamerInfo = streamers.get(be.getClassName());
             }
-            catch (ArrayIndexOutOfBoundsException e){
+            catch (ArrayIndexOutOfBoundsException e){ //Using ArrayIndexOutofBoundsException to replace applyOrElse of spark-root
                 streamerInfo = null;
             }
             if (streamerInfo==null){
@@ -511,6 +511,7 @@ public class buildATT {
         List<String> stlStrings = Arrays.asList("string","_basic_string_common<true>");
         String classTypeString,arguementsTypeString;
 
+        //Check the following regex implementation
         String classTypeRE = Pattern.quote("(.*?)<(.*?)>");
         boolean t1 = Pattern.matches(classTypeRE,"aaa");
         boolean t2 = Pattern.matches(classTypeRE,"bbb");
@@ -1125,7 +1126,7 @@ public class buildATT {
         return srcomposite;
     }
 
-    public TBranchElement findBranch(String objectName,List<String> history,TBranchElement b){
+    public TBranchElement findBranch(String objectName,List<String> history,TBranchElement b){ //Check implementation
         String fullName="";
         String temp="";
         List<String> t1 = new ArrayList();

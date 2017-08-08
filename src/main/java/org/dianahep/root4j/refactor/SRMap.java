@@ -13,7 +13,7 @@ public class SRMap<T> extends SRCollection {
     static boolean split;
     static boolean isTop;
 
-    SRMap(String name,TBranchElement b,SRType keyType,SRType valueType,boolean split,boolean isTop){
+    public SRMap(String name,TBranchElement b,SRType keyType,SRType valueType,boolean split,boolean isTop){
         super(name,isTop);
         this.b = b;
         this.keyType = keyType;
@@ -21,7 +21,7 @@ public class SRMap<T> extends SRCollection {
         this.split = split;
     }
 
-    SRMap(String name,TBranchElement b,SRComposite<T> types,boolean split,boolean isTop){
+    public SRMap(String name,TBranchElement b,SRComposite<T> types,boolean split,boolean isTop){
         super(name,isTop);
         this.b=b;
         this.keyType = types.members.get(0);
@@ -45,6 +45,7 @@ public class SRMap<T> extends SRCollection {
                 for (int i=0;i<size;i++){
                     nn=buffer.readInt();
                     data.put(keyType.read(buffer),valueType.read(buffer));
+                    // toMap ?
                 }
                 entry+=1;
                 return data;
@@ -77,6 +78,7 @@ public class SRMap<T> extends SRCollection {
                 entry+=1L;
                 for (int i=0;i<size;i++){
                     data.put(keyType.read(buffer),valueType.read(buffer));
+                    // toMap?
                 }
                 return data;
             }
@@ -99,6 +101,7 @@ public class SRMap<T> extends SRCollection {
                     entry += 1L;
                     for (int i = 0; i < size; i++) {
                         data.put(keyType.read(buffer), valueType.read(buffer));
+                        // toMap?
                     }
                     return data;
                 }
@@ -108,6 +111,7 @@ public class SRMap<T> extends SRCollection {
                 entry+=1L;
                 for (int i=0;i<size;i++){
                     data.put(keyType.read(buffer),valueType.read(buffer));
+                    // toMap?
                 }
                 return data;
             }

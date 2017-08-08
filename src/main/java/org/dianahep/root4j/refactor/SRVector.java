@@ -13,7 +13,7 @@ public class SRVector<T> extends SRCollection{
     static boolean split;
     static boolean isTop;
 
-    SRVector(String name,TBranchElement b,SRType t,boolean split,boolean isTop){
+    public SRVector(String name,TBranchElement b,SRType t,boolean split,boolean isTop){
         super(name,isTop);
         this.b=b;
         this.t=t;
@@ -61,7 +61,7 @@ public class SRVector<T> extends SRCollection{
                                 data.add(x.readArray(buffer,nn));
                             }
 
-                            //Transpose to map
+                            //Transpose to map and return a map?
                         }
                     }
                     entry+=1L;
@@ -103,7 +103,7 @@ public class SRVector<T> extends SRCollection{
                     data.add(x.readArray(size));
                 }
 
-                //Transpose to map
+                //Transpose to map and return a map?
 
             }
             entry+=1L;
@@ -126,7 +126,7 @@ public class SRVector<T> extends SRCollection{
                         data.add(x.readArray(buffer,size));
                     }
 
-                    //Transpose to map
+                    //Transpose to map and return as map?
 
                 }
                 entry +=1L;
@@ -165,7 +165,7 @@ public class SRVector<T> extends SRCollection{
                             data.add(x.readArray(buffer,size));
                         }
 
-                        //Transpose to map
+                        //Transpose to map and return as map?
 
                     }
                     entry+=1L;

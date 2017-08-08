@@ -11,7 +11,7 @@ public class SRByte extends SRSimpleType {
     static TBranch b;
     static TLeaf l;
 
-    SRByte(String name,TBranch b,TLeaf l){
+    public SRByte(String name,TBranch b,TLeaf l){
         super(name,b,l);
     }
 

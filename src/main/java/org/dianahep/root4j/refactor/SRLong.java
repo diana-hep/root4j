@@ -10,7 +10,7 @@ public class SRLong extends SRSimpleType {
     static TBranch b;
     static TLeaf l;
 
-    SRLong(String name,TBranch b,TLeaf l){
+    public SRLong(String name,TBranch b,TLeaf l){
         super(name,b,l);
     }
 

@@ -4,11 +4,11 @@ import org.dianahep.root4j.core.*;
 import java.util.*;
 
 public class SRNull extends SRType{
-    SRNull(){
+    public SRNull(){
         super(null);
     }
 
-    SRNull(String name){
+    public SRNull(String name){
         super(name);
     }
 

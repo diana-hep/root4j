@@ -11,7 +11,7 @@ public class SRSTLString extends SRCollection {
     static TBranch b;
     static boolean isTop;
 
-    SRSTLString(String name,TBranch b,boolean isTop){
+    public SRSTLString(String name,TBranch b,boolean isTop){
         super(name,isTop);
         this.b=b;
     }

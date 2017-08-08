@@ -3,11 +3,14 @@ package org.dianahep.root4j.refactor;
 public class printATT {
     static SRType att;
 
-    printATT(SRType att){
+    public printATT(SRType att){
         this.att = att;
     }
 
-    void toPrint(SRType att,int level,String sep){
+    //Check how the objects are being compared - Currently comparing with static variables declared
+    //Might have to change the attributes being compared to be calculated from buildATT.java
+
+    public void toPrint(SRType att,int level,String sep){
         String toadd = "",toadd1 = "";
         for (int i=0;i<level;i++){
             toadd = toadd+sep;

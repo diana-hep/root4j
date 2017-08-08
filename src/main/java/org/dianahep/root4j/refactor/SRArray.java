@@ -13,7 +13,7 @@ public class SRArray extends SRSimpleType{
     static SRType t;
     static int n;
 
-    SRArray(String name,TBranch b,TLeaf l,SRType t,int n){
+    public SRArray(String name,TBranch b,TLeaf l,SRType t,int n){
         super(name,b,l);
         this.n=n;
         this.t=t;
