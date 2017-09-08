@@ -1299,7 +1299,7 @@ public class buildATT {
 
     public SRType recolumns(){
         SRNull srnull = new SRNull();
-        if (requiredColumns.equals(null)){
+        if (requiredColumns == null) {
             List<SRType> temp = new ArrayList();
             for (int i=0;i<tree.getNBranches();i++){
                 TBranch b = tree.getBranch(i);
