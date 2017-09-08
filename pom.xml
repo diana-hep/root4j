@@ -7,7 +7,7 @@
   <!-- Reset the version numbers, too. -->
   <groupId>org.diana-hep</groupId>
   <artifactId>root4j</artifactId>
-  <version>0.1.6</version>
+  <version>0.1.6-refac</version>
   <packaging>jar</packaging>
 
   <name>root4j</name>
@@ -148,8 +148,8 @@
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
+          <source>1.5</source>
+          <target>1.5</target>
           <debug>true</debug>
           <!-- Debug level used for source line granularity in coverage analysis. Disable for production. -->
           <debuglevel>lines,vars,source</debuglevel>
