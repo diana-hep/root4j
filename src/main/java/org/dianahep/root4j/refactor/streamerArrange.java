@@ -16,12 +16,12 @@ public class streamerArrange {
     public Map<String,TStreamerInfo> arrangeStreamers()throws IOException{
         List<TStreamerInfo> lll = reader.streamerInfo();
         Map<String,TStreamerInfo> streamers = new HashMap();
-        TStreamerInfo s;
-        TStreamerInfo streamer;
         String temp1;
         for (int i=0;i<lll.size();i++){
-            s=lll.get(i);
-            streamers.put(s.getName(),(TStreamerInfo)s);
+            if (lll.get(i) instanceof TStreamerInfo) {
+                TStreamerInfo s=(TStreamerInfo)lll.get(i);
+                streamers.put(s.getName(),s);
+            }
         }
         return streamers;
     }

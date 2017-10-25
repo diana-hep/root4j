@@ -5,7 +5,7 @@ import java.util.*;
 
 public class SRNull extends SRType{
     public SRNull(){
-        super(null);
+        super("Null");
     }
 
     public SRNull(String name){
