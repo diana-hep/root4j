@@ -9,14 +9,29 @@ import java.io.IOException;
 
 public class Find {
 
-    public TTree findTree(TDirectory dir)throws RootClassNotFound,IOException {
+    public TTree findTree(TDirectory dir,TTree name)throws RootClassNotFound,IOException {
         for (int i=0;i<dir.nKeys();i++){
             TKey key = dir.getKey(i);
             if (key.getObjectClass().getClassName().equals("TDirectory")){
-                return findTree((TDirectory)key.getObject());
+                if (findTree((TDirectory)key.getObject(), name)!= null){
+                    return (TTree)name;
+                }
+                else {
+                    return (TTree)null;
+                }
             }
             else if (key.getObjectClass().getClassName().equals("TTree")){
-                return (TTree)key.getObject();
+                if (name!=null){
+                    if (name==(TTree)key.getObject()){
+                        return (TTree)key.getObject();
+                    }
+                    else {
+                        return null;
+                    }
+                }
+                else {
+                    return (TTree)key.getObject();
+                }
             }
         }
         return null;
