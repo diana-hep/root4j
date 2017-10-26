@@ -22,5 +22,5 @@ hs_err_pid*
 .settings/
 
 # intelliJ idea files
-*.iml
+.iml
 .idea/
