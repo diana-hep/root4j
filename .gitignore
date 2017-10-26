@@ -20,3 +20,7 @@ hs_err_pid*
 .classpath
 .project
 .settings/
+
+# intelliJ idea files
+*.iml
+*.idea
