@@ -17,6 +17,7 @@ public class SRLong extends SRSimpleType {
     @Override public Long read(RootInput buffer)throws IOException{
         long t = buffer.readLong();
         entry+=1L;
+        System.out.println(t);
         return t;
     }
 

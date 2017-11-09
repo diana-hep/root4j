@@ -18,7 +18,7 @@ public class buildATT {
     }
 
 
-    public SRType synthesizeLeafType(TBranch b,TLeaf leaf){
+    public SRType synthesizeLeafType(TBranch b,TLeaf leaf)throws IOException{
         String nameToUse;
         if (b.getLeaves().size()==1){
             nameToUse=b.getName();
@@ -57,7 +57,7 @@ public class buildATT {
         }
     }
 
-    public SRType synthesizeLeaf(TBranch b,TLeaf leaf){
+    public SRType synthesizeLeaf(TBranch b,TLeaf leaf)throws IOException{
         String nameToUse;
         if (b.getLeaves().size()==1){
             nameToUse=b.getName();
@@ -78,7 +78,7 @@ public class buildATT {
         }
     }
 
-    public SRType iterate(String nameToUse,TBranch b,TLeaf leaf,int dimsToGo){
+    public SRType iterate(String nameToUse,TBranch b,TLeaf leaf,int dimsToGo)throws IOException{
         if (dimsToGo==1){
             SRArray srarray = new SRArray(nameToUse,b,leaf,synthesizeLeafType(b,leaf),leaf.getMaxIndex()[leaf.getArrayDim()-1]);
             return srarray;
@@ -95,7 +95,7 @@ public class buildATT {
         return srnull;
     }
 
-    public SRType synthesizeTopBranch(TBranch b){
+    public SRType synthesizeTopBranch(TBranch b)throws IOException{
         SRRootType srroottype = new SRRootType();
         if (b instanceof TBranchElement){
             TBranchElement be = (TBranchElement)b;
@@ -1297,7 +1297,7 @@ public class buildATT {
         return synthesizeStreamerElement(b,streamerElement,parentType);
     }
 
-    public SRType recolumns(){
+    public SRType recolumns()throws IOException{
         SRNull srnull = new SRNull();
         if (requiredColumns == null) {
             List<SRType> temp = new ArrayList();

@@ -23,7 +23,7 @@ public class Input {
             System.exit(0);
         }
         else {
-            buildATT build = new buildATT(it.findTree(reader.getTopDir(),null),arrangestreamers.returning(),null);
+            buildATT att = new buildATT(it.findTree(reader.getTopDir(),null),arrangestreamers.returning(),null);
         }
     }
 

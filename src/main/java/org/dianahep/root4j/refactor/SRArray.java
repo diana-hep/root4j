@@ -32,24 +32,13 @@ public class SRArray extends SRSimpleType{
                 }
             }
         entry+=1L;
+        System.out.println(data);
         return data;
     }
 
     @Override public List<Object> read()throws IOException{
         RootInput buffer = b.setPosition(l,entry);
-        List<Object> data = new ArrayList();
-        if (n==-1) {
-            for (int i = 0; i < (Integer) l.getLeafCount().getWrappedValue(entry); i++) {
-                data.add(t.read(buffer));
-            }
-        }
-        else{
-            for(int i=0;i<n;i++) {
-                data.add(t.read(buffer));
-            }
-        }
-        entry+=1L;
-        return data;
+        return read(buffer);
     }
 
     @Override public List<Object> readArray(RootInput buffer, int size) throws IOException{
@@ -72,21 +61,7 @@ public class SRArray extends SRSimpleType{
 
     @Override public List<Object> readArray(int size)throws IOException{
         RootInput buffer = b.setPosition(l,entry);
-        List<Object> data = new ArrayList();
-        for (int i=0;i<size;i++){
-            if (n==-1){
-                for (int j=0; j<(Integer)l.getLeafCount().getWrappedValue(entry);j++){
-                    data.add(t.read(buffer));
-                }
-            }
-            else {
-                for (int j=0;j<size;j++){
-                    data.add(t.read(buffer));
-                }
-            }
-        }
-        entry+=1L;
-        return data;
+        return readArray(buffer,size);
     }
 
     @Override public boolean hasNext(){

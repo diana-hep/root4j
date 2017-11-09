@@ -18,6 +18,7 @@ public class SRString extends SRSimpleType{
     @Override public String read(RootInput buffer)throws IOException{
         String r=buffer.readString();
         entry+=1L;
+        System.out.println(r);
         return r;
     }
 

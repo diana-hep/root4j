@@ -17,6 +17,7 @@ public class SRFloat extends SRSimpleType {
     @Override public Float read(RootInput buffer)throws IOException{
         float t = buffer.readFloat();
         entry+=1L;
+        System.out.println(t);
         return t;
     }
 

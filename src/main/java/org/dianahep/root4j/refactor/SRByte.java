@@ -18,6 +18,7 @@ public class SRByte extends SRSimpleType {
     @Override public Byte read(RootInput buffer)throws IOException{
         byte t = buffer.readByte();
         entry+=1L;
+        System.out.println(t);
         return t;
     }
 

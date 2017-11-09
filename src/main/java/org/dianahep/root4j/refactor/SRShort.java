@@ -18,6 +18,7 @@ public class SRShort extends SRSimpleType {
     @Override public Short read(RootInput buffer)throws IOException{
         short temp = buffer.readShort();
         entry+=1L;
+        System.out.println(temp);
         return temp;
     }
 

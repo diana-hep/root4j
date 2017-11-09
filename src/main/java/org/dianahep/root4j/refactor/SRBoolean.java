@@ -17,6 +17,7 @@ public class SRBoolean extends SRSimpleType {
     @Override public Boolean read(RootInput buffer)throws IOException{
         boolean t = buffer.readBoolean();
         entry+=1L;
+        System.out.println(t);
         return t;
     }
 

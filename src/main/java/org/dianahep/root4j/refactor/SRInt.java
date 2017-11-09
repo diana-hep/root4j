@@ -17,6 +17,7 @@ public class SRInt extends SRSimpleType {
     @Override public Integer read(RootInput buffer)throws IOException{
         int t = buffer.readInt();
         entry+=1L;
+        System.out.println(t);
         return t;
     }
 

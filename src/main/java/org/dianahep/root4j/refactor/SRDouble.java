@@ -17,6 +17,7 @@ public class SRDouble extends SRSimpleType {
     @Override public Double read(RootInput buffer)throws IOException{
         double t=buffer.readDouble();
         entry+=1L;
+        System.out.println(t);
         return t;
     }
 
