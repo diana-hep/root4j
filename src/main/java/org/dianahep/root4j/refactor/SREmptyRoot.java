@@ -12,21 +12,29 @@ public class SREmptyRoot extends SRType{
         this.entries=entries;
     }
 
+    @Override void debugMe(String str) {
+        logger.debug("SREmptyRoot:: "+name+" "+str);
+    }
+
     @Override public SRType read(RootInput b){
+        debugMe("read(buffer)");
         return null;
     }
 
     @Override public List<SRType> read(){
+        debugMe("read");
         entries-=1L;
         List<SRType> temp = new ArrayList();
         return temp;
     }
 
     @Override public List<SRType> readArray(RootInput b,int size){
+        debugMe("readArray(buffer,"+size+")");
         return null;
     }
 
     @Override public List<SRType> readArray(int size){
+        debugMe("readArray("+size+")");
         return null;
     }
 

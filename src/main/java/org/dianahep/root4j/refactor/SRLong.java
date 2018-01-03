@@ -14,6 +14,10 @@ public class SRLong extends SRSimpleType {
         super(name,b,l);
     }
 
+    @Override void debugMe(String str) {
+        logger.debug("SRLong:: "+name+" "+str);
+    }
+
     @Override public Long read(RootInput buffer)throws IOException{
         long t = buffer.readLong();
         entry+=1L;

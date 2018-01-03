@@ -19,6 +19,10 @@ public class SRArray extends SRSimpleType{
         this.t=t;
     }
 
+    @Override void debugMe(String str) {
+        logger.debug("SRArray:: "+name+" "+str);
+    }
+
     @Override public List<Object> read(RootInput buffer)throws IOException{
         List<Object> data = new ArrayList();
         if (n==-1) {

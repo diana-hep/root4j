@@ -31,6 +31,10 @@ public class SRComposite<T> extends SRType{
         this.isBase = false;
     }
 
+    @Override void debugMe(String str) {
+        logger.debug("SRComposite:: "+name+" "+str+" Event="+entry);
+    }
+
     @Override public List<Object> readArray(int size)throws IOException{
         List<Object> data = new ArrayList();
         List<Object> temp = new ArrayList();

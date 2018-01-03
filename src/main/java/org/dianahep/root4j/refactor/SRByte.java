@@ -15,6 +15,10 @@ public class SRByte extends SRSimpleType {
         super(name,b,l);
     }
 
+    @Override void debugMe(String str) {
+        logger.debug("SRByte:: "+name+" "+str);
+    }
+
     @Override public Byte read(RootInput buffer)throws IOException{
         byte t = buffer.readByte();
         entry+=1L;

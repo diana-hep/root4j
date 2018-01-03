@@ -11,16 +11,23 @@ public class SRUnknown extends SRType {
         super(name);
     }
 
+    @Override void debugMe(String str) {
+        logger.debug("SRUnknown:: "+name+" "+str);
+    }
+
     @Override public String read(RootInput b){
+        debugMe("read(buffer)");
         return null;
     }
 
     @Override public String read(){
+        debugMe("read");
         return null;
     }
 
      @Override
      public List<String> readArray(int size) {
+        debugMe("readArray("+size+")");
         List<String> temp = new ArrayList();
         for (int i=0;i<size;i++)
         {
@@ -31,6 +38,7 @@ public class SRUnknown extends SRType {
 
      @Override
      public List<String> readArray(RootInput buffer, int size){
+        debugMe("readArray(buffer, "+size+")");
         List<String> temp = new ArrayList();
         for (int i=0;i<size;i++){
             temp.add(null);

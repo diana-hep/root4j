@@ -29,6 +29,10 @@ public class SRMap<T> extends SRCollection {
         this.split=split;
     }
 
+    @Override void debugMe(String str) {
+        logger.debug("SRMap:: "+name+" "+str+" Event="+entry);
+    }
+
     @Override public Map<Object,Object> readArray(RootInput buffer, int size)throws IOException {
         Map<Object,Object> data = new HashMap();
         int nn;

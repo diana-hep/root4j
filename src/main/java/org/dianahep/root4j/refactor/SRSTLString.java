@@ -16,6 +16,10 @@ public class SRSTLString extends SRCollection {
         this.b=b;
     }
 
+    @Override void debugMe(String str) {
+        logger.debug("SRSTLtring:: "+name+" "+str+" Event="+entry);
+    }
+
     @Override public String read(RootInput buffer)throws IOException{
         if (isTop){
             buffer.readInt();

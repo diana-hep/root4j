@@ -15,19 +15,29 @@ public class SRString extends SRSimpleType{
         super(name,b,l);
     }
 
+    @Override void debugMe(String str) {
+        logger.debug("SRString:: "+name+" "+str);
+    }
+
     @Override public String read(RootInput buffer)throws IOException{
+        debugMe("read(buffer)");
         String r=buffer.readString();
         entry+=1L;
-        System.out.println(r);
+        debugMe("read String ="+r);
         return r;
     }
 
     @Override public String read()throws IOException{
+        debugMe("read");
         RootInput buffer = b.setPosition(l,entry);
-        return read(buffer);
+        String data = buffer.readString();
+        debugMe("read String ="+data);
+        entry+=1L;
+        return data;
     }
 
     @Override public List<String> readArray(RootInput buffer,int size)throws IOException{
+        debugMe("readArray(buffer,"+size+")");
         List<String> temp = new ArrayList();
         String t;
         for (int i=0;i<size;i++){
@@ -39,8 +49,16 @@ public class SRString extends SRSimpleType{
     }
 
     @Override public List<String> readArray(int size) throws IOException{
+        debugMe("readArray("+size+")");
         RootInput buffer = b.setPosition(l,entry);
-        return readArray(buffer,size);
+        List<String> temp = new ArrayList();
+        String t;
+        for (int i=0;i<size;i++){
+            t=buffer.readString();
+            temp.add(t);
+        }
+        entry+=1L;
+        return temp;
     }
 
     @Override public boolean hasNext(){

@@ -16,7 +16,12 @@ public class SRRoot extends SRType{
         this.types=types;
     }
 
+    @Override void debugMe(String str) {
+        logger.debug("SRRoot:: "+name+" "+str);
+    }
+
     @Override public List<Object> read()throws IOException{
+        debugMe("read");
         List<Object> temp = new ArrayList();
         for (SRType t : types){
             temp.add(t.read());
@@ -26,14 +31,17 @@ public class SRRoot extends SRType{
     }
 
     @Override public SRType read(RootInput buffer)throws IOException{
+        debugMe("read(buffer)");
         return null;
     }
 
     @Override public List<SRType> readArray(RootInput buffer, int size)throws IOException{
+        debugMe("readArray(buffer,"+size+")");
         return null;
     }
 
     @Override public List<SRType> readArray(int size)throws IOException{
+        debugMe("readArray("+size+")");
         return null;
     }
 

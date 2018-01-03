@@ -14,6 +14,10 @@ public class SRBoolean extends SRSimpleType {
         super(name,b,l);
     }
 
+    @Override void debugMe(String str) {
+        logger.debug("SRBoolean:: "+name+" "+str);
+    }
+
     @Override public Boolean read(RootInput buffer)throws IOException{
         boolean t = buffer.readBoolean();
         entry+=1L;

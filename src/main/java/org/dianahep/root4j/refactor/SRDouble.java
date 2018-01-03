@@ -14,6 +14,10 @@ public class SRDouble extends SRSimpleType {
         super(name,b,l);
     }
 
+    @Override void debugMe(String str) {
+        logger.debug("SRDouble:: "+name+" "+str);
+    }
+
     @Override public Double read(RootInput buffer)throws IOException{
         double t=buffer.readDouble();
         entry+=1L;

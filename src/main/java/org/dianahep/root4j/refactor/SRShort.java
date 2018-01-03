@@ -15,19 +15,29 @@ public class SRShort extends SRSimpleType {
         super(name,b,l);
     }
 
+    @Override void debugMe(String str) {
+        logger.debug("SRShort:: "+name+" "+str);
+    }
+
     @Override public Short read(RootInput buffer)throws IOException{
-        short temp = buffer.readShort();
+        debugMe("read(buffer)");
+        short data = buffer.readShort();
         entry+=1L;
-        System.out.println(temp);
-        return temp;
+        debugMe("read String ="+data);
+        return data;
     }
 
     @Override public Short read()throws IOException{
         RootInput buffer = b.setPosition(l,entry);
-        return read(buffer);
+        debugMe("read");
+        short r = buffer.readShort();
+        debugMe("read Short="+r);
+        entry+=1L;
+        return r;
     }
 
     @Override public List<Short> readArray(RootInput buffer, int size)throws IOException{
+        debugMe("readArray(buffer,"+size+")");
         short t;
         List<Short> temp = new ArrayList();
         for (int i=0;i<size;i++){
@@ -39,8 +49,16 @@ public class SRShort extends SRSimpleType {
     }
 
     @Override public List<Short> readArray(int size)throws IOException{
+        debugMe("readArray("+size+")");
         RootInput buffer = b.setPosition(l,entry);
-        return readArray(buffer,size);
+        short t;
+        List<Short> temp = new ArrayList();
+        for (int i=0;i<size;i++){
+            t=buffer.readShort();
+            temp.add(t);
+        }
+        entry+=1L;
+        return temp;
     }
 
     @Override public boolean hasNext(){

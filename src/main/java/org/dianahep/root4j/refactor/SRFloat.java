@@ -14,6 +14,10 @@ public class SRFloat extends SRSimpleType {
         super(name,b,l);
     }
 
+    @Override void debugMe(String str) {
+        logger.debug("SRFloat:: "+name+" "+str);
+    }
+
     @Override public Float read(RootInput buffer)throws IOException{
         float t = buffer.readFloat();
         entry+=1L;
