@@ -19,18 +19,22 @@ public class SRDouble extends SRSimpleType {
     }
 
     @Override public Double read(RootInput buffer)throws IOException{
+        debugMe("read(buffer)");
         double t=buffer.readDouble();
         entry+=1L;
-        System.out.println(t);
         return t;
     }
 
     @Override public Double read()throws IOException{
+        debugMe("read");
         RootInput buffer = b.setPosition(l,entry);
-        return read(buffer);
+        double t=buffer.readDouble();
+        entry+=1L;
+        return t;
     }
 
     @Override public List<Double> readArray(RootInput buffer, int size)throws IOException{
+        debugMe("readArray(buffer,"+size+")");
         double t;
         List<Double> temp = new ArrayList();
         for (int i=0;i<size;i++){
@@ -42,8 +46,16 @@ public class SRDouble extends SRSimpleType {
     }
 
     @Override public List<Double> readArray(int size)throws IOException{
+        debugMe("readArray("+size+")");
         RootInput buffer = b.setPosition(l,entry);
-        return readArray(buffer,size);
+        double t;
+        List<Double> temp = new ArrayList();
+        for (int i=0;i<size;i++){
+            t=buffer.readDouble();
+            temp.add(t);
+        }
+        entry+=1L;
+        return temp;
     }
 
     @Override public boolean hasNext(){

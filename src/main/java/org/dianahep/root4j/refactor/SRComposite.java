@@ -39,6 +39,7 @@ public class SRComposite<T> extends SRType{
         List<Object> data = new ArrayList();
         List<Object> temp = new ArrayList();
         if (split){
+            debugMe("readArray(buffer," +size+") in split mode");
             if (members.size()==0){
                 for (int i=0;i<size;i++){
                     data.add(temp);
@@ -57,6 +58,7 @@ public class SRComposite<T> extends SRType{
         }
         else {
             RootInput buffer = b.setPosition((TLeafElement)b.getLeaves().get(0), entry);
+            debugMe("readArray("+size+") in non-split mode calls readArray(buffer, "+size+")");
             return readArray(buffer,size);
         }
     }
@@ -65,6 +67,7 @@ public class SRComposite<T> extends SRType{
         List<Object> data = new ArrayList();
         List<Object> temp = new ArrayList();
         if (isBase){
+            debugMe("readArray(buffer, "+size+") in isBase mode");
             if (members.size()==0){
                 for (int i=0;i<size;i++){
                     data.add(temp);
@@ -81,6 +84,7 @@ public class SRComposite<T> extends SRType{
             return data;
         }
         else {
+            debugMe("readArray(buffer, "+size+") in non-Base mode");
             for (int i=0;i<size;i++){
                 int version = buffer.readVersion();
                 if (version==0) {
@@ -101,6 +105,7 @@ public class SRComposite<T> extends SRType{
     @Override public List<Object> read()throws IOException{
         List<Object> data = new ArrayList();
         if (split){
+            debugMe("read in split mode");
             entry+=1L;
             for (SRType m : members){
                 data.add(m.read());
@@ -111,6 +116,7 @@ public class SRComposite<T> extends SRType{
             return data;
         }
         else {
+            debugMe("read in non-split mode");
             if (members.size()==0){
                 entry+=1L;
                 List<Object> temp = new ArrayList();
@@ -145,6 +151,7 @@ public class SRComposite<T> extends SRType{
     }
 
     @Override public List<Object> read(RootInput buffer)throws IOException{
+        debugMe("read(buffer)");
         List<Object> data = new ArrayList();
         entry+=1L;
         int version = buffer.readVersion();

@@ -21,6 +21,7 @@ public class SRSTLString extends SRCollection {
     }
 
     @Override public String read(RootInput buffer)throws IOException{
+        debugMe("read(buffer)");
         if (isTop){
             buffer.readInt();
             buffer.readShort();
@@ -31,6 +32,7 @@ public class SRSTLString extends SRCollection {
     }
 
     @Override public String read()throws IOException{
+        debugMe("read");
         RootInput buffer = b.setPosition((TLeafElement)b.getLeaves().get(0), entry);
         if (isTop){
             buffer.readInt();
@@ -46,6 +48,7 @@ public class SRSTLString extends SRCollection {
     }
 
     @Override public List<String> readArray(RootInput buffer, int size)throws IOException{
+        debugMe("readArray(buffer,"+size+")");
         buffer.readInt();
         buffer.readShort();
         String t;
@@ -59,6 +62,7 @@ public class SRSTLString extends SRCollection {
     }
 
     @Override public List<String> readArray(int size)throws IOException{
+        debugMe("readArray("+size+")");
         RootInput buffer = b.setPosition((TLeafElement)b.getLeaves().get(0), entry);
         buffer.readInt();
         buffer.readShort();

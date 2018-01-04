@@ -19,18 +19,22 @@ public class SRLong extends SRSimpleType {
     }
 
     @Override public Long read(RootInput buffer)throws IOException{
-        long t = buffer.readLong();
+        debugMe("read(buffer)");
+        long data = buffer.readLong();
         entry+=1L;
-        System.out.println(t);
-        return t;
+        return data;
     }
 
     @Override public Long read()throws IOException{
+        debugMe("read");
         RootInput buffer = b.setPosition(l,entry);
-        return read(buffer);
+        long data = buffer.readLong();
+        entry+=1L;
+        return data;
     }
 
     @Override public List<Long> readArray(RootInput buffer, int size)throws IOException{
+        debugMe("readArray(buffer,"+size+")");
         long t;
         List<Long> temp = new ArrayList();
         for (int i=0;i<size;i++){
@@ -42,8 +46,16 @@ public class SRLong extends SRSimpleType {
     }
 
     @Override public List<Long> readArray(int size)throws IOException{
+        debugMe("readArray("+size+")");
         RootInput buffer = b.setPosition(l,entry);
-        return readArray(buffer,size);
+        long t;
+        List<Long> temp = new ArrayList();
+        for (int i=0;i<size;i++){
+            t=buffer.readLong();
+            temp.add(t);
+        }
+        entry+=1L;
+        return temp;
     }
 
     @Override public boolean hasNext(){

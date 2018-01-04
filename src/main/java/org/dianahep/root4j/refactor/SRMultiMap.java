@@ -38,9 +38,11 @@ public class SRMultiMap<T> extends SRCollection{
         Map<Object,Object> data = new HashMap();
         int nn;
         if (split){
+            debugMe("readArray(buffer," +size+") in split mode");
             return null;
         }
         else {
+            debugMe("readArray(buffer, "+size+") in non-split mode");
             int byteCount = buffer.readInt();
             short version = buffer.readShort();
             if (version>0 && kMemberWiseStreaming>0){
@@ -61,6 +63,7 @@ public class SRMultiMap<T> extends SRCollection{
     }
 
     @Override public Map<Object,Object> readArray(int size)throws IOException{
+        debugMe("readArray("+size+") calls readArray(buffer, "+size+")");
         RootInput buffer = b.setPosition((TLeafElement)b.getLeaves().get(0),entry);
         return readArray(buffer,size);
     }
@@ -70,10 +73,12 @@ public class SRMultiMap<T> extends SRCollection{
         TLeaf leaf = (TLeaf)b.getLeaves().get(0);
         RootInput buffer = b.setPosition(leaf,entry);
         if (split){
+            debugMe("read in split mode");
             int size = buffer.readInt();
             return null;
         }
         else {
+            debugMe("read in non-split mode");
             int byteCount = buffer.readInt();
             short version = buffer.readShort();
             if (version>0 && kMemberWiseStreaming>0){
@@ -96,10 +101,12 @@ public class SRMultiMap<T> extends SRCollection{
     @Override public Map<Object,Object> read(RootInput buffer)throws IOException{
         Map<Object,Object> data = new HashMap();
         if (split){
+            debugMe("read(buffer) in split mode");
             return null;
         }
         else {
             if (isTop){
+                debugMe("read(buffer) in non-split mode");
                 int byteCount = buffer.readInt();
                 short version = buffer.readShort();
                 if (version>0 && kMemberWiseStreaming>0){
