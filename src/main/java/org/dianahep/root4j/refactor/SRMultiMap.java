@@ -30,7 +30,7 @@ public class SRMultiMap<T> extends SRCollection{
         this.split=split;
     }
 
-    @Override void debugMe(String str) {
+    @Override public void debugMe(String str) {
         logger.debug("SRMultiMap:: "+name+" "+str+" Event="+entry);
     }
 

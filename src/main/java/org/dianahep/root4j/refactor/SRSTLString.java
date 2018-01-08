@@ -16,7 +16,7 @@ public class SRSTLString extends SRCollection {
         this.b=b;
     }
 
-    @Override void debugMe(String str) {
+    @Override public void debugMe(String str) {
         logger.debug("SRSTLtring:: "+name+" "+str+" Event="+entry);
     }
 

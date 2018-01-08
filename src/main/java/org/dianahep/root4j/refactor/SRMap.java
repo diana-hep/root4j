@@ -29,7 +29,7 @@ public class SRMap<T> extends SRCollection {
         this.split=split;
     }
 
-    @Override void debugMe(String str) {
+    @Override public void debugMe(String str) {
         logger.debug("SRMap:: "+name+" "+str+" Event="+entry);
     }
 

@@ -14,7 +14,7 @@ public class SRFloat extends SRSimpleType {
         super(name,b,l);
     }
 
-    @Override void debugMe(String str) {
+    @Override public void debugMe(String str) {
         logger.debug("SRFloat:: "+name+" "+str);
     }
 

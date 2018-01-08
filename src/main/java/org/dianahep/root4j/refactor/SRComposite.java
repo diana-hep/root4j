@@ -31,7 +31,7 @@ public class SRComposite<T> extends SRType{
         this.isBase = false;
     }
 
-    @Override void debugMe(String str) {
+    @Override public void debugMe(String str) {
         logger.debug("SRComposite:: "+name+" "+str+" Event="+entry);
     }
 

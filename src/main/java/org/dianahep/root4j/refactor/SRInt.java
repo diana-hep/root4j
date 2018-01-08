@@ -14,7 +14,7 @@ public class SRInt extends SRSimpleType {
         super(name,b,l);
     }
 
-    @Override void debugMe(String str) {
+    @Override public void debugMe(String str) {
         logger.debug("SRInt:: "+name+" "+str);
     }
 

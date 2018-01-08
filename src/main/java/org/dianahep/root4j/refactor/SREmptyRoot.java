@@ -12,7 +12,7 @@ public class SREmptyRoot extends SRType{
         this.entries=entries;
     }
 
-    @Override void debugMe(String str) {
+    @Override public void debugMe(String str) {
         logger.debug("SREmptyRoot:: "+name+" "+str);
     }
 

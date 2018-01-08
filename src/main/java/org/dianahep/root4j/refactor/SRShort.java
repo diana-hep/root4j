@@ -15,7 +15,7 @@ public class SRShort extends SRSimpleType {
         super(name,b,l);
     }
 
-    @Override void debugMe(String str) {
+    @Override public void debugMe(String str) {
         logger.debug("SRShort:: "+name+" "+str);
     }
 

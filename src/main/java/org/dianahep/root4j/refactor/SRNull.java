@@ -12,7 +12,7 @@ public class SRNull extends SRType{
         super(name);
     }
 
-    @Override void debugMe(String str) {
+    @Override public void debugMe(String str) {
         logger.debug("SRNull::no name "+str);
     }
 

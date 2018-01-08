@@ -16,7 +16,7 @@ public class SRRoot extends SRType{
         this.types=types;
     }
 
-    @Override void debugMe(String str) {
+    @Override public void debugMe(String str) {
         logger.debug("SRRoot:: "+name+" "+str);
     }
 

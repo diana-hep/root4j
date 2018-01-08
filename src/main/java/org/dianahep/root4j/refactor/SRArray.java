@@ -19,7 +19,7 @@ public class SRArray extends SRSimpleType{
         this.t=t;
     }
 
-    @Override void debugMe(String str) {
+    @Override public void debugMe(String str) {
         logger.debug("SRArray:: "+name+" "+str);
     }
 

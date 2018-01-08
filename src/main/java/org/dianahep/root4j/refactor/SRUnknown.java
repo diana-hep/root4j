@@ -11,7 +11,7 @@ public class SRUnknown extends SRType {
         super(name);
     }
 
-    @Override void debugMe(String str) {
+    @Override public void debugMe(String str) {
         logger.debug("SRUnknown:: "+name+" "+str);
     }
 
