@@ -7,9 +7,9 @@ import java.util.*;
 
 public class SRString extends SRSimpleType{
 
-    static String name;
-    static TBranch b;
-    static TLeaf l;
+    public static String name;
+    public static TBranch b;
+    public static TLeaf l;
 
     public SRString(String name,TBranch b,TLeaf l){
         super(name,b,l);

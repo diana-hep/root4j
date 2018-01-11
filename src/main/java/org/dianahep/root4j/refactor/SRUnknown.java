@@ -5,7 +5,7 @@ import java.util.*;
 
 public class SRUnknown extends SRType {
 
-    static String name;
+    public static String name;
 
     public SRUnknown(String name) {
         super(name);

@@ -7,9 +7,9 @@ import java.util.*;
 
 public class SRSTLString extends SRCollection {
 
-    static String name;
-    static TBranch b;
-    static boolean isTop;
+    public static String name;
+    public static TBranch b;
+    public static boolean isTop;
 
     public SRSTLString(String name,TBranch b,boolean isTop){
         super(name,isTop);

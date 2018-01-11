@@ -7,11 +7,11 @@ import java.util.*;
 
 public class SRArray extends SRSimpleType{
 
-    static String name;
-    static TBranch b;
-    static TLeaf l;
-    static SRType t;
-    static int n;
+    public static String name;
+    public static TBranch b;
+    public static TLeaf l;
+    public static SRType t;
+    public static int n;
 
     public SRArray(String name,TBranch b,TLeaf l,SRType t,int n){
         super(name,b,l);

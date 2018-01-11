@@ -6,9 +6,9 @@ import java.io.*;
 
 public class SRRoot extends SRType{
 
-    static String name;
-    static long entries;
-    static List<SRType> types;
+    public static String name;
+    public static long entries;
+    public static List<SRType> types;
 
     public SRRoot(String name,long entries,List<SRType> types){
         super(name);

@@ -7,11 +7,11 @@ import java.io.*;
 
 public class SRVector<T> extends SRCollection{
 
-    static String name;
-    static TBranchElement b;
-    static SRType t;
-    static boolean split;
-    static boolean isTop;
+    public static String name;
+    public static TBranchElement b;
+    public static SRType t;
+    public static boolean split;
+    public static boolean isTop;
 
     public SRVector(String name,TBranchElement b,SRType t,boolean split,boolean isTop){
         super(name,isTop);

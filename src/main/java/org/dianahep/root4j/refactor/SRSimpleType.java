@@ -4,9 +4,9 @@ import org.dianahep.root4j.interfaces.*;
 
 public abstract class SRSimpleType extends SRType{
 
-    static String name;
-    static TBranch b;
-    static TLeaf l;
+    public static String name;
+    public static TBranch b;
+    public static TLeaf l;
 
     public SRSimpleType()
     {

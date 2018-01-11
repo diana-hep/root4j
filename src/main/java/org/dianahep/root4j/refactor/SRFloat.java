@@ -6,9 +6,9 @@ import java.io.*;
 import java.util.*;
 
 public class SRFloat extends SRSimpleType {
-    static String name;
-    static TBranch b;
-    static TLeaf l;
+    public static String name;
+    public static TBranch b;
+    public static TLeaf l;
 
     public SRFloat(String name,TBranch b,TLeaf l){
         super(name,b,l);
