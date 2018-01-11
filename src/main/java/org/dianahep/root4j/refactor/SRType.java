@@ -4,7 +4,7 @@ import org.dianahep.root4j.core.*;
 import java.io.*;
 import org.apache.log4j.*;
 
-public abstract class SRType{
+public abstract class SRType<T>{
 
     protected Logger logger = LogManager.getLogger("org.dianahep.root4j.refactor.TypeSystem");
 
@@ -16,17 +16,17 @@ public abstract class SRType{
 
     public abstract void debugMe(String str) throws IOException;
 
-    public abstract <T> T read(RootInput b) throws IOException;
+    public abstract T read(RootInput b) throws IOException;
 
-    public abstract <T> T read()throws IOException;
+    public abstract T read()throws IOException;
 
     public boolean hasNext() {
         return false;
     };
 
-    public abstract <T> T readArray(int size)throws IOException;
+    public abstract T readArray(int size)throws IOException;
 
-    public abstract <T> T readArray(RootInput buffer, int size)throws IOException;
+    public abstract T readArray(RootInput buffer, int size)throws IOException;
 
     public SRType(String name){
         this.name=name;

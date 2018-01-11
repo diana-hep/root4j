@@ -45,7 +45,7 @@ public interface RootInput extends DataInput
    float[] readVarWidthArrayFloat() throws IOException;
 
    double[] readVarWidthArrayDouble() throws IOException;
-   
+
    boolean[] readVarWidthArrayBoolean() throws IOException;
 
    int readArray(int[] data) throws IOException;
