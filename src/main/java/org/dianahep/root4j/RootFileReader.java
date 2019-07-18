@@ -24,6 +24,7 @@ import java.net.URLConnection;
 import java.util.List;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Properties;
 
 // hadoop hdfs
 import org.apache.hadoop.conf.Configuration;
@@ -167,16 +168,16 @@ public class RootFileReader implements TFile
 
    public RootFileReader(String path) throws IOException
    {
-       /*
-       FileSystem hdfs = FileSystem.get(hConf);
-       Path hPathName = new Path(pathName);
-       RootHDFSInputStream hdfsInput = new RootHDFSInputStream(hdfs.open(hPathName), 
-            this);
-       init(hdfsInput, null);
-       */
-
-
+       //DO NOT USE THIS IMPLEMENTATION! - For compatibility only
        Configuration conf = new Configuration();
+       Path hPath = new Path(path);
+       FileSystem fs = hPath.getFileSystem(conf);
+       RootHDFSInputStream hdfsInput = new RootHDFSInputStream(fs.open(hPath), this);
+       init(hdfsInput, null);
+   }
+
+   public RootFileReader(String path, Configuration conf) throws IOException
+   {
        Path hPath = new Path(path);
        FileSystem fs = hPath.getFileSystem(conf);
        RootHDFSInputStream hdfsInput = new RootHDFSInputStream(fs.open(hPath), this);
